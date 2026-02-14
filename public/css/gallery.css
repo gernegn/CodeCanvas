@@ -1,0 +1,237 @@
+/* ========================================= */
+/* 1. Global & Background Layout */
+/* ========================================= */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    background: linear-gradient(to bottom, #31BEF3, #fff);
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.bg-grass {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    line-height: 0;
+    z-index: 2;
+}
+
+.bg-grass img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.bg-cloud {
+    position: absolute;
+    top: -30px;
+    width: 100%;
+    line-height: 0;
+    z-index: 3;
+}
+
+.bg-cloud img {
+    width: 100%;
+    object-fit: cover;
+}
+
+/* ========================================= */
+/* 2. Header Section */
+/* ========================================= */
+.sec-head {
+    position: relative;
+    margin: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.btn-box {
+    width: 9rem;
+    height: 4rem;
+}
+
+.bt-back {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bt-back .iconify {
+    font-size: 2.2rem;
+    color: #000;
+}
+
+.bt-back:hover {
+    background: #D4F2FF;
+}
+
+.challenge {
+    font-weight: 500;
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.sec-head img {
+    width: 9rem;
+    height: 4rem;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+/* ========================================= */
+/* 3. Main Content (Gallery Grid) */
+/* ========================================= */
+.sec-content {
+    width: 100%;
+    height: 42rem;
+    display: flex;
+    z-index: 12;
+    position: relative;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.sec-content-top {
+    width: 100%;
+    height: 88%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row-top, .row-bottom {
+    width: 96%;
+    height: 48%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+/* ✅ กล่องผลลัพธ์ (แก้ไขใหม่ให้จัดกึ่งกลาง) */
+.box-result {
+    width: 21rem;
+    height: 100%;
+    background-color: #fff4eb;
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+
+    /* จัดของข้างในให้กึ่งกลางด้วย Flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box; /* ให้ padding ไม่ดันขนาดกล่อง */
+}
+
+/* ✅ รูปภาพ (แก้ไขใหม่ ตัด Margin เดิมออก) */
+.img-result {
+    width: 12rem;
+    height: 12rem;
+    position: relative;
+}
+
+.img-result img {
+    width: 95%;
+    height: 95%;
+    object-fit: contain;
+}
+
+/* ✅ ชื่อผลงาน (เพิ่มใหม่แทนตัวเลข) */
+.name-result {
+    width: 90%;             /* กว้างเกือบเต็มกล่อง */
+    text-align: center;     /* จัดกลาง */
+    font-size: 1.5rem;      /* ขนาดตัวอักษร */
+    font-weight: 500;       /* ความหนา */
+    color: #333;            /* สีเทาเข้ม */
+
+    /* ตัดคำถ้ายาวเกินไป (...) */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* background-color: #31BEF3; */
+    margin: 10px 0 -20px 0;
+}
+
+/* ✅ ลิ้งค์ล่องหน (Click Layer) */
+.click-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;       /* อยู่บนสุดเพื่อให้กดโดน */
+    cursor: pointer;
+}
+
+/* ========================================= */
+/* 4. Pagination (Bottom) */
+/* ========================================= */
+.sec-content-bottom {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+}
+
+.gallery-bt-prev, .gallery-bt-next {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-bt-prev .iconify {
+    font-size: 2.2rem;
+    color: #000;
+    transform: translateX(6px);
+}
+
+.gallery-bt-next .iconify {
+    font-size: 2.2rem;
+    color: #000;
+    transform: translateX(2px);
+}
+
+.gallery-bt-prev:hover , .gallery-bt-next:hover {
+    background: #D4F2FF;
+}
+
+.text-num {
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 0;
+}

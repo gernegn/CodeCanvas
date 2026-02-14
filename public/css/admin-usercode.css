@@ -1,0 +1,144 @@
+/* --- User Code Page Styles --- */
+
+.page-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #000;
+}
+
+/* --- Search Bar (เหมือนหน้า User General) --- */
+.search-section {
+    margin-bottom: 25px;
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 45px 12px 20px;
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #333;
+    pointer-events: none;
+}
+
+/* --- Table Styling --- */
+.table-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-table th {
+    background-color: #fff;
+    color: #000;
+    font-weight: 600;
+    font-size: 1.25rem;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    border-right: 2px solid #f0f0f0;
+    white-space: nowrap;
+    vertical-align: top; /* จัดให้หัวตารางชิดบน */
+}
+
+/* จัดการหัวตารางที่มี 2 บรรทัด */
+.th-multiline span {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #666;
+    margin-top: 4px;
+}
+
+.custom-table td {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    border-right: 2px solid #f0f0f0;
+    vertical-align: top; /* จัดให้เนื้อหาชิดบนเสมอ */
+    font-size: 1.1rem;
+
+}
+
+/* --- Code Block Buttons --- */
+.code-container {
+    display: flex;
+    flex-wrap: wrap; /* ให้ปุ่มขึ้นบรรทัดใหม่ถ้ายาวเกิน */
+    gap: 8px; /* ระยะห่างระหว่างปุ่ม */
+    justify-content: flex-start;
+}
+
+.code-btn {
+    padding: 6px 16px;
+    border-radius: 8px; /* ขอบมน */
+    font-size: 0.85rem;
+    color: #000;
+    font-weight: 500;
+    border: none;
+    white-space: nowrap; /* ห้ามตัดคำในปุ่ม */
+    display: inline-block;
+}
+
+/* สีของปุ่มตามรูปภาพ */
+.bg-blue {
+    background-color: #62d4ff; /* forward */
+}
+
+.bg-orange {
+    background-color: #fe9a00; /* moveLeft */
+}
+
+.bg-green {
+    background-color: #ace036; /* moveRight */
+}
+
+.bg-pink {
+    background-color: #ff98b8; /* Color, Texture */
+}
+
+/* Delete Button */
+.btn-delete {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #ff98b8;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 10px; /* ดันลงมาหน่อยเพราะ td vertical-align top */
+}
+
+.btn-delete:hover {
+    background-color: #ff7aa2;
+}

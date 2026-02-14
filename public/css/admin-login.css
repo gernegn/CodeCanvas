@@ -1,0 +1,142 @@
+* {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            background-color: #f8f8f6;
+        }
+
+        .container {
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* --- ฝั่งซ้าย (สีดำ) --- */
+        .left-panel {
+            flex: 1;
+            background-color: #0c0c0c; /* สีพื้นหลังดำ */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            /* width: 34.18rem; */
+            border-radius: 0 25px 25px 0;
+
+        }
+
+        /* กราฟิกเส้นๆ (ถ้ามีรูปให้ใส่ตรงนี้) */
+        .bg-pattern {
+            position: absolute;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('../img/elements-backend/login-pattern.png');
+            background-size: cover;
+        }
+
+        /* --- ฝั่งขวา (สีขาว) --- */
+        .right-panel {
+            flex: 1; /* กินพื้นที่ 50% */
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        h1.title {
+            font-size: 2.125rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #000;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        /* --- Form Elements --- */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #636362;
+            font-size: 1rem;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 50px; /* ขอบมนแบบแคปซูล */
+            border: 1px solid #000;
+            font-size: 1rem;
+            background-color: #f9f9f9;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #000;
+            background-color: #fff;
+        }
+
+        input::placeholder {
+            font-weight: 200;
+            opacity: 0.5;
+            color: #808080;
+}
+
+        /* ปุ่ม Login */
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            border-radius: 50px;
+            background-color: #000;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn-login:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Error Message */
+        .error-text {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            padding-left: 15px;
+        }

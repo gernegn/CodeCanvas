@@ -1,0 +1,544 @@
+/* ========================================= */
+/* 1. Global & Background Layout */
+/* ========================================= */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* ป้องกัน Scrollbar โผล่ */
+}
+
+body {
+    background: linear-gradient(to bottom, #31BEF3, #fff); /* ไล่สีฟ้าลงขาว */
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* ฉากหลัง: หญ้า */
+.bg-grass {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    line-height: 0;
+    z-index: 2;
+}
+
+.bg-grass img {
+    width: 100%;
+    object-fit: cover;
+}
+
+/* ฉากหลัง: เมฆ */
+.bg-cloud {
+    position: absolute;
+    top: -30px;
+    width: 100%;
+    line-height: 0;
+    z-index: 3;
+}
+
+.bg-cloud img {
+    width: 100%;
+    object-fit: cover;
+}
+
+/* ========================================= */
+/* 2. Header Section */
+/* ========================================= */
+.sec-head {
+    position: relative;
+    margin: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.sec-head h1 {
+    font-weight: 500;
+    font-size: 2.2rem;
+    line-height: 3rem;
+    margin: 0;
+    color: #333;
+}
+
+.sec-head img {
+    width: 9rem;
+    height: 4rem;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+/* ========================================= */
+/* 3. Main Content Layout */
+/* ========================================= */
+.sec-content {
+    width: 100%;
+    height: 79%; /* ปรับความสูงให้พอดีกับหน้าจอ */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 11;
+    margin-bottom: 2rem;
+}
+
+.sec-content-left {
+    width: 53%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start; /* จัดให้อยู่กลางแนวตั้ง */
+    align-items: center;     /* จัดให้อยู่กลางแนวนอน */
+}
+
+.sec-content-right {
+    width: 42%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end; /* ชิดขวา */
+}
+
+/* ========================================= */
+/* 4. Canvas Area (Left Side) */
+/* ========================================= */
+.canvas {
+    background: #fff4eb; /* สีพื้นหลังครีม */
+    width: 95%; /* ปรับขนาดให้ไม่เต็มเกินไป */
+    height: 82%;
+    border-radius: 20px;
+    position: relative;
+    overflow: visible; /* ให้รูปดาว/วิงค์ ล้นออกมาได้ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* รูปตกแต่งมุมซ้ายบน */
+.wink-yellow-01 {
+    position: absolute;
+    width: 7rem;
+    height: auto;
+    object-fit: contain;
+    z-index: 30;
+    top: -1rem;
+    left: 1.2rem;
+    pointer-events: none;
+}
+
+/* รูปตกแต่งมุมขวาล่าง */
+.wink-yellow-02 {
+    position: absolute;
+    width: 7rem;
+    height: auto;
+    object-fit: contain;
+    z-index: 30;
+    bottom: -1.5rem;
+    right: -1.2rem;
+    pointer-events: none;
+}
+
+/* กรอบวงกลมสำหรับแสดงผลรูป */
+.frame-result-radius {
+    width: 28rem;
+    height: 28rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* --- [แก้ไข] รูปภาพผลลัพธ์ (สำคัญ: เอา opacity 0 ออกแล้ว) --- */
+.frame-result-radius img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+
+    /* บังคับค่าพื้นฐานเพื่อแก้ Bug รูปหาย */
+    position: static !important;
+    transform: none !important;
+    margin: 0 !important;
+    opacity: 1 !important; /* บังคับให้แสดงผลเสมอ */
+}
+
+/* ========================================= */
+/* 5. Custom Panel (Right Side) */
+/* ========================================= */
+.box-custom {
+    width: 90%;
+    height: 82%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-between;
+    /* background-color: #19b56d; */
+}
+
+/* --- ส่วนชื่อ (Name) --- */
+.custom-name {
+    width: 100%;
+    height: 35%;
+    display: flex;
+    flex-direction: column;
+    /* background-color: #31BEF3; */
+    gap: 1rem;
+}
+
+/* --- ส่วนเลือกสี (Color) --- */
+.custom-color {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    /* background-color: #31BEF3; */
+    gap: 0.6rem;
+}
+
+/* --- ส่วนเลือกพื้นผิว (Texture) --- */
+.custom-texture {
+    width: 100%;
+    height: 40%;
+    /* background-color: #31BEF3; */
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+}
+
+.topic-name, .topic-color, .topic-texture {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+}
+
+.topic-name .iconify, .topic-color .iconify, .topic-texture .iconify {
+    font-size: 2.2rem;
+    color: #333;
+}
+
+.topic-name p, .topic-color p, .topic-texture p {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 0;
+    color: #333;
+}
+
+/* ปรับแต่งช่อง Input ปกติ */
+#userNameInput {
+    width: 97%;
+    height: 4.5rem; /* ความสูงช่อง */
+    border-radius: 1rem; /* ความโค้งมน */
+    border: 3px solid #e0e0e0;
+    padding: 0 1.5rem;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-size: 1.3rem;
+    color: #333;
+    background-color: #fff;
+    outline: none; /* ลบเส้นขอบมาตรฐานของ Browser ออก */
+    transition: all 0.2s ease-in-out; /* เอฟเฟกต์เปลี่ยนสีนุ่มๆ */
+    box-sizing: border-box; /* ให้ padding ไม่ไปดันขนาดกล่อง */
+}
+
+/* ✅ ส่วนสำคัญ: เปลี่ยนเป็นสีชมพูตอนกด (Focus) */
+#userNameInput:focus {
+    border-color: #FF98B8; /* สีขอบเป็นสีชมพู */
+    box-shadow: 0 0 0 4px rgba(255, 152, 184, 0.25); /* เพิ่มเงาฟุ้งๆ สีชมพูจางๆ รอบๆ */
+}
+
+/* ปรับสี Placeholder (ข้อความจางๆ) */
+#userNameInput::placeholder {
+    color: #aaa;
+    font-weight: 300;
+}
+
+.box-color {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1.5rem;
+    flex-wrap: wrap; /* เผื่อสีเยอะจนล้นบรรทัด */
+}
+
+/* วงกลมสี (สร้างโดย JS) */
+.circle-color-item {
+    width: 5rem;
+    height: 5rem;
+    border: 0.3rem solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.circle-color-item:hover {
+    transform: scale(1.1);
+}
+
+.circle-color-item.active {
+    border-color: #333; /* ขอบสีเข้มเมื่อเลือก */
+    transform: scale(1.15);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.box-texture {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.box-texture-top, .box-texture-bottom {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: flex-start;
+}
+
+/* ปุ่ม Texture */
+.texture-btn {
+    width: 10.1rem;
+    height: 4.5rem;
+    border: 3px solid #e0e0e0;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    background-color: #fff;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: all 0.2s ease;
+}
+
+.texture-btn:hover {
+    border-color: #ffd700;
+}
+
+.texture-btn.active {
+    border-color: #ffaa00;
+    box-shadow: 0 0 0 2px #ffaa0033;
+}
+
+/* ลายเส้นเฉียงสำหรับปุ่ม None */
+.box-texture-none {
+    background: linear-gradient(
+        to top right,
+        transparent calc(50% - 2px),
+        #d1d5db calc(50% - 2px),
+        #d1d5db calc(50% + 2px),
+        transparent calc(50% + 2px)
+    );
+    background-color: #fff;
+}
+
+/* ========================================= */
+/* 6. Confirm Button & Modal */
+/* ========================================= */
+.bt-confirm {
+    width: 100%;
+    height: 4.5rem;
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+/* สไตล์ปุ่มยืนยัน (สถานะปกติ / กดได้) */
+.confirm {
+    background-color: #000000; /* สีดำตามที่ขอ */
+    color: #ffffff;            /* ตัวหนังสือสีขาว */
+    border: none;
+    height: 100%;
+    width: 40%;
+    border-radius: 100px;
+    font-size: 2rem;
+    font-weight: 400;
+    cursor: pointer;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    margin-right: 0.6rem;
+    transition: all 0.2s ease; /* เพิ่ม transition ให้เปลี่ยนสีนุ่มๆ */
+}
+
+.confirm:hover {
+    transform: scale(1.05);
+}
+
+/* ✅ สไตล์ตอนกดไม่ได้ (Disabled) */
+.confirm:disabled {
+    background-color: #989898; /* สีเทาตามที่ขอ */
+    color: #000000;            /* ตัวหนังสือสีดำ */
+    cursor: not-allowed;       /* เมาส์เป็นรูปห้ามจอด */
+    transform: none;           /* ไม่ขยายตอนเอาเมาส์ชี้ */
+    opacity: 1;
+}
+
+/* --- Modal Overlay --- */
+.custom-modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.custom-modal-container {
+    background-color: #fff;
+    border-radius: 30px;
+    width: 50rem;
+    height: auto;
+    min-height: 32rem;
+    max-width: 90%;
+    padding: 30px 40px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.close-modal {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: #aaa;
+    font-size: 40px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 20;
+}
+
+.close-modal:hover {
+    color: #000;
+}
+
+.modal-header-text {
+    margin-top: 25px;
+    margin-bottom: 20px;
+    z-index: 5;
+}
+
+.modal-header-text h2 {
+    margin: 0;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-size: 2rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.text-success {
+    margin: 0;
+    color: #19b56d;
+    font-weight: 700;
+    font-size: 2.8rem;
+}
+
+.modal-content-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 9rem;
+    width: 100%;
+    height: 20rem;
+    margin-bottom: 2rem;
+}
+
+.result-image-box img {
+    height: 18rem;
+    width: 18rem;
+    object-fit: contain;
+    display: block;
+}
+
+.qr-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.qr-code-img {
+    width: 13rem;
+    height: 13rem;
+}
+
+.qr-text p {
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-size: 1.2rem;
+    color: #777;
+    margin: 0;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.star-decor-img {
+    position: absolute;
+    width: 40px;
+    height: auto;
+    z-index: 1;
+}
+
+.star-top-left {
+    top: 50px;
+    left: 22%;
+    width: 50px;
+}
+
+.star-top-right {
+    top: 100px;
+    right: 26%;
+    width: 35px;
+}
+
+.star-bottom-left {
+    bottom: 40px;
+    left: 45px;
+    width: 30px;
+}
+
+.btn-gallery-green {
+    background-color: #27AE60;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+    height: 3.2rem;
+    width: 15rem;
+}
+
+.btn-gallery-green .iconify {
+    font-size: 2.5rem;
+}
+
+.btn-gallery-green:hover {
+    transform: scale(1.05);
+    background-color: #219150;
+}

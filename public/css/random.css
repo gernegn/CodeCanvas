@@ -1,0 +1,322 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    background: linear-gradient(to bottom, #31BEF3, #fff);
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%; /* [สำคัญ] ต้องยืด container ให้เต็มความสูงหน้าจอ */
+    margin: 0;
+    padding: 0;
+}
+
+.bg-grass {
+    position: absolute; /* สั่งให้หลุดจาก flow ปกติเพื่อจัดตำแหน่งได้อิสระ */
+    bottom: 0;          /* สั่งให้ติดขอบล่างสุด */
+    line-height: 0;     /* ป้องกันไม่ให้มีช่องว่างเล็กๆ ใต้รูปภาพ */
+    z-index: 2;         /* (ทางเลือก) กำหนดลำดับชั้น ถ้ามี object อื่น */
+}
+
+.bg-grass img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.bg-cloud {
+    position: absolute; /* สั่งให้หลุดจาก flow ปกติเพื่อจัดตำแหน่งได้อิสระ */
+    line-height: 0;     /* ป้องกันไม่ให้มีช่องว่างเล็กๆ ใต้รูปภาพ */
+    z-index: 3;         /* (ทางเลือก) กำหนดลำดับชั้น ถ้ามี object อื่น */
+    top: -30px;
+}
+
+.bg-cloud img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.sec-head {
+    position: relative;  /* สำคัญมาก */
+    margin: 2rem;
+    display: flex;
+    flex-direction: row;
+    /* background-color: red; */
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.btn-box {
+    width: 9rem;
+    height: 4rem;
+}
+
+.bt-back {
+  background: transparent; /* เอาพื้นหลังสีเทาออก */
+  border: none;            /* เอาเส้นขอบออก */
+  padding: 0;
+  cursor: pointer;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;      /* กึ่งกลางแนวตั้ง */
+  justify-content: center;
+}
+
+.bt-back .iconify {
+  font-size: 2.5rem;
+  color: #000; /* หรือสีที่ต้องการ */
+  transform: translateX(6px);
+}
+
+.bt-back:hover {
+    background: #D4F2FF;
+}
+
+.challenge {
+  font-weight: 500;
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.sec-head img {
+    width: 9rem;
+    height: 4rem;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+/* sec-content */
+.sec-content {
+    width: 100%;
+    height: 82%;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    z-index: 11;
+    flex-direction: column;
+    gap: 1.5rem;
+    /* background: greenyellow; */
+}
+
+.challenge-random {
+    /* background: #fff; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.challenge-random img {
+    width: 27rem;
+    height: 35rem;
+    position: relative;
+    z-index: 12;
+    object-fit: contain;
+    margin-left: 2rem;
+}
+
+.text-random {
+    position: absolute;
+    z-index: 14;
+    top: 7rem;
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: #6b3f27;
+    transition: transform 0.1s ease-in-out;
+}
+
+/* เพิ่มคลาสนี้ผ่าน JS ตอนกำลังสุ่ม */
+.randomizing {
+    animation: bounce 0.1s infinite;
+}
+
+@keyframes bounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* ... (CSS เดิม) ... */
+
+/* [เพิ่มใหม่] Styles สำหรับ Modal Popup */
+.modal {
+    display: none; /* ซ่อนเป็นค่าเริ่มต้น */
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* พื้นหลังสีดำโปร่งแสง */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    width: 50rem;
+    height: 34rem;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+
+.popup-title {
+    margin: 0.2rem 0 0 0;
+    font-weight: 500;
+    font-size: 1.8rem;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #000;
+}
+
+#modalChallengeName {
+    font-size: 2.5rem;
+    color: #000;
+    margin: 0;
+    font-weight: 800;
+}
+
+.modal-img-box {
+    width: 100%;
+    height: 45%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+#modalOriginalImage {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.modal-actions {
+    background: #19b56d;
+    width: 14rem;
+    height: 4rem;
+    position: relative;
+    z-index: 13;
+    border-radius: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s;
+    margin-top: 1rem;
+}
+
+.modal-actions button {
+    cursor: pointer;
+}
+
+#btnGoToGame {
+    background: transparent;
+    border: none;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.modal-actions:hover {
+    transform: scale(1.05);
+}
+
+.close-modal {
+    position: absolute;
+    top: 1.5rem;      /* ปรับระยะห่างจากด้านบนตามความสวยงาม */
+    right: 2rem;      /* ปรับระยะห่างจากด้านขวา */
+    color: #aaa;      /* สีเทา */
+    font-size: 3rem; /* ขนาดไอคอน (ปรับใหญ่-เล็กได้ที่นี่) */
+    cursor: pointer;
+    display: flex;    /* ช่วยจัดตำแหน่งไอคอนให้ตรงจุด */
+    transition: transform 0.2s, color 0.2s;
+}
+
+.close-modal:hover {
+    color: #000;      /* สีตอนเอาเมาส์ชี้ */
+    transform: scale(1.1);
+}
+
+/* Class สำหรับปุ่มที่กดครบโควต้าแล้ว */
+.btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.btn-random-box {
+    background: #000;
+    width: 11rem;
+    height: 4rem;
+    position: relative;
+    z-index: 13;
+    border-radius: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.btn-random-box:hover {
+    transform: scale(1.05);
+}
+
+.bt-random {
+    background: transparent;
+    border: none;
+    color: white;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+}
+
+.bt-random .iconify {
+    font-size: 4rem;
+}
+
+.num-random {
+    font-size: 1.7rem;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-weight: 400;
+}

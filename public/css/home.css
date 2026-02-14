@@ -1,0 +1,228 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; 
+}
+
+body {
+    background: linear-gradient(to bottom, #31BEF3, #fff);
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%; /* [สำคัญ] ต้องยืด container ให้เต็มความสูงหน้าจอ */
+    margin: 0;
+    padding: 0;
+}
+
+.bg-grass {
+    position: absolute; /* สั่งให้หลุดจาก flow ปกติเพื่อจัดตำแหน่งได้อิสระ */
+    bottom: 0;          /* สั่งให้ติดขอบล่างสุด */
+    line-height: 0;     /* ป้องกันไม่ให้มีช่องว่างเล็กๆ ใต้รูปภาพ */
+    z-index: 3;         /* (ทางเลือก) กำหนดลำดับชั้น ถ้ามี object อื่น */
+}
+
+.bg-grass img {
+    width: 100%;
+    object-fit: cover; 
+}
+
+.bg-cloud {
+    position: absolute; /* สั่งให้หลุดจาก flow ปกติเพื่อจัดตำแหน่งได้อิสระ */
+    line-height: 0;     /* ป้องกันไม่ให้มีช่องว่างเล็กๆ ใต้รูปภาพ */
+    z-index: 2;         /* (ทางเลือก) กำหนดลำดับชั้น ถ้ามี object อื่น */
+    top: -30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-cloud img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.bg-wink {
+    position: absolute; /* สั่งให้หลุดจาก flow ปกติเพื่อจัดตำแหน่งได้อิสระ */
+    line-height: 0;     /* ป้องกันไม่ให้มีช่องว่างเล็กๆ ใต้รูปภาพ */
+    z-index: 4;         /* (ทางเลือก) กำหนดลำดับชั้น ถ้ามี object อื่น */
+    top: -30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-wink img {
+    width: 82%;
+    object-fit: cover;
+}
+
+.sec-head {
+    position: relative;  /* สำคัญมาก */
+    margin: 2rem;
+    display: flex;
+    flex-direction: row;
+    /* background-color: red; */
+    justify-content: end;
+    align-items: center;
+    z-index: 10;
+}
+
+.sec-head img {
+    width: 9rem;
+    height: 4rem;
+    object-fit: cover; 
+    cursor: pointer;
+}
+
+.btn-box {
+    width: 9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: red; */
+}
+
+.bt-tutorial {
+  background: transparent; /* เอาพื้นหลังสีเทาออก */
+  border: none;            /* เอาเส้นขอบออก */
+  padding: 0;
+  cursor: pointer;
+  width: 5.2rem;
+  height: 5.2rem;
+  /* background: white; */
+  display: flex;
+  align-items: center;      /* กึ่งกลางแนวตั้ง */
+  justify-content: center; 
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+
+.bt-tutorial .iconify {
+  font-size: 3.2rem;
+  color: #000; /* หรือสีที่ต้องการ */
+}
+
+/* --- ส่วนที่แก้ไข --- */
+.icon-tutorial {
+    width: 3.2rem;           /* กำหนดพื้นที่สำหรับไอคอน */
+    height: 3.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.25rem;  /* ระยะห่างจากตัวหนังสือ */
+    flex-shrink: 0;
+}
+
+.bt-text {
+    font-size: 1.2rem;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-weight: 500;
+}
+
+.bt-tutorial:hover {
+    transform: scale(1.05);
+}
+
+.sec-content {
+    z-index: 20;
+    width: 100%;
+    height: 38rem;
+    /* background-color: orange; */
+    position: absolute;
+    display: flex;
+    justify-content: center;
+}
+
+.box-content-main {
+    display: flex;
+    /* background: burlywood; */
+    width: 70%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.box-board {
+    width: 26rem;
+    /* background: rgb(255, 0, 76); */
+    height: 100%;
+
+}
+
+.box-board img {
+    width: 100%;
+    height: 100%;
+
+}
+
+.box-main {
+    /* background: red; */
+    width: 60%;
+    height: 100%;
+}
+
+.box-logo-main {
+    /* background: green; */
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-logo-main img {
+    width: 75%;
+}
+
+.box-button {
+    /* background: rgb(52, 106, 255); */
+    height: 50%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.btn-main-box {
+    width: 20rem;
+    height: 4rem;
+    /* background: pink; */
+}
+
+.bt-play, .bt-gallery {
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  border-radius: 5rem;
+  background: rgb(0, 0, 0);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  font-size: 1.8rem;
+  transition: all 0.3s ease;
+}
+
+.bt-play:hover {
+    background-color: #19b56d;
+  color: #fff;        
+  transform: scale(1.05);   
+}
+
+.bt-gallery {
+    background: white;
+    border: 4px solid #ff98b8;
+    color: #ff98b8;
+    gap: 0.8rem;
+}
+
+.bt-gallery:hover {
+    background: #ff98b8;
+    color: white;
+    transform: scale(1.05);
+}

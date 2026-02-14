@@ -1,0 +1,224 @@
+/* ========================================= */
+/* detail-result.css (Merged Version) */
+/* Layout: Set 1 | Code Box Design: Set 2 */
+/* ========================================= */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    background: linear-gradient(to bottom, #31BEF3, #fff);
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Background (จากชุดที่ 1) --- */
+.bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+.bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+    display: block;
+}
+
+/* --- Header (จากชุดที่ 1) --- */
+.sec-head {
+    position: relative;
+    margin: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.btn-box {
+    width: 9rem;
+    height: 4rem;
+}
+
+.bt-back {
+    background: white;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.bt-back .iconify {
+    font-size: 2.5rem;
+    color: #000;
+    transform: translateX(6px);
+}
+
+.bt-back:hover {
+    background: #D4F2FF;
+}
+
+.sec-head img {
+    width: 9rem;
+    height: 4rem;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+/* --- Main Content Layout (จากชุดที่ 1) --- */
+/* ใช้การจัดวางแบบเดิมที่คุณชอบ (สูง 40rem, gap 3rem) */
+.sec-content {
+    width: 100%;
+    height: 40rem; /* ใช้ความสูงตามชุดที่ 1 */
+    display: flex;
+    z-index: 12;
+    position: relative;
+    justify-content: center;
+    flex-direction: row;
+    gap: 3rem; /* ระยะห่างตามชุดที่ 1 */
+}
+
+/* ฝั่งซ้าย (จากชุดที่ 1) */
+.sec-content-left {
+    height: 100%;
+    width: 62%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content-topic {
+    width: 100%;
+    height: 7rem;
+}
+
+.content-topic h2 {
+    font-size: 2rem;
+    color: #000;
+    font-weight: 500;
+    margin: 0;
+}
+
+.content-topic h1 {
+    font-size: 2.5rem;
+    color: #000;
+    font-weight: 600;
+    margin: 0;
+}
+
+.content-img-result {
+    width: 50%;
+    height: 33rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-img-result img {
+    width: 95%;
+    height: 95%;
+    object-fit: contain;
+}
+
+/* --- ฝั่งขวา (ผสมผสาน) --- */
+/* Layout ภายนอกอิงชุดที่ 1 แต่ Design อิงชุดที่ 2 */
+.sec-content-right {
+    height: 100%; /* สูงเต็มกรอบ 40rem (อิงชุด 1) */
+    width: 28%;   /* กว้าง 25% (อิงชุด 1) */
+
+    /* Design กล่อง (อิงชุด 2) */
+    background-color: #fff;
+    border-radius: 1.2rem; /* ความโค้งมนแบบชุด 2 */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15); /* เงาแบบชุด 2 */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem;
+}
+
+/* --- ส่วนภายในกล่องโค้ด (จากชุดที่ 2 ทั้งหมด) --- */
+/* พื้นที่ Scrollbar */
+/* พื้นที่ใส่โค้ด (Scrollable Area) */
+.code-panel {
+    width: 100%;
+    height: 100%;
+
+    /* 🔴 แก้ไขบรรทัดนี้ */
+    /* จากเดิม: padding: 3rem 2rem; */
+    padding-top: 3rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 0; /* เอา Padding ล่างออก เพื่อใช้ ::after แทน */
+
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* ✅ เพิ่มส่วนนี้: สร้างพื้นที่ว่างด้านล่างสุด (Spacer) */
+.code-panel::after {
+    content: "";
+    display: block;
+    min-height: 5rem; /* ความสูงเท่ากับ padding-top เพื่อให้เว้นระยะเท่ากัน */
+    width: 100%;
+    flex-shrink: 0;   /* สำคัญมาก! ป้องกันไม่ให้พื้นที่นี้หดตัว */
+}
+
+/* สไตล์ปุ่มคำสั่ง (Code Pills) แบบชุด 2 */
+.code-pill {
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 50px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-align: center;
+    color: #000;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+}
+
+.code-pill:hover {
+    transform: scale(1.02);
+}
+
+/* สีปุ่ม (ชุด 2) */
+.cmd-forward { background-color: #62D4FF; }
+.cmd-left    { background-color: #FE9A00; }
+.cmd-right   { background-color: #FF98B8; }
+.cmd-default { background-color: #ccc; color: #333; }
+
+.no-data {
+    color: #aaa;
+    margin-top: 5rem;
+    font-size: 1.5rem;
+}
+
+/* Custom Scrollbar (ชุด 2) */
+.code-panel::-webkit-scrollbar { width: 8px; }
+.code-panel::-webkit-scrollbar-track { background: transparent; margin: 20px 0; }
+.code-panel::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 10px; }
+.code-panel::-webkit-scrollbar-thumb:hover { background: #ccc; }

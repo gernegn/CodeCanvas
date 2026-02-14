@@ -1,0 +1,189 @@
+/* --- User General Page Styles --- */
+
+.page-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #000;
+}
+
+/* Search Bar Container */
+.search-section {
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between; /* แยกซ้ายขวา */
+    align-items: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+}
+.search-form {
+    flex-grow: 1; /* ให้ฟอร์มค้นหาขยายพื้นที่ */
+    margin-right: 20px; /* เว้นระยะห่างจากปุ่มกรอง */
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+    max-width: 400px; /* ความกว้างช่องค้นหา */
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 45px 12px 20px; /* เว้นขวาไว้ใส่ไอคอน */
+    border-radius: 50px; /* ขอบมนแบบแคปซูล */
+    border: 1px solid #ddd;
+    background-color: #fff;
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #333;
+    pointer-events: none; /* ให้คลิกทะลุไปที่ input ได้ */
+}
+
+/* --- Filter Box Container --- */
+.filter-box {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* เว้นระยะห่างระหว่าง Label กับ Select */
+    position: relative; /* เพื่อการจัดตำแหน่งในอนาคต */
+}
+
+/* ปรับแต่ง Label "Sort by:" ให้ดู Soft ขึ้น */
+.filter-box label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #666; /* สีเทากลางๆ ไม่แย่งสายตา */
+}
+
+/* --- Dropdown Select Styling --- */
+.filter-select {
+    /* 1. ล้างค่า Default ของ Browser (สำคัญมาก!) */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* 2. โครงสร้าง */
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 50px; /* ทรงแคปซูล */
+    padding: 10px 45px 10px 20px; /* เว้นขวาเยอะหน่อยเผื่อที่ให้ลูกศร */
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    min-width: 160px; /* กำหนดความกว้างขั้นต่ำให้ดูสมส่วน */
+
+    /* 3. สร้างลูกศรเองด้วย SVG (ดูดีกว่า Default) */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center; /* จัดลูกศรให้อยู่ขวา */
+    background-size: 16px; /* ขนาดลูกศร */
+
+    /* 4. Effect */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02); /* เงาบางๆ ตอนปกติ */
+}
+
+/* Hover State: เมื่อเอาเมาส์ชี้ */
+.filter-select:hover {
+    border-color: #2d93ff; /* เปลี่ยนขอบเป็นสีธีม (สีฟ้า) */
+    box-shadow: 0 4px 12px rgba(45, 147, 255, 0.15); /* เงาสีฟ้าจางๆ ฟุ้งๆ */
+    transform: translateY(-1px); /* ลอยขึ้นนิดนึง */
+}
+
+/* Focus State: เมื่อคลิกเลือก */
+.filter-select:focus {
+    border-color: #2d93ff;
+    box-shadow: 0 0 0 3px rgba(45, 147, 255, 0.1); /* วงแหวนโฟกัส */
+}
+
+/* Table Styling Override */
+.table-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden; /* ตัดมุมโค้ง */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-table th {
+    background-color: #fff;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    border-right: 2px solid #f0f0f0;
+    white-space: nowrap;
+}
+
+.custom-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    border-right: 2px solid #f0f0f0;
+    vertical-align: middle;
+    color: #000;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+/* Image Placeholder Box */
+.img-placeholder {
+    width: 9.5rem;
+    height: 8rem; /* สัดส่วนสี่เหลี่ยมผืนผ้าเล็กน้อย */
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.8rem;
+    overflow: hidden;
+}
+
+.img-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* ปรับรูปให้พอดีกรอบโดยไม่เสียสัดส่วน (หรือใช้ cover ถ้าอยากให้เต็มช่อง) */
+    background-color: #fff; /* พื้นหลังขาวเผื่อรูปเป็น PNG โปร่งใส */
+}
+
+/* Delete Button */
+.btn-delete {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #ff98b8; /* สีชมพู */
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.btn-delete:hover {
+    background-color: #ff7aa2;
+    transform: scale(1.05);
+}

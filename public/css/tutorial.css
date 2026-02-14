@@ -1,0 +1,163 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    background: linear-gradient(to bottom, #31BEF3, #fff);
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%; /* [สำคัญ] ต้องยืด container ให้เต็มความสูงหน้าจอ */
+    margin: 0;
+    padding: 0;
+}
+
+.bg-grass {
+    position: absolute; /* สั่งให้หลุดจาก flow ปกติเพื่อจัดตำแหน่งได้อิสระ */
+    bottom: 0;          /* สั่งให้ติดขอบล่างสุด */
+    line-height: 0;     /* ป้องกันไม่ให้มีช่องว่างเล็กๆ ใต้รูปภาพ */
+    z-index: 2;         /* (ทางเลือก) กำหนดลำดับชั้น ถ้ามี object อื่น */
+}
+
+.bg-grass img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.bg-cloud {
+    position: absolute; /* สั่งให้หลุดจาก flow ปกติเพื่อจัดตำแหน่งได้อิสระ */
+    line-height: 0;     /* ป้องกันไม่ให้มีช่องว่างเล็กๆ ใต้รูปภาพ */
+    z-index: 3;         /* (ทางเลือก) กำหนดลำดับชั้น ถ้ามี object อื่น */
+    top: -30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-cloud img {
+    width: 100%;
+    object-fit: cover;
+}
+
+/* เปลี่ยนจาก .logo02-bg เฉยๆ เป็น .bg-cloud .logo02-bg เพื่อให้ Priority สูงกว่า .bg-cloud img */
+.bg-cloud .logo02-bg {
+    position: absolute;
+    z-index: 12;
+    height: 30rem;      /* ความสูงที่ต้องการ */
+    width: auto;       /* [สำคัญ] ต้องสั่ง auto เพื่อยกเลิก width 100% จากคำสั่งแม่ */
+    opacity: 30%;
+    /* คุณอาจจะต้องกำหนดตำแหน่งด้วย เพราะเป็น absolute */
+    top: 36%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* จัดกึ่งกลาง (ถ้าต้องการ) */
+}
+
+.sec-head {
+    position: relative;  /* สำคัญมาก */
+    margin: 2rem;
+    display: flex;
+    flex-direction: row;
+    /* background-color: red; */
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.btn-box {
+    width: 9rem;
+    height: 4rem;
+}
+
+.bt-back {
+  background: transparent; /* เอาพื้นหลังสีเทาออก */
+  border: none;            /* เอาเส้นขอบออก */
+  padding: 0;
+  cursor: pointer;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;      /* กึ่งกลางแนวตั้ง */
+  justify-content: center;
+}
+
+.bt-back .iconify {
+  font-size: 2.5rem;
+  color: #000; /* หรือสีที่ต้องการ */
+  transform: translateX(6px);
+}
+
+.bt-back:hover {
+    background: #D4F2FF;
+}
+
+.challenge {
+  font-weight: 500;
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.sec-head img {
+    width: 9rem;
+    height: 4rem;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.sec-content {
+    position: relative;
+    z-index: 15;
+    width: 100%;
+    height: 55%;
+    /* background: lightcoral; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-content {
+    width: 50rem;
+    height: 22rem;
+    /* background: lightgreen; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 100px;
+}
+
+.box-text {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    /* background: yellow; */
+    gap: 3rem;
+}
+
+.tutorial-number {
+    width: 2.2rem;
+    height: 2.2rem;
+    background: #ff98d8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 2rem;
+    padding: 0.5rem;
+    font-weight: 400;
+}
+
+.tutorial-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: #000;
+    font-weight: 400;
+}

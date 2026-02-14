@@ -1,0 +1,103 @@
+/* --- Game Code Page Styles --- */
+
+.page-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #000;
+}
+
+/* Grid Layout 2 Columns */
+.code-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+/* Card Styling */
+.code-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    min-height: 500px; /* ความสูงขั้นต่ำ */
+}
+
+/* Header ของแต่ละการ์ด */
+.card-header-flex {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.header-icon-circle {
+    width: 3.68rem;
+    height: 3.68rem;
+    background-color: #2d93ff; /* สีฟ้า */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.header-icon-circle i {
+    font-size: 2rem;
+}
+
+.header-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #2d93ff; /* สีฟ้า */
+}
+
+/* List Styling */
+.code-list {
+    list-style: none;
+    padding-left: 30px;
+}
+
+.code-item {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #f0f0f0; /* เส้นขีดคั่นบางๆ */
+}
+
+.code-item:last-child {
+    border-bottom: none;
+}
+
+/* Color Circles */
+.color-circle {
+    width: 2.81rem;
+    height: 2.81rem;
+    border-radius: 50%;
+    margin-right: 25px;
+    flex-shrink: 0;
+}
+
+/* กำหนดสีวงกลม */
+.cc-none   { border: 2px solid #eee; background-color: #fff; }
+.cc-yellow { background-color: #fdd849; }
+.cc-blue   { background-color: #2d93ff; }
+.cc-green  { background-color: #19b56d; }
+.cc-red    { background-color: #ff4d4d; }
+.cc-pink   { background-color: #ff98b8; }
+.cc-grey   { background-color: #9e9e9e; }
+
+/* Texture Icons (รูปภาพ) */
+.texture-img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    margin-right: 25px;
+    /* opacity: 0.6; ปรับให้จางลงนิดหน่อยถ้าต้องการให้เหมือนรูปต้นแบบ */
+}
+
+/* Text Label */
+.item-label {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #000;
+}
