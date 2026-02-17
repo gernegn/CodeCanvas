@@ -53,7 +53,15 @@
                 <tbody>
                     @foreach ($userCodes as $code)
                         <tr>
-                            <td style="padding-top: 25px;">{{ $code->UserCode_ID }}</td>
+                            <td>
+                                @if ($sort == 'asc')
+                                    {{-- ถ้าเรียงจากเก่าไปใหม่: 1, 2, 3... --}}
+                                    {{ $loop->iteration }}
+                                @else
+                                    {{-- ✅ แก้ตรงนี้: เปลี่ยน $users เป็น $userCodes --}}
+                                    {{ $userCodes->count() - $loop->index }}
+                                @endif
+                            </td>
 
                             <td>
                                 <div class="code-container">

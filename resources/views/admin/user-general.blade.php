@@ -48,7 +48,16 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td>{{ $user->User_ID }}</td>
+                            {{-- คำนวณเลขลำดับตามการ Sort --}}
+                            <td>
+                                @if ($sort == 'asc')
+                                    {{-- ถ้าเรียงจากเก่าไปใหม่: 1, 2, 3... --}}
+                                    {{ $loop->iteration }}
+                                @else
+                                    {{-- ถ้าเรียงจากใหม่ไปเก่า: 3, 2, 1... (จำนวนทั้งหมด - Index ปัจจุบัน) --}}
+                                    {{ $users->count() - $loop->index }}
+                                @endif
+                            </td>
 
                             <td>{{ $user->game->Challenge ?? '-' }}</td>
 

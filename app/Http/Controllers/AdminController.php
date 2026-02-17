@@ -115,8 +115,32 @@ class AdminController extends Controller
         $code = UserCode::find($id);
 
         if ($code) {
-            $code->delete();
-            return redirect()->back()->with('success', 'User Code deleted successfully');
+            $userId = $code->User_ID;
+
+            // ✅ [เพิ่มส่วนนี้] ต้องหาข้อมูล UserGeneral ก่อนเพื่อจะรู้ว่าเขาเล่น Challenge อะไร
+            if ($userId) {
+                $user = UserGeneral::find($userId);
+                if ($user && $user->Challenge_ID) {
+                    // สั่งลดค่า Total_Play ลง 1
+                    TotalPlay::where('Challenge_ID', $user->Challenge_ID)->decrement('Total_Play');
+                }
+
+                // ลบ UserGeneral
+                UserGeneral::where('User_ID', $userId)->delete();
+            }
+
+            // ลบ UserCode
+            UserCode::where('UserCode_ID', $id)->delete();
+
+            // เช็คเพื่อรีเซ็ต ID (โค้ดเดิมของคุณ)
+            if (UserCode::count() == 0) {
+                DB::statement('ALTER TABLE ccv_UserCode AUTO_INCREMENT = 1');
+            }
+            if (UserGeneral::count() == 0) {
+                DB::statement('ALTER TABLE ccv_UserGeneral AUTO_INCREMENT = 1');
+            }
+
+            return redirect()->back()->with('success', 'User Code and stats deleted successfully');
         }
 
         return redirect()->back()->with('error', 'User Code not found');
@@ -155,8 +179,27 @@ class AdminController extends Controller
         $user = UserGeneral::find($id);
 
         if ($user) {
+            // ✅ [เพิ่มส่วนนี้] 1. ลดค่าในตารางสถิติ (TotalPlay) ลง 1 ตาม Challenge ที่ user เล่น
+            if ($user->Challenge_ID) {
+                // ค้นหาตาราง TotalPlay ที่ตรงกับ Challenge_ID นี้ แล้วสั่งลดค่า Total_Play ลง 1
+                TotalPlay::where('Challenge_ID', $user->Challenge_ID)->decrement('Total_Play');
+            }
+
+            // 2. ลบ UserCode ที่เกี่ยวข้อง
+            UserCode::where('User_ID', $id)->delete();
+
+            // 3. ลบ UserGeneral
             $user->delete();
-            return redirect()->back()->with('success', 'User deleted successfully');
+
+            // เช็คเพื่อรีเซ็ต ID (โค้ดเดิมของคุณ)
+            if (UserGeneral::count() == 0) {
+                DB::statement('ALTER TABLE ccv_UserGeneral AUTO_INCREMENT = 1');
+            }
+            if (UserCode::count() == 0) {
+                DB::statement('ALTER TABLE ccv_UserCode AUTO_INCREMENT = 1');
+            }
+
+            return redirect()->back()->with('success', 'User and stats deleted successfully');
         }
 
         return redirect()->back()->with('error', 'User not found');
