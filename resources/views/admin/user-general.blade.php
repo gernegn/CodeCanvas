@@ -66,8 +66,7 @@
                                             $folderName = $parts[0];
                                         @endphp
 
-                                        <img src="{{ asset('img/user-image/' . $folderName . '/' . $user->Image) }}"
-                                            alt="User Image">
+                                        <img src="{{ asset('img/result-image/' . $user->Image) }}" alt="User Image">
                                     @else
                                         <span style="font-size: 2rem;">-</span>
                                     @endif

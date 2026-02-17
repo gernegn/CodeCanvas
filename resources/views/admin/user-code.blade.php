@@ -11,12 +11,24 @@
     </div>
 
     <div class="search-section">
-        <form action="#" method="GET">
+        <form action="#" method="GET" class="search-form">
             <div class="search-box">
                 <input type="text" class="search-input" placeholder="Search...">
                 <i class='bx bx-search search-icon'></i>
             </div>
         </form>
+
+        <div class="filter-box">
+            <label for="sortOrder" style="margin-right: 10px; font-weight: 500;">Sort by:</label>
+            <select id="sortOrder" class="filter-select" onchange="window.location.href=this.value;">
+                <option value="{{ route('admin.user-code', ['sort' => 'desc']) }}" {{ $sort == 'desc' ? 'selected' : '' }}>
+                    Newest
+                </option>
+                <option value="{{ route('admin.user-code', ['sort' => 'asc']) }}" {{ $sort == 'asc' ? 'selected' : '' }}>
+                    Oldest
+                </option>
+            </select>
+        </div>
     </div>
 
     <div class="table-card">

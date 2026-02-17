@@ -97,10 +97,17 @@ class AdminController extends Controller
     // ==========================================
     // 3. ฟังก์ชันหน้า User Code
     // ==========================================
-    public function userCode()
+    public function userCode(Request $request) // ✅ 1. รับ Request เข้ามา
     {
-        $userCodes = UserCode::all();
-        return view('admin.user-code', compact('userCodes'));
+        // ✅ 2. รับค่า 'sort' จาก URL (ถ้าไม่มีให้เป็น 'desc' คือล่าสุดก่อน)
+        $sort = $request->get('sort', 'desc');
+
+        // ✅ 3. ดึงข้อมูลและสั่งเรียงลำดับ
+        // (เรียงตาม created_at หรือ UserCode_ID ก็ได้)
+        $userCodes = UserCode::orderBy('created_at', $sort)->get();
+
+        // ✅ 4. ส่งตัวแปร $sort ไปที่หน้า View ด้วย (แก้ Error $sort is undefined)
+        return view('admin.user-code', compact('userCodes', 'sort'));
     }
 
     public function deleteUserCode($id)
