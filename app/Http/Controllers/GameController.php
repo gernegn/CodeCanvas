@@ -13,7 +13,10 @@ class GameController extends Controller
 
     public function getAllChallenges()
     {
-        $challenges = DB::table('ccv_GameGeneral')->get();
+        $challenges = DB::table('ccv_GameGeneral')
+            ->where('Status', 1) // เพิ่มเงื่อนไขนี้
+            ->get();
+
         return response()->json($challenges);
     }
 
