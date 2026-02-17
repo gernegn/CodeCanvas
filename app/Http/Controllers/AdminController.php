@@ -97,17 +97,36 @@ class AdminController extends Controller
     // ==========================================
     // 3. ฟังก์ชันหน้า User Code
     // ==========================================
-    public function userCode(Request $request) // ✅ 1. รับ Request เข้ามา
+    public function userCode(Request $request)
     {
-        // ✅ 2. รับค่า 'sort' จาก URL (ถ้าไม่มีให้เป็น 'desc' คือล่าสุดก่อน)
         $sort = $request->get('sort', 'desc');
+        $search = $request->get('search');
 
-        // ✅ 3. ดึงข้อมูลและสั่งเรียงลำดับ
-        // (เรียงตาม created_at หรือ UserCode_ID ก็ได้)
-        $userCodes = UserCode::orderBy('created_at', $sort)->get();
+        // โหลดข้อมูลทั้งหมดตาม sort
+        $allData = UserCode::orderBy('created_at', $sort)->get();
 
-        // ✅ 4. ส่งตัวแปร $sort ไปที่หน้า View ด้วย (แก้ Error $sort is undefined)
-        return view('admin.user-code', compact('userCodes', 'sort'));
+        $userCodes = $allData;
+
+        if ($search) {
+
+            // ค้นหาตามลำดับ
+            if (is_numeric($search)) {
+                $index = (int)$search - 1;
+                $userCodes = $allData->slice($index, 1);
+            } else {
+                $userCodes = $allData->filter(function ($item) use ($search) {
+                    return str_contains($item->User_Code, $search)
+                        || str_contains($item->Color_Name, $search)
+                        || str_contains($item->Texture_Name, $search);
+                });
+            }
+        }
+
+        return view('admin.user-code', [
+            'userCodes' => $userCodes,
+            'allData' => $allData,   // ⭐ ส่งข้อมูลทั้งหมดไปด้วย
+            'sort' => $sort
+        ]);
     }
 
     public function deleteUserCode($id)
@@ -166,13 +185,54 @@ class AdminController extends Controller
     public function userGeneral(Request $request)
     {
         $sort = $request->get('sort', 'desc');
+        $search = $request->get('search');
 
-        $users = UserGeneral::with('game')
+        // 1. โหลดข้อมูลทั้งหมดตามลำดับที่เลือก
+        $allData = UserGeneral::with('game')
             ->orderBy('created_at', $sort)
             ->get();
 
-        return view('admin.user-general', compact('users', 'sort'));
+        // ค่าเริ่มต้น = แสดงทั้งหมด
+        $users = $allData;
+
+        // 2. ถ้ามีการค้นหา
+        if ($search) {
+
+            // -------------------------
+            // กรณีค้นหาเป็นตัวเลข = ค้นหาตาม "ลำดับ"
+            // -------------------------
+            if (is_numeric($search)) {
+                $index = (int)$search - 1; // ลำดับเริ่มที่ 1
+                $users = $allData->slice($index, 1);
+            }
+
+            // -------------------------
+            // กรณีค้นหาเป็นข้อความ
+            // -------------------------
+            else {
+                $users = $allData->filter(function ($item) use ($search) {
+
+                    // ชื่อผู้ใช้
+                    $matchName = $item->User_Name &&
+                        stripos($item->User_Name, $search) !== false;
+
+                    // ชื่อ Challenge
+                    $matchChallenge = $item->game &&
+                        stripos($item->game->Challenge, $search) !== false;
+
+                    return $matchName || $matchChallenge;
+                });
+            }
+        }
+
+        // 3. ส่งข้อมูลไปที่ View
+        return view('admin.user-general', [
+            'users'   => $users,
+            'allData' => $allData, // ใช้คำนวณลำดับเดิมใน Blade
+            'sort'    => $sort
+        ]);
     }
+
 
     public function deleteUserGeneral($id)
     {

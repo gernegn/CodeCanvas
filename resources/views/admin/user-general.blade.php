@@ -11,10 +11,17 @@
     </div>
 
     <div class="search-section">
-        <form action="#" method="GET" class="search-form">
+        <form action="{{ route('admin.users') }}" method="GET" class="search-form">
+            {{-- เก็บค่า sort เดิมไว้ --}}
+            <input type="hidden" name="sort" value="{{ request('sort', 'desc') }}">
+
             <div class="search-box">
-                <input type="text" class="search-input" placeholder="Search...">
-                <i class='bx bx-search search-icon'></i>
+                <input type="text" name="search" class="search-input" placeholder="ค้นหา..." value="">
+
+                {{-- ✅ ย้าย Class มาที่ปุ่มแทน --}}
+                <button type="submit" class="search-btn">
+                    <i class='bx bx-search'></i>
+                </button>
             </div>
         </form>
 
@@ -55,7 +62,9 @@
                                     {{ $loop->iteration }}
                                 @else
                                     {{-- ถ้าเรียงจากใหม่ไปเก่า: 3, 2, 1... (จำนวนทั้งหมด - Index ปัจจุบัน) --}}
-                                    {{ $users->count() - $loop->index }}
+                                    {{ $allData->search(function ($item) use ($user) {
+                                        return $item->User_ID == $user->User_ID;
+                                    }) + 1 }}
                                 @endif
                             </td>
 

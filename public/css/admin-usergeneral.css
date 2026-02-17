@@ -48,7 +48,26 @@
     transform: translateY(-50%);
     font-size: 1.2rem;
     color: #333;
-    pointer-events: none; /* ให้คลิกทะลุไปที่ input ได้ */
+    pointer-events: auto;
+}
+
+.search-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #333;
+    padding: 0;
+    display: flex; /* จัดไอคอนให้อยู่กึ่งกลางปุ่ม */
+    align-items: center;
+}
+
+.search-btn i {
+    pointer-events: none; /* ให้คลิกทะลุไอคอนไปโดนปุ่ม */
 }
 
 /* --- Filter Box Container --- */
