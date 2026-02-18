@@ -71,7 +71,15 @@
     <!-- end container -->
 
     <!-- Script -->
-    <script src="{{ asset('js/codeCanvas.js') }}"></script>
+    <script src="{{ asset('js/codeCanvas.js') }}?v={{ time() }}"></script>
+
+    {{-- ✅ 1. เพิ่มแท็กเสียงสำหรับปุ่มถัดไปตรงนี้ครับ --}}
+    <audio id="buttonSound">
+        <source src="{{ asset('public/audio/button-sound.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    {{-- ✅ เรียกใช้ไฟล์เสียงที่เราสร้างไว้ --}}
+    @include('components.bg-music')
 </body>
 
 </html>

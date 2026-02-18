@@ -171,7 +171,19 @@
     </div>
 
     <!-- Script -->
-    <script src="{{ asset('js/codeCanvas.js') }}"></script>
+    <script src="{{ asset('js/codeCanvas.js') }}?v={{ time() }}"></script>
+
+    <audio id="popupSound">
+        <source src="{{ asset('public/audio/popup-sound.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    {{-- ✅ เพิ่มแท็กเสียงสำหรับปุ่มในหน้านี้ --}}
+    <audio id="buttonSound">
+        <source src="{{ asset('public/audio/button-sound.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    {{-- ✅ เรียกใช้ไฟล์เสียงที่เราสร้างไว้ --}}
+    @include('components.bg-music')
 </body>
 
 </html>

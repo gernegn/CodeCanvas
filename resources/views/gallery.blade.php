@@ -166,6 +166,9 @@
 
     <!-- Script -->
     <script src="{{ asset('js/codeCanvas.js') }}"></script>
+
+    {{-- ✅ เรียกใช้ไฟล์เสียงที่เราสร้างไว้ --}}
+    @include('components.bg-music')
 </body>
 
 </html>

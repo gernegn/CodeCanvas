@@ -148,7 +148,35 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('js/codeCanvas.js') }}"></script>
+    <script src="{{ asset('js/codeCanvas.js') }}?v={{ time() }}"></script>
+
+    {{-- ✅ เพิ่มแท็กเสียง Success Sound สำหรับตอนวาดถูก --}}
+    <audio id="successSound">
+        <source src="{{ asset('/public/audio/success-sound.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    {{-- ✅ เพิ่มแท็กเสียง Command Sound ตรงนี้ครับ --}}
+    <audio id="commandSound">
+        <source src="{{ asset('/public/audio/command-sound.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    {{-- ✅ เพิ่มแท็กเสียง Undo/Redo ตรงนี้ครับ --}}
+    <audio id="undoRedoSound">
+        <source src="{{ asset('/public/audio/undo-redo-sound.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    {{-- ✅ เพิ่มแท็กเสียงสำหรับปุ่ม RUN ตรงนี้ครับ --}}
+    <audio id="buttonSound">
+        <source src="{{ asset('/public/audio/button-sound.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    {{-- ✅ เพิ่มแท็กเสียงสำหรับปุ่ม Reset ตรงนี้ครับ --}}
+    <audio id="resetSound">
+        <source src="{{ asset('/public/audio/reset-sound.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    {{-- ✅ เรียกใช้ไฟล์เสียงที่เราสร้างไว้ --}}
+    @include('components.bg-music')
 </body>
 
 </html>

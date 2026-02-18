@@ -75,6 +75,9 @@
             </div>
         </div>
     </div>
+
+    {{-- ✅ เรียกใช้ไฟล์เสียงที่เราสร้างไว้ --}}
+    @include('components.bg-music')
 </body>
 
 </html>

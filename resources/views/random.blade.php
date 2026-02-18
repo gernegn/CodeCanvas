@@ -78,7 +78,25 @@
     <!-- end container -->
 
     <!-- Script -->
-    <script src="{{ asset('js/codeCanvas.js') }}"></script>
+    <script src="{{ asset('js/codeCanvas.js') }}?v={{ time() }}"></script>
+
+    {{-- ✅ 1. เพิ่มแท็กเสียงสำหรับตอนสุ่มโจทย์ --}}
+    <audio id="randomSound" loop>
+        <source src="{{ asset('public/audio/random-sound.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    {{-- ✅ 1. เพิ่มแท็กเสียง Popup ตรงนี้ครับ --}}
+    <audio id="popupSound">
+        <source src="{{ asset('public/audio/popup-sound.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    {{-- ✅ 1. เพิ่มแท็กเสียงสำหรับปุ่มในหน้านี้ --}}
+    <audio id="buttonSound">
+        <source src="{{ asset('public/audio/button-sound.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    {{-- ✅ เรียกใช้ไฟล์เสียงที่เราสร้างไว้ --}}
+    @include('components.bg-music')
 </body>
 
 </html>
