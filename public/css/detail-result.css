@@ -1,8 +1,6 @@
 /* ========================================= */
-/* detail-result.css (Merged Version) */
-/* Layout: Set 1 | Code Box Design: Set 2 */
+/* detail-result.css (Aligned with result.css) */
 /* ========================================= */
-
 html, body {
     height: 100%;
     margin: 0;
@@ -18,9 +16,11 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-/* --- Background (จากชุดที่ 1) --- */
+/* พื้นหลังใหม่ (ที่หน้า Detail ใช้) */
 .bg {
     position: fixed;
     top: 0;
@@ -38,139 +38,148 @@ body {
     display: block;
 }
 
-/* --- Header (จากชุดที่ 1) --- */
+/* =========================================
+   2. Header Section (แบบเดียวกับ Result)
+========================================= */
 .sec-head {
-    position: relative;
-    margin: 2rem;
+    /* ✅ เปลี่ยนเป็น Absolute ตรึงไว้ด้านบน */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 3rem 4rem;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    z-index: 10;
+    z-index: 30;
 }
 
 .btn-box {
     width: 9rem;
     height: 4rem;
+    display: flex;
+    align-items: center;
 }
 
 .bt-back {
-    background: white;
+    background: transparent;
     border: none;
     padding: 0;
     cursor: pointer;
     width: 3.5rem;
     height: 3.5rem;
+    background: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s;
+    transition: transform 0.2s;
 }
 
 .bt-back .iconify {
     font-size: 2.5rem;
     color: #000;
-    transform: translateX(6px);
+    transform: translateX(8px);
 }
 
 .bt-back:hover {
     background: #D4F2FF;
+    transform: scale(1.05);
 }
 
 .sec-head img {
     width: 9rem;
-    height: 4rem;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
     cursor: pointer;
 }
 
-/* --- Main Content Layout (จากชุดที่ 1) --- */
-/* ใช้การจัดวางแบบเดิมที่คุณชอบ (สูง 40rem, gap 3rem) */
+/* =========================================
+   3. Main Content Layout (Absolute Center)
+========================================= */
 .sec-content {
+    /* ✅ จัดกึ่งกลางแบบหน้า Result */
     width: 100%;
-    height: 40rem; /* ใช้ความสูงตามชุดที่ 1 */
-    display: flex;
-    z-index: 12;
+    height: 79%;
+    top: 22%;
     position: relative;
+    align-items: flex-start;
     justify-content: center;
-    flex-direction: row;
-    gap: 3rem; /* ระยะห่างตามชุดที่ 1 */
+    display: flex;
+    z-index: 11;
+    /* background-color: #19b56d; */
+    gap: 4rem;
 }
 
-/* ฝั่งซ้าย (จากชุดที่ 1) */
+/* --- ฝั่งซ้าย (ข้อความ + รูปภาพ) --- */
 .sec-content-left {
+    width: 50%; /* กว้างเท่าหน้า Result */
     height: 100%;
-    width: 62%;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    justify-content: flex-start; /* ดันเนื้อหาให้อยู่กลางความสูง */
+    align-items: center;
+    gap: 2rem; /* ระยะห่างระหว่างข้อความกับรูป */
 }
 
 .content-topic {
     width: 100%;
-    height: 7rem;
+    text-align: left; /* จัดข้อความให้อยู่ตรงกลาง */
 }
 
 .content-topic h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: #000;
     font-weight: 500;
     margin: 0;
 }
 
 .content-topic h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     color: #000;
     font-weight: 600;
     margin: 0;
 }
 
 .content-img-result {
-    width: 50%;
-    height: 33rem;
+    width: 60%; /* ปรับขนาดกรอบรูปให้กางออกอีกนิด */
+    height: 55%; /* แบ่งความสูงให้พอดีกับข้อความ */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .content-img-result img {
-    width: 95%;
-    height: 95%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
-/* --- ฝั่งขวา (ผสมผสาน) --- */
-/* Layout ภายนอกอิงชุดที่ 1 แต่ Design อิงชุดที่ 2 */
+/* --- ฝั่งขวา (กล่องโค้ด) --- */
 .sec-content-right {
-    height: 100%; /* สูงเต็มกรอบ 40rem (อิงชุด 1) */
-    width: 28%;   /* กว้าง 25% (อิงชุด 1) */
+    width: 30%; /* กว้างเท่าหน้า Result */
+    height: 90%; /* ปรับให้เตี้ยกว่าฝั่งซ้ายนิดนึง จะได้ดูมีมิติเหมือน Result */
 
-    /* Design กล่อง (อิงชุด 2) */
     background-color: #fff;
-    border-radius: 1.2rem; /* ความโค้งมนแบบชุด 2 */
-    box-shadow: 0 10px 40px rgba(0,0,0,0.15); /* เงาแบบชุด 2 */
+    border-radius: 1.2rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     overflow: hidden;
     display: flex;
-    justify-content: center;
-    padding: 0 1rem;
+    justify-content: flex-start; /* ดันเนื้อหาให้อยู่กลางความสูง */
+    align-items: start;
+    padding: 0 1px;
 }
 
-/* --- ส่วนภายในกล่องโค้ด (จากชุดที่ 2 ทั้งหมด) --- */
-/* พื้นที่ Scrollbar */
-/* พื้นที่ใส่โค้ด (Scrollable Area) */
+/* =========================================
+   4. Code Panel (ภายในกล่องขวา)
+========================================= */
 .code-panel {
     width: 100%;
     height: 100%;
-
-    /* 🔴 แก้ไขบรรทัดนี้ */
-    /* จากเดิม: padding: 3rem 2rem; */
     padding-top: 3rem;
     padding-left: 2rem;
     padding-right: 2rem;
-    padding-bottom: 0; /* เอา Padding ล่างออก เพื่อใช้ ::after แทน */
-
+    padding-bottom: 0;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -178,19 +187,19 @@ body {
     gap: 1rem;
 }
 
-/* ✅ เพิ่มส่วนนี้: สร้างพื้นที่ว่างด้านล่างสุด (Spacer) */
+/* พื้นที่ว่างด้านล่างสุด (Spacer) */
 .code-panel::after {
     content: "";
     display: block;
-    min-height: 5rem; /* ความสูงเท่ากับ padding-top เพื่อให้เว้นระยะเท่ากัน */
+    min-height: 5rem;
     width: 100%;
-    flex-shrink: 0;   /* สำคัญมาก! ป้องกันไม่ให้พื้นที่นี้หดตัว */
+    flex-shrink: 0;
 }
 
-/* สไตล์ปุ่มคำสั่ง (Code Pills) แบบชุด 2 */
+/* สไตล์ปุ่มคำสั่ง */
 .code-pill {
     width: 100%;
-    padding: 12px 0;
+    padding: 0.8rem 0; /* แปลงเป็น rem */
     border-radius: 50px;
     font-size: 1.4rem;
     font-weight: 500;
@@ -199,13 +208,13 @@ body {
     font-family: 'IBM Plex Sans Thai', sans-serif;
     transition: transform 0.2s;
     flex-shrink: 0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* เพิ่มเงาให้เหมือนปุ่มใน Result */
 }
 
 .code-pill:hover {
     transform: scale(1.02);
 }
 
-/* สีปุ่ม (ชุด 2) */
 .cmd-forward { background-color: #62D4FF; }
 .cmd-left    { background-color: #FE9A00; }
 .cmd-right   { background-color: #FF98B8; }
@@ -217,8 +226,15 @@ body {
     font-size: 1.5rem;
 }
 
-/* Custom Scrollbar (ชุด 2) */
+/* Custom Scrollbar */
 .code-panel::-webkit-scrollbar { width: 8px; }
 .code-panel::-webkit-scrollbar-track { background: transparent; margin: 20px 0; }
 .code-panel::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 10px; }
 .code-panel::-webkit-scrollbar-thumb:hover { background: #ccc; }
+
+/* =========================================
+   5. Responsive สำหรับ TV
+========================================= */
+@media screen and (min-width: 1920px) { html { font-size: 22px; } }
+@media screen and (min-width: 2560px) { html { font-size: 30px; } }
+@media screen and (min-width: 3840px) { html { font-size: 42px; } }

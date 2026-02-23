@@ -135,6 +135,31 @@ async function loadChallengeData(id) {
                 setupCanvas(5, 19);
                 validPaths = [];
             }
+
+            // ==========================================
+            // ✅ เพิ่มโค้ดส่วนนี้เพื่อ Restore ข้อมูลเดิม
+            // ==========================================
+            const savedId = sessionStorage.getItem('storedChallengeID');
+            if (savedId && savedId == id) {
+                const savedPath = sessionStorage.getItem('userPathHistory');
+                if (savedPath) {
+                    pathHistory = JSON.parse(savedPath);
+                    if (pathHistory && pathHistory.length > 0) {
+                        // อัปเดตตำแหน่งจุด (dot) ให้อยู่ที่ปลายเส้นล่าสุด
+                        dot = { ...pathHistory[pathHistory.length - 1] };
+
+                        // ปิดเสียงชั่วคราวเพื่อไม่ให้เสียง Success ดังลั่นตอนโหลดหน้าเว็บ
+                        previousCorrectState = true;
+
+                        // สั่งวาดเส้นและสร้างโค้ดในกล่องใหม่ทั้งหมด
+                        draw();
+                    }
+                }
+            } else {
+                // ถ้าเป็นโจทย์ใหม่ ให้ล้างประวัติเก่าทิ้ง
+                sessionStorage.removeItem('userPathHistory');
+            }
+            // ==========================================
         }
     } catch (error) { console.error(error); setupCanvas(5, 19); }
 }
@@ -566,44 +591,34 @@ if (btnReset) {
         if (typeof Swal !== 'undefined') {
             Swal.fire({
                 title: 'ต้องการรีเซ็ตใหม่อีกครั้งไหม?',
-                text: 'ภาพและโค้ดปัจจุบันจะถูกล้าง',
-                showCancelButton: true,
-                confirmButtonColor: '#2d93ff',
-                cancelButtonColor: '#fff',
-                confirmButtonText: 'เริ่มใหม่',
-                cancelButtonText: 'ยกเลิก',
-                reverseButtons: true,
-                heightAuto: false,
-                scrollbarPadding: false,
-                customClass: {
-                    popup: 'my-swal-popup',
-                    title: 'my-swal-title',
-                    htmlContainer: 'my-swal-text',
-                    confirmButton: 'my-swal-confirm',
-                    cancelButton: 'my-swal-cancel'
-                }
+                // ... (โค้ดเดิม) ...
             }).then((result) => {
                 if (result.isConfirmed) {
-
-                    // ✅ 2. สั่งเล่นเสียงเมื่อกดยืนยันการรีเซ็ต
+                    // เล่นเสียง
                     const resetSound = document.getElementById('resetSound');
                     if (resetSound) {
                         resetSound.currentTime = 0;
                         resetSound.volume = 0.5;
-                        resetSound.play().catch(e => console.log("Sound play error"));
+                        resetSound.play().catch(e => console.log("Sound error"));
                     }
+
+                    // ✅ เพิ่มบรรทัดนี้: ล้างประวัติเพื่อไม่ให้เด้งกลับมาอีก
+                    sessionStorage.removeItem('userPathHistory');
 
                     setupCanvas(startGridPos.x, startGridPos.y);
                 }
             });
         } else {
             if(confirm("ต้องการรีเซ็ตใหม่อีกครั้งไหม?")) {
-                // ✅ 2. สั่งเล่นเสียงกรณีใช้ Confirm ปกติ
                 const resetSound = document.getElementById('resetSound');
                 if (resetSound) {
                     resetSound.currentTime = 0;
                     resetSound.play();
-            }
+                }
+
+                // ✅ เพิ่มบรรทัดนี้: ล้างประวัติเพื่อไม่ให้เด้งกลับมาอีก
+                sessionStorage.removeItem('userPathHistory');
+
                 setupCanvas(startGridPos.x, startGridPos.y);
             }
         }
@@ -656,7 +671,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (canvas) { setupCanvas(); draw(); loadChallengeData(challengeId || 1); }
     else if (document.getElementById('resultChallengeName')) {
 
-        // ✅ 1. เพิ่มส่วนนี้: ดึงชื่อโจทย์มาแสดง
+        // ✅ 1. ดึงชื่อโจทย์มาแสดง
         const storedName = sessionStorage.getItem('storedChallengeName');
         const nameElement = document.getElementById('resultChallengeName');
         if (storedName && nameElement) {
@@ -675,6 +690,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 ac.width = frameResult.clientWidth;
                 ac.height = frameResult.clientHeight;
                 const p = JSON.parse(sPath);
+
+                // จัดกึ่งกลางภาพ
+                if (p.length > 0) {
+                    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+                    p.forEach(point => {
+                        minX = Math.min(minX, point.x);
+                        minY = Math.min(minY, point.y);
+                        maxX = Math.max(maxX, point.x);
+                        maxY = Math.max(maxY, point.y);
+                    });
+
+                    const drawingCenterX = (minX + maxX) / 2;
+                    const drawingCenterY = (minY + maxY) / 2;
+                    const canvasCenterX = ac.width / 2;
+                    const canvasCenterY = ac.height / 2;
+
+                    const offsetX = canvasCenterX - drawingCenterX;
+                    const offsetY = (canvasCenterY - drawingCenterY) + 40;
+
+                    actx.translate(offsetX, offsetY);
+                }
+
                 let i = 0;
                 const timer = setInterval(() => {
                     if (i >= p.length - 1) { clearInterval(timer); return; }
@@ -693,8 +730,9 @@ document.addEventListener('DOMContentLoaded', () => {
         initRandomPage();
         btnRandom.addEventListener('click', startRandomization);
     }
+
     // ==========================================================
-    // ✅ วางโค้ด Home Page Button Sounds ตรงนี้ครับ
+    // ✅ Home Page Button Sounds
     // ==========================================================
     function playButtonSound() {
         const btnSound = document.getElementById('buttonSound');
@@ -709,25 +747,76 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnHomeGallery = document.querySelector('.bt-gallery');
     const btnHomeTutorial = document.querySelector('.bt-tutorial');
 
-    if (btnHomePlay) {
-        btnHomePlay.addEventListener('click', () => {
-            playButtonSound();
-        });
-    }
+    if (btnHomePlay) btnHomePlay.addEventListener('click', playButtonSound);
+    if (btnHomeGallery) btnHomeGallery.addEventListener('click', playButtonSound);
+    if (btnHomeTutorial) btnHomeTutorial.addEventListener('click', playButtonSound);
 
-    if (btnHomeGallery) {
-        btnHomeGallery.addEventListener('click', () => {
-            playButtonSound();
-        });
-    }
-
-    if (btnHomeTutorial) {
-        btnHomeTutorial.addEventListener('click', () => {
-            playButtonSound();
-        });
-    }
     // ==========================================================
+    // ✅ ปุ่ม ถัดไป (Next) เพื่อไปหน้า Custom
+    // ==========================================================
+    const btnGoToCustom = document.getElementById('btnGoToCustom');
+    if (btnGoToCustom) {
+        btnGoToCustom.addEventListener('click', () => {
+            playButtonSound();
+            setTimeout(() => {
+                const currentId = new URLSearchParams(window.location.search).get('id') || sessionStorage.getItem('storedChallengeID');
+                if (currentId) {
+                    window.location.href = `${appURL}/custom?id=${currentId}`;
+                } else {
+                    window.location.href = `${appURL}/custom`;
+                }
+            }, 150);
+        });
+    }
 
+    // ==========================================================
+    // ✅ ปุ่ม ย้อนกลับ ไปหน้า Main Game
+    // ==========================================================
+    const btnBackToMain = document.getElementById('btnBackToMain');
+    if (btnBackToMain) {
+        btnBackToMain.addEventListener('click', () => {
+            playButtonSound();
+            setTimeout(() => {
+                const currentId = new URLSearchParams(window.location.search).get('id') || sessionStorage.getItem('storedChallengeID');
+                if (currentId) {
+                    window.location.href = `${appURL}/play?id=${currentId}`;
+                } else {
+                    window.history.back();
+                }
+            }, 150);
+        });
+    }
+
+    // ==========================================================
+    // ✅ ปุ่ม ย้อนกลับ ไปหน้า Result (ทำงานเฉพาะในหน้า Custom)
+    // ==========================================================
+    const btnBackToResult = document.getElementById('btnBackToResult');
+    if (btnBackToResult) {
+        btnBackToResult.addEventListener('click', () => {
+            // เล่นเสียง
+            const btnSound = document.getElementById('buttonSound');
+            if (btnSound) {
+                btnSound.currentTime = 0;
+                btnSound.volume = 0.5;
+                btnSound.play().catch(e => console.log("Sound play error"));
+            }
+
+            // หน่วงเวลาเล็กน้อยแล้วพากลับไปหน้าผลลัพธ์
+            setTimeout(() => {
+                const currentId = new URLSearchParams(window.location.search).get('id') || sessionStorage.getItem('storedChallengeID');
+
+                if (currentId) {
+                    window.location.href = `${appURL}/result?id=${currentId}`;
+                } else {
+                    window.history.back();
+                }
+            }, 150);
+        });
+    }
+
+    // ==========================================================
+    // ✅ Custom Page Logic
+    // ==========================================================
     const customResultImg = document.getElementById('customResultImg');
     const boxColorContainer = document.querySelector('.box-color');
     const userNameInput = document.getElementById('userNameInput');
@@ -760,7 +849,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 boxColorContainer.innerHTML = '';
                 if (colors.length > 0) {
                     colors.forEach((color) => {
-                        // ✅ แก้ไขตรงนี้: รองรับทั้งตัวพิมพ์เล็กและใหญ่
                         const colorCode = color.Color_Code || color.color_code;
                         const colorName = color.Color_Name || color.color_name;
                         const colorId = color.Color_ID || color.color_id;
@@ -777,9 +865,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             this.classList.add('active');
 
                             currentSelectedColorId = colorId;
-                            currentSelectedColorName = colorName; // ✅ เก็บค่าสีที่ถูกต้อง
-
-                            console.log("Selected Color:", currentSelectedColorName);
+                            currentSelectedColorName = colorName;
 
                             if (currentSelectedTexture === null) {
                                 currentSelectedTexture = 'None';
@@ -795,37 +881,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    const btnNext = document.querySelector('.bt-next');
-if (btnNext) {
-    btnNext.addEventListener('click', () => {
-
-        // 1. เล่นเสียงปุ่ม
-        const btnSound = document.getElementById('buttonSound');
-        if (btnSound) {
-            btnSound.currentTime = 0;
-            btnSound.volume = 0.4;
-            btnSound.play().catch(e => console.log("Sound play error"));
-        }
-
-        // 2. หน่วงเวลาเล็กน้อย (150ms) เพื่อให้เสียงดังก่อนเปลี่ยนหน้า
-        setTimeout(() => {
-            window.location.href = challengeId ? `${appURL}/custom?id=${challengeId}` : `${appURL}/custom`;
-        }, 150);
-    });
-}
-    // ค้นหาและวางทับส่วน if (btnConfirm) เดิมด้วยโค้ดชุดนี้ครับ
+    // ==========================================================
+    // ✅ ปุ่ม Confirm บันทึกภาพ
+    // ==========================================================
     if (btnConfirm) {
         validateForm();
 
         btnConfirm.addEventListener('click', async () => {
-
-            // 1. เล่นเสียงปุ่ม (button-sound) ทันทีที่กดคลิก
-            const btnSound = document.getElementById('buttonSound');
-            if (btnSound) {
-                btnSound.currentTime = 0;
-                btnSound.volume = 0.5;
-                btnSound.play().catch(e => console.log("Sound play error"));
-            }
+            playButtonSound();
 
             const success = await saveFinalData();
 
@@ -843,7 +906,6 @@ if (btnNext) {
                     }
                 }
 
-                // 2. เมื่อบันทึกสำเร็จ -> เล่นเสียง Popup และแสดงหน้าต่าง
                 if (customModal) {
                     const popupSound = document.getElementById('popupSound');
                     if (popupSound) {
@@ -860,17 +922,11 @@ if (btnNext) {
         });
     }
 
-    // ✅ เพิ่มเสียงปุ่มให้ "คลังภาพวาด" (ปุ่มสีเขียวใต้ Popup)
+    // ✅ ปุ่ม คลังภาพวาด ใน Popup
     const btnGalleryGreen = document.querySelector('.btn-gallery-green');
     if (btnGalleryGreen) {
         btnGalleryGreen.addEventListener('click', (e) => {
-            const btnSound = document.getElementById('buttonSound');
-            if (btnSound) {
-                btnSound.currentTime = 0;
-                btnSound.play();
-            }
-
-            // หน่วงเวลาเล็กน้อยเพื่อให้ได้ยินเสียงก่อนเปลี่ยนหน้า
+            playButtonSound();
             e.preventDefault();
             const targetUrl = btnGalleryGreen.getAttribute('href');
             setTimeout(() => {
@@ -883,7 +939,7 @@ if (btnNext) {
     if (btnCloseCustom && customModal) btnCloseCustom.addEventListener('click', () => customModal.style.display = "none");
 
     // ==========================================
-    // Randomization Functions (with Sound Effects)
+    // Randomization Functions
     // ==========================================
     async function initRandomPage() {
         if (!btnRandom) return;
@@ -903,21 +959,14 @@ if (btnNext) {
         }
     }
 
-// ฟังก์ชันตอนเริ่มกดปุ่มสุ่ม
     function startRandomization() {
         if (allChallenges.length === 0 || randomQuota <= 0) return;
 
-        // ✅ เล่นเสียงปุ่มทันทีที่คลิกสุ่ม
-        const btnSound = document.getElementById('buttonSound');
-        if (btnSound) {
-            btnSound.currentTime = 0;
-            btnSound.play().catch(e => console.log("Sound error"));
-        }
+        playButtonSound();
 
-        // ✅ 1. ดึงไฟล์เสียงมา สั่งให้เริ่มที่ 0 และกดเล่นทันที
         const randomSound = document.getElementById('randomSound');
         if (randomSound) {
-            randomSound.currentTime = 0; // ทำให้กดกี่ครั้งก็เริ่มเล่นจากวินาทีที่ 0 เสมอ
+            randomSound.currentTime = 0;
             randomSound.volume = 1;
             randomSound.play().catch(e => console.error("เล่นเสียงไม่ได้:", e));
         }
@@ -939,7 +988,6 @@ if (btnNext) {
         }, 80);
     }
 
-    // ฟังก์ชันตอนที่สุ่มจนได้คำตอบแล้ว
     function finishRandomization() {
         const idx = Math.floor(Math.random() * allChallenges.length);
         const sel = allChallenges[idx];
@@ -951,20 +999,17 @@ if (btnNext) {
         if (randomQuota > 0 && btnRandom) btnRandom.disabled = false;
 
         setTimeout(() => {
-            // ✅ 2. สั่งหยุดเสียงทันทีที่กำลังจะแสดง Popup
             const randomSound = document.getElementById('randomSound');
             if (randomSound) {
-                randomSound.pause(); // สั่งหยุด
+                randomSound.pause();
             }
-
             showModal(sel);
         }, 500);
     }
 
-function showModal(d) {
+    function showModal(d) {
         if (!modal) return;
 
-        // 1. เล่นเสียง Popup ทันทีที่หน้าต่างเด้ง
         const popupSound = document.getElementById('popupSound');
         if (popupSound) {
             popupSound.currentTime = 0;
@@ -984,16 +1029,9 @@ function showModal(d) {
         }
         if (c) c.style.display = (randomQuota <= 0) ? 'none' : 'flex';
 
-        // 2. เพิ่มเสียงปุ่ม (button-sound) เมื่อกดปุ่ม "เริ่มวาดเลย!" ก่อนเปลี่ยนหน้า
         if (g) {
             g.onclick = () => {
-                const btnSound = document.getElementById('buttonSound');
-                if (btnSound) {
-                    btnSound.currentTime = 0;
-                    btnSound.play();
-                }
-
-                // รอให้เสียงดังนิดนึงแล้วค่อยเปลี่ยนหน้า
+                playButtonSound();
                 setTimeout(() => {
                     window.location.href = `${appURL}/play?id=${d.Challenge_ID}`;
                 }, 150);

@@ -1,6 +1,10 @@
-/* ========================================= */
-/* 1. Global & Background Layout */
-/* ========================================= */
+/* =========================================
+   1. Global & Background Layout
+========================================= */
+html {
+    font-size: 16px; /* ค่าเริ่มต้นสำหรับ Desktop ปกติ */
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -14,8 +18,8 @@ body {
 
 .container {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     margin: 0;
     padding: 0;
 }
@@ -23,6 +27,7 @@ body {
 .bg-grass {
     position: absolute;
     bottom: 0;
+    left: 0;
     width: 100%;
     line-height: 0;
     z-index: 2;
@@ -31,14 +36,18 @@ body {
 .bg-grass img {
     width: 100%;
     object-fit: cover;
+    object-position: bottom;
 }
 
 .bg-cloud {
     position: absolute;
-    top: -30px;
-    width: 100%;
     line-height: 0;
     z-index: 3;
+    top: -30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .bg-cloud img {
@@ -46,22 +55,27 @@ body {
     object-fit: cover;
 }
 
-/* ========================================= */
-/* 2. Header Section */
-/* ========================================= */
+/* =========================================
+   2. Header Section (แบบเดียวกับ Custom)
+========================================= */
 .sec-head {
-    position: relative;
-    margin: 2rem;
+    /* ✅ เปลี่ยนเป็น Absolute ตรึงไว้ด้านบน */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 3rem 4rem;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    z-index: 10;
+    z-index: 30;
 }
 
 .btn-box {
     width: 9rem;
     height: 4rem;
+    display: flex;
+    align-items: center;
 }
 
 .bt-back {
@@ -76,104 +90,121 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.2s;
 }
 
 .bt-back .iconify {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     color: #000;
 }
 
 .bt-back:hover {
     background: #D4F2FF;
+    transform: scale(1.05);
 }
 
 .challenge {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 2.5rem;
     margin: 0;
+    /* ✅ จัดข้อความให้อยู่ตรงกลางเป๊ะๆ */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .sec-head img {
     width: 9rem;
-    height: 4rem;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
     cursor: pointer;
 }
 
-/* ========================================= */
-/* 3. Main Content (Gallery Grid) */
-/* ========================================= */
+/* =========================================
+   3. Main Content (Gallery Grid)
+========================================= */
 .sec-content {
-    width: 100%;
-    height: 42rem;
+    /* ✅ จัดกึ่งกลางแบบสมบูรณ์แบบ (Absolute Center) */
+    position: absolute;
+    z-index: 15;
+    width: 90.5%; /* กว้างเท่าหน้า Custom */
+    top: 60%; /* ดันลงมาพ้นเมฆ เท่าหน้า Custom */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 3rem;
     display: flex;
-    z-index: 12;
-    position: relative;
-    justify-content: space-between;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sec-content-top {
     width: 100%;
     height: 88%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 1.5rem;
 }
 
 .row-top, .row-bottom {
-    width: 96%;
-    height: 48%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
+    width: 100%; /* เปลี่ยนเป็น 100% ให้เต็มกล่อง */
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem; /* เพิ่ม gap กันกล่องเบียดกันเวลากล่องใหญ่ขึ้น */
 }
 
-/* ✅ กล่องผลลัพธ์ (แก้ไขใหม่ให้จัดกึ่งกลาง) */
+/* ✅ กล่องผลลัพธ์ */
 .box-result {
-    width: 21rem;
+    flex: 1; /* ให้ยืดขยายเต็มพื้นที่ที่เหลืออย่างสมดุล */
+    width: 100%; /* กำหนดขนาดสูงสุด */
     height: 100%;
     background-color: #fff4eb;
     border-radius: 1.5rem;
     position: relative;
     overflow: hidden;
-
-    /* จัดของข้างในให้กึ่งกลางด้วย Flexbox */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box; /* ให้ padding ไม่ดันขนาดกล่อง */
+    box-sizing: border-box;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* เพิ่มเงาให้ดูมีมิติเหมือนฝั่ง Canvas */
+    transition: transform 0.2s, box-shadow 0.2s; /* เพิ่มลูกเล่นตอนชี้เมาส์ */
 }
 
-/* ✅ รูปภาพ (แก้ไขใหม่ ตัด Margin เดิมออก) */
+.box-result:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* ✅ รูปภาพ */
 .img-result {
-    width: 12rem;
-    height: 12rem;
+    width: 10rem; /* ขยายขนาดรูปนิดนึง */
+    height: 10rem;
     position: relative;
+    padding: 0.5rem 0.5rem 0.2rem 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .img-result img {
-    width: 95%;
-    height: 95%;
+    width: 80%;
+    height: 80%;
     object-fit: contain;
 }
 
-/* ✅ ชื่อผลงาน (เพิ่มใหม่แทนตัวเลข) */
+/* ✅ ชื่อผลงาน */
 .name-result {
-    width: 90%;             /* กว้างเกือบเต็มกล่อง */
-    text-align: center;     /* จัดกลาง */
-    font-size: 1.5rem;      /* ขนาดตัวอักษร */
-    font-weight: 500;       /* ความหนา */
-    color: #333;            /* สีเทาเข้ม */
-
-    /* ตัดคำถ้ายาวเกินไป (...) */
+    width: 90%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    /* background-color: #31BEF3; */
-    margin: 10px 0 -20px 0;
+    margin-bottom: 1rem;
 }
 
 /* ✅ ลิ้งค์ล่องหน (Click Layer) */
@@ -183,55 +214,59 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 10;       /* อยู่บนสุดเพื่อให้กดโดน */
+    z-index: 10;
     cursor: pointer;
 }
 
-/* ========================================= */
-/* 4. Pagination (Bottom) */
-/* ========================================= */
+/* =========================================
+   4. Pagination (Bottom)
+========================================= */
 .sec-content-bottom {
     width: 100%;
-    height: 10%;
+    height: 12%; /* เพิ่มพื้นที่ให้ปุ่มกดนิดนึง */
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 4rem;
+    gap: 2rem; /* ลดระยะห่างระหว่างปุ่มลูกศรนิดนึง */
 }
 
 .gallery-bt-prev, .gallery-bt-next {
-    background: transparent;
-    border: none;
+    background: white;
+    border: 2px solid #e0e0e0; /* เพิ่มขอบให้ดูเป็นปุ่มชัดขึ้น */
     padding: 0;
     cursor: pointer;
     width: 3.5rem;
     height: 3.5rem;
-    background: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.gallery-bt-prev .iconify, .gallery-bt-next .iconify {
+    font-size: 2.2rem;
+    color: #333;
 }
 
 .gallery-bt-prev .iconify {
-    font-size: 2.2rem;
-    color: #000;
-    transform: translateX(6px);
-}
-
-.gallery-bt-next .iconify {
-    font-size: 2.2rem;
-    color: #000;
-    transform: translateX(2px);
-}
-
-.gallery-bt-prev:hover , .gallery-bt-next:hover {
-    background: #D4F2FF;
+    transform: translateX(8px);
 }
 
 .text-num {
-    font-size: 2rem;
-    font-weight: 500;
+    font-size: 1.8rem;
+    font-weight: 600;
     margin: 0;
+    color: #333;
+    min-width: 4rem; /* กำหนดความกว้างขั้นต่ำ กันตัวเลขหลักสิบทำให้กล่องขยับ */
+    text-align: center;
 }
+
+/* =========================================
+   5. Responsive สำหรับ TV (แบบเดียวกับ Custom)
+========================================= */
+@media screen and (min-width: 1920px) { html { font-size: 22px; } }
+@media screen and (min-width: 2560px) { html { font-size: 30px; } }
+@media screen and (min-width: 3840px) { html { font-size: 42px; } }

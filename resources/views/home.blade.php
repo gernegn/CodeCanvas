@@ -61,6 +61,10 @@
                         <img src="{{ asset('img/elements-frontend/logo-01.png') }}" alt="" />
                     </div>
 
+                    <div class="box-tagline">
+                        <p>Turn Code into Art</p>
+                    </div>
+
                     <div class="box-button">
                         <div class="btn-main-box">
                             <button class="bt-play" onclick="window.location.href='{{ route('game.random') }}'">

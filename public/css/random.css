@@ -42,19 +42,24 @@ body {
 }
 
 .sec-head {
-    position: relative;  /* สำคัญมาก */
-    margin: 2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 3rem 4rem;
     display: flex;
     flex-direction: row;
     /* background-color: red; */
     justify-content: space-between;
     align-items: center;
-    z-index: 10;
+    z-index: 30;
 }
 
 .btn-box {
     width: 9rem;
     height: 4rem;
+    display: flex;
+    align-items: center;
 }
 
 .bt-back {
@@ -69,22 +74,27 @@ body {
   display: flex;
   align-items: center;      /* กึ่งกลางแนวตั้ง */
   justify-content: center;
+  transition: transform 0.2s;
 }
 
 .bt-back .iconify {
   font-size: 2.5rem;
   color: #000; /* หรือสีที่ต้องการ */
-  transform: translateX(6px);
+  transform: translateX(8px);
 }
 
 .bt-back:hover {
     background: #D4F2FF;
+    transform: scale(1.05);
 }
 
 .challenge {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 2.5rem;
   margin: 0;
+  position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .sec-head img {
@@ -116,18 +126,19 @@ body {
 }
 
 .challenge-random img {
-    width: 27rem;
-    height: 35rem;
+    width: 25rem;
+    height: 33rem;
     position: relative;
     z-index: 12;
     object-fit: contain;
     margin-left: 2rem;
+    margin-top: 14rem;
 }
 
 .text-random {
     position: absolute;
     z-index: 14;
-    top: 7rem;
+    top: 13.5rem;
     font-size: 2.2rem;
     font-weight: 500;
     color: #6b3f27;
@@ -319,4 +330,10 @@ body {
     font-size: 1.7rem;
     font-family: 'IBM Plex Sans Thai', sans-serif;
     font-weight: 400;
+}
+
+@media screen and (min-width: 1920px) {
+    html {
+        font-size: 22px; /* ขยายขนาดทุกอย่างขึ้น */
+    }
 }

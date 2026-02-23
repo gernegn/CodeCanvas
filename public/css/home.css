@@ -1,7 +1,14 @@
+/* =========================================
+   Global & Base
+========================================= */
+html {
+    font-size: 16px; /* ค่าเริ่มต้นสำหรับ Desktop ปกติ */
+}
+
 html, body {
     height: 100%;
     margin: 0;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 body {
@@ -11,32 +18,42 @@ body {
 
 .container {
     position: relative;
-    width: 100%;
-    height: 100%; /* [สำคัญ] ต้องยืด container ให้เต็มความสูงหน้าจอ */
+    width: 100vw;
+    height: 100vh; /* ใช้ vh เพื่อให้เต็มจอเสมอ */
     margin: 0;
     padding: 0;
 }
 
+/* =========================================
+   Background Elements
+========================================= */
 .bg-grass {
-    position: absolute; /* สั่งให้หลุดจาก flow ปกติเพื่อจัดตำแหน่งได้อิสระ */
-    bottom: 0;          /* สั่งให้ติดขอบล่างสุด */
-    line-height: 0;     /* ป้องกันไม่ให้มีช่องว่างเล็กๆ ใต้รูปภาพ */
-    z-index: 3;         /* (ทางเลือก) กำหนดลำดับชั้น ถ้ามี object อื่น */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    line-height: 0;
+    z-index: 3;
 }
 
 .bg-grass img {
     width: 100%;
-    object-fit: cover; 
+    object-fit: cover;
+    object-position: bottom; /* มั่นใจว่าหญ้าติดพื้นเสมอ */
 }
 
-.bg-cloud {
-    position: absolute; /* สั่งให้หลุดจาก flow ปกติเพื่อจัดตำแหน่งได้อิสระ */
-    line-height: 0;     /* ป้องกันไม่ให้มีช่องว่างเล็กๆ ใต้รูปภาพ */
-    z-index: 2;         /* (ทางเลือก) กำหนดลำดับชั้น ถ้ามี object อื่น */
+.bg-cloud, .bg-wink {
+    position: absolute;
+    line-height: 0;
     top: -30px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.bg-cloud {
+    z-index: 2;
 }
 
 .bg-cloud img {
@@ -45,13 +62,7 @@ body {
 }
 
 .bg-wink {
-    position: absolute; /* สั่งให้หลุดจาก flow ปกติเพื่อจัดตำแหน่งได้อิสระ */
-    line-height: 0;     /* ป้องกันไม่ให้มีช่องว่างเล็กๆ ใต้รูปภาพ */
-    z-index: 4;         /* (ทางเลือก) กำหนดลำดับชั้น ถ้ามี object อื่น */
-    top: -30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    z-index: 4;
 }
 
 .bg-wink img {
@@ -59,21 +70,25 @@ body {
     object-fit: cover;
 }
 
+/* =========================================
+   Header (ปุ่มวิธีการเล่น)
+========================================= */
 .sec-head {
-    position: relative;  /* สำคัญมาก */
+    /* ✅ แก้จาก relative เป็น absolute เพื่อให้ยึดติดมุมขวาบนเสมอ ไม่กวน Layout อื่น */
+    position: absolute;
+    top: 0;
+    right: 0;
     margin: 2rem;
     display: flex;
-    flex-direction: row;
-    /* background-color: red; */
     justify-content: end;
     align-items: center;
-    z-index: 10;
+    z-index: 30; /* ให้อยู่บนสุด */
 }
 
 .sec-head img {
     width: 9rem;
     height: 4rem;
-    object-fit: cover; 
+    object-fit: cover;
     cursor: pointer;
 }
 
@@ -82,37 +97,34 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background: red; */
 }
 
 .bt-tutorial {
-  background: transparent; /* เอาพื้นหลังสีเทาออก */
-  border: none;            /* เอาเส้นขอบออก */
+  background: transparent;
+  border: none;
   padding: 0;
   cursor: pointer;
   width: 5.2rem;
   height: 5.2rem;
-  /* background: white; */
   display: flex;
-  align-items: center;      /* กึ่งกลางแนวตั้ง */
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   transition: transform 0.2s;
 }
 
 .bt-tutorial .iconify {
   font-size: 3.2rem;
-  color: #000; /* หรือสีที่ต้องการ */
+  color: #000;
 }
 
-/* --- ส่วนที่แก้ไข --- */
 .icon-tutorial {
-    width: 3.2rem;           /* กำหนดพื้นที่สำหรับไอคอน */
+    width: 3.2rem;
     height: 3.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 0.25rem;  /* ระยะห่างจากตัวหนังสือ */
+    margin-bottom: 0.25rem;
     flex-shrink: 0;
 }
 
@@ -126,69 +138,94 @@ body {
     transform: scale(1.05);
 }
 
+/* =========================================
+   Main Content (ส่วนเนื้อหาเกมตรงกลาง)
+========================================= */
 .sec-content {
     z-index: 20;
     width: 100%;
-    height: 38rem;
-    /* background-color: orange; */
+
+    /* ✅ จัดกึ่งกลางจอแบบสมบูรณ์แบบ (Absolute Centering) */
     position: absolute;
+    bottom: 11%; /* 💡 ถ้าต่ำไปให้เพิ่มเป็น 25%, ถ้าสูงไปให้ลดเหลือ 18% */
+    left: 0;
+
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .box-content-main {
     display: flex;
-    /* background: burlywood; */
     width: 70%;
-    justify-content: space-between;
+    max-width: 1200px; /* ✅ กันไม่ให้ยืดกว้างเกินไปบนจอทีวีแบบ Ultra-wide */
+    height: auto; /* ย้ายความสูงมากำหนดที่ตัวกล่องเนื้อหาแทน */
+    justify-content: center; /* เปลี่ยนเป็น Center และใช้ Gap */
+    gap: 8rem; /* ระยะห่างระหว่างกระดานกับเมนู */
     align-items: center;
 }
 
 .box-board {
     width: 26rem;
-    /* background: rgb(255, 0, 76); */
-    height: 100%;
-
+    /* height: 100%; */
 }
 
 .box-board img {
     width: 100%;
-    height: 100%;
-
+    height: auto;
+    object-fit: contain; /* ป้องกันภาพบิดเบี้ยว */
 }
 
 .box-main {
-    /* background: red; */
-    width: 60%;
-    height: 100%;
+    width: auto;
+    /* height: 100%; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2.6rem;
 }
 
 .box-logo-main {
-    /* background: green; */
-    height: 50%;
+    /* height: 50%; */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .box-logo-main img {
-    width: 75%;
+    width: 100%;
+    max-width: 25rem; /* กำหนดขนาดสูงสุดให้โลโก้ */
+    margin: 0;
+     margin-top: -1rem;
+}
+
+.box-tagline {
+    margin-top: -3.4rem;
+    margin-bottom: 2 rem; /* ดันกลุ่มปุ่มด้านล่างให้ห่างออกไปนิดนึง จะได้บาลานซ์ */
+    z-index: 5; /* ป้องกันไม่ให้โดนกล่องโลโก้ทับ */
+    position: relative;
+}
+
+.box-tagline p {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 0;
 }
 
 .box-button {
-    /* background: rgb(52, 106, 255); */
-    height: 50%;
+    /* height: 50%; */
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.2rem;
 }
 
 .btn-main-box {
-    width: 20rem;
+    width: 21rem;
     height: 4rem;
-    /* background: pink; */
 }
 
 .bt-play, .bt-gallery {
@@ -202,20 +239,20 @@ body {
   color: white;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   font-family: 'IBM Plex Sans Thai', sans-serif;
   font-size: 1.8rem;
   transition: all 0.3s ease;
 }
 
 .bt-play:hover {
-    background-color: #19b56d;
-  color: #fff;        
-  transform: scale(1.05);   
+  background-color: #19b56d;
+  color: #fff;
+  transform: scale(1.05);
 }
 
 .bt-gallery {
-    background: white;
+    background: #fff;
     border: 4px solid #ff98b8;
     color: #ff98b8;
     gap: 0.8rem;
@@ -226,3 +263,20 @@ body {
     color: white;
     transform: scale(1.05);
 }
+
+/* =========================================
+   Responsive สำหรับ TV (Media Queries)
+========================================= */
+
+/* สำหรับทีวี Full HD (1920x1080) ขึ้นไป */
+@media screen and (min-width: 1920px) {
+    html {
+        /* ✅ หัวใจสำคัญ: ขยายขนาดฟอนต์ราก
+           เมื่อฟอนต์หลักใหญ่ขึ้น ทุกคลาสที่ใช้หน่วย rem จะใหญ่ตามสัดส่วนเป๊ะๆ! */
+        font-size: 22px;
+    }
+}
+
+
+
+

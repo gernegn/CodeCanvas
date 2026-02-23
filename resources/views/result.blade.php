@@ -33,6 +33,11 @@
         <!-- end bg-cloud -->
 
         <div class="sec-head">
+            <div class="btn-box">
+                <button class="bt-back" id="btnBackToMain">
+                    <span class="iconify" data-icon="material-symbols:arrow-back-ios-rounded"></span>
+                </button>
+            </div>
             <h1 class="challenge">
                 <strong>นี่คือผลลัพธ์ “<span id="resultChallengeName">Challenge</span>”</strong><br>
                 จากโค้ดที่คุณเขียนและจัดเรียง
@@ -60,7 +65,8 @@
 
             <div class="sec-content-right">
                 <div class="box-code"></div>
-                <div class="bt-next"> <button class="next">ถัดไป</button>
+                <div class="bt-next">
+                    <button class="next" id="btnGoToCustom">ถัดไป</button>
                 </div>
             </div>
             <!-- end sec-content-right -->
