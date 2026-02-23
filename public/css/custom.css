@@ -443,12 +443,6 @@ body {
     transition: all 0.2s;
 }
 
-.close-kb-btn:hover {
-    background: #ff98b8;
-    color: #fff;
-    border-color: #ff98b8;
-}
-
 /* =========================================
    ปรับแต่ง Simple Keyboard ให้ใหญ่สู้ทีวี
 ========================================= */
