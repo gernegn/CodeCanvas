@@ -81,9 +81,14 @@ body {
 }
 
 .bt-back .iconify {
-    font-size: 2.5rem;
-    color: #000;
-    transform: translateX(8px); /* จัดกึ่งกลางไอคอน */
+  font-size: 2.5rem;
+  color: #000;
+  transform: translateX(8px);
+}
+
+.bt-back:hover {
+    background: #D4F2FF;
+    transform: scale(1.08);
 }
 
 .sec-head h1 {

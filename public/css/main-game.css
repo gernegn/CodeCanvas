@@ -1,3 +1,6 @@
+/* =========================================
+   1. Global & Base
+========================================= */
 html, body {
     height: 100%;
     margin: 0;
@@ -12,16 +15,16 @@ body {
 .container {
     position: relative;
     width: 100%;
-    height: 100%; /* [สำคัญ] ต้องยืด container ให้เต็มความสูงหน้าจอ */
+    height: 100%;
     margin: 0;
     padding: 0;
 }
 
 .bg-grass {
-    position: absolute; /* สั่งให้หลุดจาก flow ปกติเพื่อจัดตำแหน่งได้อิสระ */
-    bottom: 0;          /* สั่งให้ติดขอบล่างสุด */
-    line-height: 0;     /* ป้องกันไม่ให้มีช่องว่างเล็กๆ ใต้รูปภาพ */
-    z-index: 2;         /* (ทางเลือก) กำหนดลำดับชั้น ถ้ามี object อื่น */
+    position: absolute;
+    bottom: 0;
+    line-height: 0;
+    z-index: 2;
 }
 
 .bg-grass img {
@@ -30,9 +33,9 @@ body {
 }
 
 .bg-cloud {
-    position: absolute; /* สั่งให้หลุดจาก flow ปกติเพื่อจัดตำแหน่งได้อิสระ */
-    line-height: 0;     /* ป้องกันไม่ให้มีช่องว่างเล็กๆ ใต้รูปภาพ */
-    z-index: 3;         /* (ทางเลือก) กำหนดลำดับชั้น ถ้ามี object อื่น */
+    position: absolute;
+    line-height: 0;
+    z-index: 3;
     top: -30px;
 }
 
@@ -41,25 +44,32 @@ body {
     object-fit: cover;
 }
 
+/* =========================================
+   2. Header Section
+========================================= */
 .sec-head {
-    position: relative;  /* สำคัญมาก */
-    margin: 2rem;
+    /* ✅ เปลี่ยนเป็น Absolute ตรึงไว้ขอบบนสุด */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 3rem 4rem;
     display: flex;
-    flex-direction: row;
-    /* background-color: red; */
     justify-content: space-between;
     align-items: center;
-    z-index: 10;
+    z-index: 30;
 }
 
 .btn-box {
     width: 9rem;
     height: 4rem;
+    display: flex;
+    align-items: center;
 }
 
 .bt-back {
-  background: transparent; /* เอาพื้นหลังสีเทาออก */
-  border: none;            /* เอาเส้นขอบออก */
+  background: transparent;
+  border: none;
   padding: 0;
   cursor: pointer;
   width: 3.5rem;
@@ -67,24 +77,29 @@ body {
   background: white;
   border-radius: 50%;
   display: flex;
-  align-items: center;      /* กึ่งกลางแนวตั้ง */
+  align-items: center;
   justify-content: center;
 }
 
 .bt-back .iconify {
   font-size: 2.5rem;
-  color: #000; /* หรือสีที่ต้องการ */
-  transform: translateX(6px);
+  color: #000;
+  transform: translateX(8px);
 }
 
 .bt-back:hover {
     background: #D4F2FF;
+    transform: scale(1.08);
 }
 
 .challenge {
   font-weight: 500;
   font-size: 2.5rem;
   margin: 0;
+  /* ✅ จัดข้อความให้อยู่ตรงกลางเป๊ะๆ */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .sec-head img {
@@ -94,21 +109,26 @@ body {
     cursor: pointer;
 }
 
-/* sec-content */
+/* =========================================
+   3. Main Content Layout (Absolute Center)
+========================================= */
 .sec-content {
-    /* background: blueviolet; */
-    width: 100%;
-    height: 79%;
-    position: relative;
-    align-items: center;
-    justify-content: center;
+    /* ✅ สูตรจัดกึ่งกลางหน้าจอแบบตายตัว */
+    position: absolute;
+    z-index: 15;
+    width: 91%;
+    height: 77%;
+
+    top: 58%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     display: flex;
-    z-index: 11;
-    margin-bottom: 2rem;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sec-content-left {
-    /* background: cornflowerblue; */
     width: 65%;
     height: 100%;
     display: flex;
@@ -117,143 +137,146 @@ body {
 }
 
 .sec-content-right {
-    /* background: pink; */
-    width: 30%;
+    width: 32%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 0;
 }
 
+/* =========================================
+   4. Canvas Area
+========================================= */
 .canvas {
     background: #fff4eb;
     width: 100%;
-    height: 82%;
+    height: 85%;
     border-radius: 20px;
-    overflow: hidden; /* ป้องกันจุดล้นขอบ */
+    overflow: hidden;
     position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
 #gameCanvas {
     display: block;
     width: 100%;
     height: 100%;
+    object-fit: contain;
 }
 
-/* จัดการกรอบหลักของปุ่ม options */
 .bt-options {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 1.25rem;
+    right: 1.25rem;
     display: flex;
     align-items: center;
-    gap: 15px;      /* เพิ่มระยะห่างระหว่างปุ่มเล็กน้อย */
+    gap: 1rem;
     z-index: 20;
 }
 
-/* ปรับแต่งปุ่ม Undo / Redo ให้เป็นวงกลมสีส้มอ่อน */
+/* ✅ แปลงขนาดปุ่มเป็น rem ให้ขยายบนทีวีได้ */
 .bt-undo, .bt-redo {
     background: #ffc873;
-    width: 60px;      /* ขยายขนาดให้ใกล้เคียงภาพ */
-    height: 60px;
-    border-radius: 50%; /* ทำให้เป็นวงกลมสมบูรณ์ */
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.1s, opacity 0.2s;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* สีไอคอนสีน้ำตาลส้มตามโจทย์ */
 .bt-undo .iconify, .bt-redo .iconify {
-    font-size: 2rem; /* ขยายไอคอนให้ชัดเจน */
+    font-size: 2rem;
     color: #ca6e3c;
+    transition: color 0.2s;
 }
 
-/* ปรับแต่งปุ่ม Reset ให้เป็นทรงมนยาว (Pill Shape) */
 .reset {
     background: #ffc873;
-    color: #ca6e3c;    /* สีฟอนต์ตามโจทย์ */
+    color: #ca6e3c;
     border: none;
-    padding: 0 25px;   /* เพิ่มพื้นที่ด้านข้างให้ยาวขึ้น */
-    border-radius: 50px; /* ทำให้ขอบมนโค้งเป็นทรงแคปซูล */
-    font-size: 1.6rem; /* ขยายขนาดฟอนต์ */
-    font-weight: 500;  /* ทำให้ฟอนต์ดูหนาขึ้นเล็กน้อยแบบในภาพ */
+    padding: 0 1.5rem;
+    border-radius: 3rem;
+    font-size: 1.6rem;
+    font-weight: 500;
     cursor: pointer;
-    height: 60px;
-    width: 140px;   /* ความสูงเท่ากับปุ่ม Undo/Redo */
+    height: 3.75rem;
+    width: 8.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.1s, opacity 0.2s;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     font-family: inherit;
 }
 
 .reset:hover, .bt-undo:hover, .bt-redo:hover {
-    background-color: #ffb84d;
+    background: #ffb84d;
     color: #fff;
-    transform: scale(1.05);
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(255, 184, 77, 0.4);
 }
 
 .bt-undo .iconify:hover, .bt-redo .iconify:hover {
     color: #fff;
 }
 
-/* ปรับปรุงช่องเก็บโค้ดให้รองรับการเรียงคำสั่ง */
+/* =========================================
+   5. Code Box
+========================================= */
 .code-box {
     background: #fff;
     width: 100%;
     height: 12%;
-    border-radius: 100px;
+    border-radius: 6rem;
     display: flex;
     align-items: center;
-    padding: 0 20px;
-    gap: 10px;
-    overflow-x: auto; /* เผื่อกรณีคำสั่งยาวจนล้น */
+    padding: 0 1.5rem;
+    gap: 0.8rem;
+    overflow-x: auto;
     box-sizing: border-box;
 }
 
-/* ค้นหาส่วนนี้ในไฟล์ CSS เดิมแล้วแทนที่ */
+.item-forward { background-color: #62D4FF; color: #000; }
+.item-moveleft { background-color: #FE9A00; color: #000; }
+.item-moveright { background-color: #FF98B8; color: #000; }
 
-/* สีแยกตามประเภทคำสั่งใน code-box */
-.item-forward {
-    background-color: #62D4FF; /* สีฟ้าเดียวกับปุ่ม forward */
-    color: #000;
-}
-
-.item-moveleft {
-    background-color: #FE9A00; /* สีส้มเดียวกับปุ่ม moveLeft */
-    color: #000;
-}
-
-.item-moveright {
-    background-color: #FF98B8; /* สีชมพูเดียวกับปุ่ม moveRight */
-    color: #000;
-}
-
-/* เพิ่มเติม: ปรับตัวหนังสือให้ชัดเจนขึ้นเมื่ออยู่บนพื้นหลังสี */
 .code-item {
-    padding: 8px 20px;
+    padding: 0.5rem 1.25rem;
     border-radius: 50px;
     font-weight: 500;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     white-space: nowrap;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    border: none; /* เอาขอบออกถ้ามี */
+    border: none;
+    animation: codePopIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
+/* กล่องโค้ดเส้นประว่างๆ (Placeholder) */
+.code-item-placeholder {
+    border: 0.15rem dashed #ccc !important;
+    background-color: transparent !important;
+    color: transparent !important;
+    min-width: 12.5rem; /* แทน 200px */
+    height: 3.75rem;    /* แทน 60px */
+    box-sizing: border-box;
+    box-shadow: none !important;
+    border-radius: 50px;
+}
+
+/* =========================================
+   6. Example Image (Right Panel)
+========================================= */
 .example-img {
-    /* background: brown; */
     width: 100%;
-    height: 40%; /* ลดจาก 45% เพื่อแบ่งที่ให้ปุ่มกด */
+    height: 53%;
     display: flex;
-    justify-content: end;
-    /* padding-bottom เล็กน้อยถ้าต้องการห่างจากปุ่ม */
+    justify-content: center;
 }
 
 .frame-box {
-    width: 80%;
+    width: 100%;
     height: 100%;
     background: white;
     border-radius: 20px;
@@ -267,39 +290,34 @@ body {
     height: 90%;
     background: white;
     border-radius: 20px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
-/* Container ของชุดปุ่มทั้งหมด (ล่าง) */
+/* =========================================
+   7. Buttons Command Grid
+========================================= */
 .bt-command {
-    width: 80%;
-    /* ความสูงส่วนนี้คือพื้นที่ที่เหลือ (ประมาณ 60% ของจอ) */
-    height: 58%;
+    width: 100%;
+    height: 60%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* ดัน Grid ไว้บน Run ไว้ล่าง */
-    margin-left: auto;
+    justify-content: space-between;
+    margin-top: 1rem;
+    align-items: flex-end;
 }
 
-/* 2. Grid ปุ่มสีฟ้า ส้ม ชมพู */
 .bt-code-grid {
     display: grid;
     grid-template-areas:
         "forward forward"
         "left right";
     grid-template-columns: 1fr 1fr;
-
-    /* คงสัดส่วนเดิมไว้ (บนใหญ่กว่าล่างนิดหน่อย) */
     grid-template-rows: 1.3fr 1.3fr;
-
-    gap: 10px;
+    gap: 0.8rem;
     width: 100%;
-
-    /* [จุดที่ต้องแก้] ลดจาก 76% เหลือประมาณ 60-65% ตามความชอบครับ */
     height: 68%;
 }
 
-/* สไตล์พื้นฐานของปุ่มกด (Reset ปุ่มเดิม) */
 .forward, .moveleft, .moveright {
     background: transparent !important;
     border: none !important;
@@ -310,89 +328,46 @@ body {
     padding: 0;
 }
 
-/* กล่อง Forward */
-.bt-forward-item {
-    grid-area: forward;
-    background-color: #62D4FF;
-    border: 8px solid #4EB8E0;
+.bt-forward-item { grid-area: forward; background-color: #62D4FF; border: 8px solid #4EB8E0; display: flex; align-items: end; justify-content: space-between; padding: 0.5rem 1.5rem; }
+.bt-left-item { grid-area: left; background-color: #FE9A00; border: 8px solid #E58B00; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem; }
+.bt-right-item { grid-area: right; background-color: #FF98B8; border: 8px solid #EE789D; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem; }
 
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    padding: 8px 25px;
-}
-
-/* กล่อง Move Left */
-.bt-left-item {
-    grid-area: left;
-    background-color: #FE9A00;
-    border: 8px solid #E58B00;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-
-/* กล่อง Move Right */
-.bt-right-item {
-    grid-area: right;
-    background-color: #FF98B8;
-    border: 8px solid #EE789D;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-
-/* --- คงสไตล์เดิมไว้ตามที่ขอ --- */
 .bt-item {
     box-sizing: border-box;
-    /* คง Border Radius และ Border เดิมที่คุณชอบไว้ */
     border-radius: 30px;
     cursor: pointer;
-    transition: transform 0.1s;
-    /* ลบ height: 70% ออกจาก bt-forward-item เดิม เพื่อให้ Grid จัดการความสูงเอง */
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Effect ตอนกดปุ่ม */
+.bt-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
 .bt-item:active {
-    transform: translateY(4px); /* ขยับลงเหมือนถูกกด */
-    border-bottom-width: 2px;   /* ลดขนาดเงาลง */
+    transform: scale(0.95); /* ทำให้ยุบตอนคลิก */
+    border-bottom-width: 2px;
 }
 
-/* ปรับขนาดฟอนต์ */
 .forward { font-size: 1.5rem; font-weight: 500; }
 .moveleft, .moveright { font-size: 1.3rem; font-weight: 500; }
 
-/* ปรับขนาดรูปภาพไอคอน */
-.bt-item img {
-    height: 50px; /* ปรับความสูงตามความเหมาะสม */
-    width: auto;
-    object-fit: contain;
-}
+/* ✅ ปรับไอคอนปุ่มให้เล็กลงเล็กน้อย */
+.bt-item img { height: 2.6rem; width: auto; object-fit: contain; } /* ลดจาก 3.2rem */
+.forward-img { height: 3.6rem !important; margin-bottom: 0.5rem; } /* ลดจาก 4.5rem */
 
-.forward-img {
-    height: 70px !important;
-    margin-bottom: 0.5rem;
-}
-
-/* --- ส่วนปุ่ม RUN --- */
+/* =========================================
+   8. RUN Button
+========================================= */
 .bt-run-container {
-    width: 100%;
-    /* CodeBox ฝั่งซ้ายสูง 12% ของจอ
-       ดังนั้นตรงนี้ตั้ง 21% ของ Container แม่ (21% * 58% ≈ 12.1%) */
-    height: 21%;
+    width: 60%;
+    height: 22%;
     display: flex;
     justify-content: flex-end;
 }
 
-/* ปุ่ม Run */
 .run {
-    width: 50%;
+    width: 100%;
     height: 100%;
     background-color: #989898;
     color: white;
@@ -402,41 +377,32 @@ body {
     font-weight: 600;
     cursor: pointer;
     font-family: 'IBM Plex Sans Thai', sans-serif;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.run:hover {
+    background-color: #19b56d; /* เปลี่ยนเป็นสีเขียวตอนชี้ให้ดูน่ากด */
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(25, 181, 109, 0.3);
 }
 
 .run:active {
-    transform: translateY(4px);
-    box-shadow: 0 0 0 #7a7a7a;
+    transform: scale(0.95);
+    box-shadow: none;
 }
 
-/* ========================================== */
-/* Tutorial Modal Styles */
-/* ========================================== */
-/* ========================================== */
-/* Tutorial Modal Styles (Updated)            */
-/* ========================================== */
-.tutorial-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+/* =========================================
+   9. Tutorial Modal Styles
+========================================= */
+.tutorial-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 9999; display: flex; justify-content: center; align-items: center; }
 
+/* ✅ 1. ปรับขนาดกล่องให้เท่ากับหน้า Random */
 .tutorial-box {
     background-color: #fff;
-    width: 880px; /* ขยายความกว้างกล่องอีกนิด */
-    height: 650px; /* ขยายความสูงกล่อง */
-    max-width: 95%;
-    max-height: 95vh;
-    border-radius: 25px;
-    /* ลด padding ลงเพื่อให้มีพื้นที่ใส่รูปมากขึ้น */
-    padding: 15px 20px 15px 20px;
+    width: 48rem;
+    height: 33rem;
+    border-radius: 20px; /* ปรับขอบให้มน 20px เท่า Random */
+    padding: 1.5rem 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -444,200 +410,217 @@ body {
     position: relative;
 }
 
-/* ปุ่มปิด X */
+/* ✅ 2. ปรับตำแหน่งปุ่มปิดให้อยู่ตำแหน่งเดียวกับ Random */
 .close-tutorial {
     position: absolute;
-    top: 30px;       /* ปรับลงมาหน่อยให้กึ่งกลาง */
-    right: 30px;
-    font-size: 3rem; /* กำหนดขนาดไอคอน */
-    color: #333;
+    top: 1.5rem;
+    right: 2rem;
+    font-size: 3rem;
+    color: #aaa;
     cursor: pointer;
     z-index: 10;
-    transition: color 0.2s, transform 0.2s; /* เพิ่มลูกเล่นตอนชี้ */
-    line-height: 0; /* สำคัญ: เพื่อไม่ให้ความสูงบรรทัดดันตำแหน่งเพี้ยน */
-}
-
-.close-tutorial:hover {
-    color: #000;       /* เปลี่ยนสีเข้มขึ้นตอนชี้ */
-    transform: scale(1.1); /* ขยายใหญ่ขึ้นนิดนึง */
-}
-
-.tutorial-title {
-    font-family: 'IBM Plex Sans Thai', sans-serif;
-    font-size: 2rem;
-    color: #333;
-    margin: 15px 0 5px 0;
-    font-weight: 600;
-}
-
-/* --- Slider Container --- */
-.slider-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    /* ใช้ flex-grow เพื่อให้ส่วนนี้ยืดกินพื้นที่ว่างทั้งหมดในกล่อง */
-    flex-grow: 1;
-    position: relative;
-    gap: 10px;
-    margin-bottom: 5px;
-}
-
-.slider-wrapper {
-    width: 85%;
-    height: 100%; /* ให้สูงเต็มพื้นที่ container */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
-}
-
-.tutorial-slide {
-    display: none;
-    max-width: 100%;
-    max-height: 480px; /* กำหนดความสูงสูงสุดของรูปภาพ */
-    width: auto;
-    height: auto;
-    object-fit: contain; /* ให้รูปแสดงครบทั้งใบโดยไม่โดนตัด */
-    border-radius: 10px;
-}
-
-.tutorial-slide.active {
-    display: block;
-    animation: fadeEffect 0.5s;
-}
-
-@keyframes fadeEffect {
-    from {opacity: 0.4;}
-    to {opacity: 1;}
-}
-
-/* --- ปุ่มลูกศรซ้าย-ขวา --- */
-.slider-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #aaa;
-    font-size: 3rem; /* ขยายปุ่มลูกศรให้กดง่ายขึ้น */
-    padding: 0;
     transition: transform 0.2s, color 0.2s;
-    display: flex;
-    align-items: center;
-    z-index: 5;
+    line-height: 0;
 }
+.close-tutorial:hover { color: #000; transform: scale(1.1); }
 
-.slider-btn:hover {
-    color: #333;
-    transform: scale(1.1);
-}
+.tutorial-title { font-family: 'IBM Plex Sans Thai', sans-serif; font-size: 2rem; color: #333; margin: 0.5rem 0 0.5rem 0; font-weight: 600; }
+.slider-container { display: flex; align-items: center; justify-content: center; width: 100%; flex-grow: 1; position: relative; gap: 10px; margin-bottom: 5px; }
+.slider-wrapper { width: 90%; height: auto; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
 
-/* --- Pagination Dots --- */
-.pagination-dots {
-    text-align: center;
-    margin-bottom: 15px; /* เว้นระยะห่างจากปุ่มเริ่มด้านล่าง */
-    height: 20px;
-}
+/* ✅ 3. ลด max-height ของรูปลง เพื่อให้พอดีกับกล่องที่เตี้ยลง */
+.tutorial-slide { display: none; width: 83%; height: 83%; object-fit: contain; border-radius: 1.2rem; }
+.tutorial-slide.active { display: block; animation: fadeEffect 0.5s; }
 
-.dot {
-    cursor: pointer;
-    height: 12px;
-    width: 12px;
-    margin: 0 6px;
-    background-color: #ddd;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-}
+@keyframes fadeEffect { from {opacity: 0.4;} to {opacity: 1;} }
+.slider-btn { background: none; border: none; cursor: pointer; color: #aaa; font-size: 3rem; padding: 0; transition: transform 0.2s; display: flex; align-items: center; z-index: 5; }
+.slider-btn:hover { color: #333; transform: scale(1.1); }
+.pagination-dots { text-align: center; margin-bottom: 10px; height: 20px; }
+.dot { cursor: pointer; height: 1rem; width: 1rem; margin: 0 6px; background-color: #ddd; border-radius: 50%; display: inline-block; transition: background-color 0.3s ease; }
+.dot.active, .dot:hover { background-color: #27AE60; }
+button, .bt-item, .code-box, .challenge { user-select: none; -webkit-user-select: none; }
 
-.dot.active, .dot:hover {
-    background-color: #27AE60;
-}
-
-/* ปุ่มรีเพลย์ (วงกลมสีส้ม) */
-.btn-replay {
-    background-color: #FFCD80; /* สีส้มอ่อน */
-    color: #C57347; /* สีไอคอนส้มเข้ม */
-    border: none;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 2rem;
-    box-shadow: 0 4px 0 #e6b873;
-    transition: transform 0.1s;
-}
-
-.btn-replay:hover {
-    transform: rotate(45deg); /* หมุนนิดหน่อยตอนชี้ */
-    background-color: #ffc266;
-}
-
-.btn-replay:active {
-    transform: scale(0.95);
-    box-shadow: 0 2px 0 #e6b873;
-}
-
-/* ป้องกันการคลุมดำตัวหนังสือ (Text Selection) บนปุ่มและ UI */
-button, .bt-item, .code-box, .challenge, .text-random, .num-random {
-    user-select: none;          /* Standard */
-    -webkit-user-select: none;  /* Safari/Chrome */
-    -moz-user-select: none;     /* Firefox */
-    -ms-user-select: none;      /* IE/Edge */
-}
-
-/* ========================================= */
-/* SweetAlert Custom Style (Reset Popup)     */
-/* ========================================= */
-
+/* =========================================
+   10. SweetAlert (Reset Popup Design)
+========================================= */
 .my-swal-popup {
+    background-color: #fff !important;
     border-radius: 20px !important;
-    padding: 2rem !important;
+    padding: 4rem 3rem 3rem 3rem !important;
     font-family: 'IBM Plex Sans Thai', sans-serif !important;
+    width: 800px !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2) !important;
 }
 
 .my-swal-title {
-    color: #2d93ff !important; /* สีฟ้าหัวข้อ */
-    font-size: 1.8rem !important;
+    color: #6daafc !important;
+    font-size: 2.2rem !important;
     font-weight: 600 !important;
-    padding-top: 1rem;
+    margin-bottom: 0.5rem !important;
+    padding: 0 !important;
 }
 
 .my-swal-text {
-    color: #333 !important;
-    font-size: 1.5rem !important;
-    font-weight: 500;
-    padding: 0 0 1rem 0;
+    color: #000 !important;
+    font-size: 1.6rem !important;
+    font-weight: 500 !important;
+    margin: 0 0 2rem 0 !important;
+    padding: 0 !important;
 }
 
-/* ปุ่มเริ่มใหม่ (สีฟ้า) */
-.my-swal-confirm {
-    background-color: #2d93ff!important;
-    color: white !important;
-    border-radius: 10px !important;
-    padding: 10px 30px !important;
-    font-size: 1.2rem !important;
-    font-family: 'IBM Plex Sans Thai', sans-serif !important;
-    box-shadow: none !important;
-    padding-bottom: 1rem;
+.my-swal-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+    justify-content: center !important;
+    margin: 0 !important;
 }
 
-/* ปุ่มยกเลิก (สีขาวขอบเทา) */
 .my-swal-cancel {
-    background-color: white !important;
-    color: #333 !important;
-    border: 1px solid #2d93ff !important;
-    border-radius: 10px !important;
-    padding: 10px 30px !important;
-    font-size: 1.2rem !important;
-    font-family: 'IBM Plex Sans Thai', sans-serif !important;
-    margin-right: 10px !important;
-        padding-bottom: 1rem;
+    background-color: #fff !important;
+    color: #000 !important;
+    border: 2px solid #6daafc !important;
+    border-radius: 12px !important;
+    font-size: 1.6rem !important;
+    font-weight: 500 !important;
+    font-family: inherit !important;
+    width: 200px !important;
+    height: 100px !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.my-swal-cancel:hover { background-color: #f0f8ff !important; }
+
+.my-swal-confirm {
+    background-color: #6daafc !important;
+    color: #000 !important;
+    border: 2px solid #6daafc !important;
+    border-radius: 12px !important;
+    font-size: 1.6rem !important;
+    font-weight: 500 !important;
+    font-family: inherit !important;
+    width: 200px !important;
+    height: 100px !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.my-swal-confirm:hover { background-color: #589cf2 !important; border-color: #589cf2 !important;}
+
+/* =========================================
+   UI الإضافเพิ่มเติม (เปอร์เซ็นต์, แจ้งเตือน, กรอบว่าง)
+========================================= */
+.progress-circle {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    width: 4rem;  /* ขยายขนาดกล่องให้ใหญ่ขึ้น */
+    height: 4rem;
+    border-radius: 50%;
+    /* ใช้สีเขียวอ่อนแบบในรูป และส่วนที่ยังไม่ถึงให้เป็นสีขาว */
+    background: conic-gradient(#bce051 0%, #ffffff 0%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 15;
 }
 
-.my-swal-cancel:hover {
-    background-color: #f0f0f0 !important;
+/* ปรับกล่องตัวหนังสือข้างในให้ใส เพื่อให้เห็นกราฟวงกลมเต็มๆ */
+.inner-circle {
+    background-color: transparent; /* เอาพื้นหลังสีขาวออก */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.15rem; /* ขยายตัวหนังสือให้ใหญ่แบบในรูป */
+    font-weight: 500;
+    color: #000;       /* ตัวหนังสือสีดำเข้ม */
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    z-index: 16;
 }
+
+/* ✅ กล่องข้อความให้กำลังใจ (Cheer Tooltip) */
+.cheer-tooltip {
+    position: absolute;
+    bottom: 7.5rem; /* ยกให้สูงกว่าวงกลมเปอร์เซ็นต์ */
+    left: 2rem;     /* ชิดซ้ายให้ตรงกับวงกลม */
+    background-color: #fce2a6; /* สีพื้นหลังส้มครีมตามรูป */
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 25;
+    pointer-events: none;
+
+    /* ซ่อนไว้เป็นค่าเริ่มต้น */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px); /* ให้มีแอนิเมชันเด้งขึ้น */
+    transition: all 0.3s ease-in-out;
+}
+
+/* ติ่งลูกศรชี้ลงของกล่องให้กำลังใจ */
+.cheer-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 20px; /* ขยับติ่งให้ตรงกับขอบวงกลม */
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: #fce2a6 transparent transparent transparent;
+}
+
+/* คลาสสำหรับโชว์ข้อความให้กำลังใจ */
+.cheer-tooltip.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.error-tooltip {
+    position: absolute;
+    background-color: #ffb8ca; /* สีชมพูตามรูป */
+    color: #333;
+    padding: 8px 18px;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    z-index: 25;
+    pointer-events: none;
+
+    /* ซ่อนไว้เป็นค่าเริ่มต้น */
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -150%);
+    transition: all 0.2s ease-in-out;
+}
+
+/* ติ่งลูกศรชี้ลงของกล่องข้อความ */
+.error-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 8px 0;
+    border-style: solid;
+    border-color: #ffb8ca transparent transparent transparent;
+}
+
+/* =========================================
+   11. Responsive สำหรับ TV
+========================================= */
+@media screen and (min-width: 1920px) { html { font-size: 22px; } }
+@media screen and (min-width: 2560px) { html { font-size: 30px; } }
+@media screen and (min-width: 3840px) { html { font-size: 42px; } }

@@ -10,9 +10,9 @@ let ctx = null;
 if (canvas) ctx = canvas.getContext('2d');
 
 // Buttons & UI
-const btnForward = document.querySelector('.forward');
-const btnLeft = document.querySelector('.moveleft');
-const btnRight = document.querySelector('.moveright');
+const btnForward = document.querySelector('.bt-forward-item');
+const btnLeft = document.querySelector('.bt-left-item');
+const btnRight = document.querySelector('.bt-right-item');
 const btnReset = document.querySelector('.reset');
 const btnUndo = document.querySelector('.bt-undo');
 const btnRedo = document.querySelector('.bt-redo');
@@ -32,8 +32,8 @@ const btnConfirm = document.querySelector('.confirm');
 const customModal = document.getElementById('customSuccessModal');
 
 // --- Game Variables ---
-const gridSize = 25;
-const dotSize = 2;
+const gridSize = window.innerWidth >= 1920 ? 20 : 25;
+const dotSize = window.innerWidth >= 1920 ? 1.5 : 2; // ลดขนาดจุดพื้นหลังในจอทีวี
 const minPadding = 15;
 let dot = { x: 0, y: 0, angle: 0 };
 let gridOffset = { x: 0, y: 0 };
@@ -57,6 +57,9 @@ let currentSelectedColorName = 'Default';
 let currentSelectedTexture = null;
 let currentChallengeIdForCustom = null;
 let currentResultImageName = "";
+
+// ✅ ตัวแปรเก็บ Timer ของกล่องข้อความ เพื่อไม่ให้มันตีกันถ้าวาดเร็วเกินไป
+let cheerTimer = null;
 
 // ✅ เพิ่มตัวแปรนี้เข้าไป เพื่อกันไม่ให้เสียงดังรัวๆ ซ้ำซ้อน
 let previousCorrectState = false;
@@ -115,53 +118,52 @@ async function loadChallengeData(id) {
             }
 
             if (dataTemplate && dataTemplate.length > 0) {
-                const startPointStr = dataTemplate[0].Code_Start;
-                const startCoordsArr = parseCoordinates(startPointStr);
-                let startObj = (startCoordsArr.length > 0) ? startCoordsArr[0] : {x: 5, y: 19};
-
+                // เราจะไม่ดึงจุดเริ่มต้นตายตัวจาก DB อีกต่อไป
+                // แต่เราจะแปลงเฉพาะรูปร่างของเส้น (Path)
                 validPaths = [];
+                let firstPathStart = null;
+
                 dataTemplate.forEach(row => {
                     if (row.Code_Point) {
                         const path = parseCoordinates(row.Code_Point);
-                        if (path.length > 0 && (path[0].x !== startObj.x || path[0].y !== startObj.y)) {
-                            path.unshift(startObj);
+                        if (path.length > 0) {
+                            if (!firstPathStart) firstPathStart = path[0];
+
+                            // จัดตำแหน่งรูปภาพทั้งหมดให้สัมพันธ์กับจุดเริ่มต้นแรก
+                            const relativePath = path.map(p => ({
+                                x: p.x - firstPathStart.x,
+                                y: p.y - firstPathStart.y
+                            }));
+                            validPaths.push(relativePath);
                         }
-                        validPaths.push(path);
                     }
                 });
-                startGridPos = { x: startObj.x, y: startObj.y };
-                setupCanvas(startObj.x, startObj.y);
+
+                // สั่ง Setup Canvas ซึ่งมันจะคำนวณจุดกึ่งกลางและเริ่มจากด้านล่างให้อัตโนมัติ
+                setupCanvas(0, 0);
+
             } else {
-                setupCanvas(5, 19);
+                setupCanvas(0, 0);
                 validPaths = [];
             }
 
-            // ==========================================
-            // ✅ เพิ่มโค้ดส่วนนี้เพื่อ Restore ข้อมูลเดิม
-            // ==========================================
+            // ... โค้ดส่วน Restore Session ข้อมูลเดิมที่เคยเขียนไว้ ปล่อยไว้เหมือนเดิมครับ ...
             const savedId = sessionStorage.getItem('storedChallengeID');
             if (savedId && savedId == id) {
                 const savedPath = sessionStorage.getItem('userPathHistory');
                 if (savedPath) {
                     pathHistory = JSON.parse(savedPath);
                     if (pathHistory && pathHistory.length > 0) {
-                        // อัปเดตตำแหน่งจุด (dot) ให้อยู่ที่ปลายเส้นล่าสุด
                         dot = { ...pathHistory[pathHistory.length - 1] };
-
-                        // ปิดเสียงชั่วคราวเพื่อไม่ให้เสียง Success ดังลั่นตอนโหลดหน้าเว็บ
                         previousCorrectState = true;
-
-                        // สั่งวาดเส้นและสร้างโค้ดในกล่องใหม่ทั้งหมด
                         draw();
                     }
                 }
             } else {
-                // ถ้าเป็นโจทย์ใหม่ ให้ล้างประวัติเก่าทิ้ง
                 sessionStorage.removeItem('userPathHistory');
             }
-            // ==========================================
         }
-    } catch (error) { console.error(error); setupCanvas(5, 19); }
+    } catch (error) { console.error(error); setupCanvas(0, 0); }
 }
 
 function parseCoordinates(str) {
@@ -180,16 +182,41 @@ function setupCanvas(gridX, gridY) {
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
 
-    const availableWidth = canvas.width - (minPadding * 2);
-    const availableHeight = canvas.height - (minPadding * 2);
-    const cols = Math.floor(availableWidth / gridSize);
-    const rows = Math.floor(availableHeight / gridSize);
+    // ✅ 1. คำนวณหาจุดกึ่งกลางของภาพจาก validPaths (เฉลย)
+    let drawingCenterX = gridX;
+    let drawingCenterY = gridY;
 
-    gridOffset.x = (canvas.width - (cols * gridSize)) / 2;
-    gridOffset.y = (canvas.height - (rows * gridSize)) / 2;
+    if (validPaths && validPaths.length > 0) {
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        validPaths.forEach(path => {
+            path.forEach(p => {
+                minX = Math.min(minX, p.x);
+                minY = Math.min(minY, p.y);
+                maxX = Math.max(maxX, p.x);
+                maxY = Math.max(maxY, p.y);
+            });
+        });
+        drawingCenterX = (minX + maxX) / 2;
+        drawingCenterY = (minY + maxY) / 2;
+    }
 
-    const startX = gridOffset.x + (gridX * gridSize);
-    const startY = gridOffset.y + (gridY * gridSize);
+    // ✅ 2. จัดตำแหน่ง Canvas ให้ภาพวาดอยู่ตรงกลางจอ
+    gridOffset.x = (canvas.width / 2) - (drawingCenterX * gridSize);
+    gridOffset.y = (canvas.height / 2) - (drawingCenterY * gridSize);
+
+    // ✅ 3. ปรับเลื่อนลงแยกระหว่างทีวีและหน้าจอคอม
+    if (window.innerWidth >= 1920) {
+        gridOffset.y += 120; // ดันลงมาสำหรับหน้าจอทีวี (ปรับเพิ่มลดตัวเลขได้ครับ)
+    } else {
+        gridOffset.y += 20;  // ดันลงมาสำหรับหน้าจอคอมปกติ
+    }
+
+    // กำหนดตำแหน่งเริ่มต้นผู้เล่น (บังคับจุดเริ่มจากโค้ดสัมพัทธ์)
+    startGridPos.x = 0;
+    startGridPos.y = 0;
+
+    const startX = gridOffset.x;
+    const startY = gridOffset.y;
 
     dot = { x: startX, y: startY, angle: 0 };
     pathHistory = [{ x: dot.x, y: dot.y, angle: dot.angle }];
@@ -207,10 +234,17 @@ function draw() {
     if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // 1. วาดจุด Grid (พื้นหลัง)
+    // 1. วาดจุด Grid (พื้นหลัง) ให้เต็มจออย่างสม่ำเสมอ
     ctx.fillStyle = '#fddfb3ff';
-    for (let x = gridOffset.x; x <= canvas.width - gridOffset.x + 1; x += gridSize) {
-        for (let y = gridOffset.y; y <= canvas.height - gridOffset.y + 1; y += gridSize) {
+    let startGridX = gridOffset.x % gridSize;
+    let startGridY = gridOffset.y % gridSize;
+
+    // ปรับค่าให้จุดเริ่มวาดจากขอบซ้ายบนสุดของจอเสมอ
+    if (startGridX < 0) startGridX += gridSize;
+    if (startGridY < 0) startGridY += gridSize;
+
+    for (let x = startGridX - gridSize; x <= canvas.width + gridSize; x += gridSize) {
+        for (let y = startGridY - gridSize; y <= canvas.height + gridSize; y += gridSize) {
             ctx.beginPath(); ctx.arc(x, y, dotSize, 0, Math.PI * 2); ctx.fill();
         }
     }
@@ -233,10 +267,13 @@ function draw() {
 }
 
 function getCleanPath() {
+    // ฟังก์ชันนี้ถูกปรับเพื่อให้บันทึกพิกัดแบบ "สัมพัทธ์ (Relative)"
+    // ทำให้โค้ดตรวจจับได้แม่นยำ ไม่ว่าคุณจะเริ่มวาดจากจุดไหนบนจอทีวีก็ตาม
     const fullPath = pathHistory.map(p => ({
-        x: Math.round((p.x - gridOffset.x) / gridSize),
-        y: Math.round((p.y - gridOffset.y) / gridSize)
+        x: Math.round((p.x - gridOffset.x) / gridSize) - startGridPos.x,
+        y: Math.round((p.y - gridOffset.y) / gridSize) - startGridPos.y
     }));
+
     const uniquePath = [];
     if (fullPath.length > 0) {
         uniquePath.push(fullPath[0]);
@@ -256,33 +293,118 @@ function validatePathWithDB() {
     const userGridPath = getCleanPath();
     if (!validPaths || validPaths.length === 0) {
         updateRunButtonState(false);
-        previousCorrectState = false; // รีเซ็ตสถานะเมื่อไม่มี path
+        previousCorrectState = false;
+        updateProgressAndError(0, false); // รีเซ็ต UI
         return;
     }
 
-    // ตรวจสอบว่าพิกัดตรงกัน 100% ไหม
-    const isCorrect = validPaths.some((targetPath, idx) => {
-        if (userGridPath.length !== targetPath.length) return false;
-        for (let i = 0; i < targetPath.length; i++) {
-            if (userGridPath[i].x !== targetPath[i].x || userGridPath[i].y !== targetPath[i].y) return false;
+    let isExactMatch = false;
+    let maxMatchCount = 0;
+    let isCurrentlyOnTrack = false;
+    let targetTotalLength = validPaths[0].length; // ความยาวจุดทั้งหมดของเฉลย
+
+    // วนลูปเช็คว่าเส้นทางที่ผู้เล่นเดิน ตรงกับเส้นทางเฉลยเส้นไหนบ้างไหม?
+    validPaths.forEach(targetPath => {
+        let matchCount = 0;
+        let onThisTrack = true;
+
+        for (let i = 0; i < userGridPath.length; i++) {
+            if (i < targetPath.length && userGridPath[i].x === targetPath[i].x && userGridPath[i].y === targetPath[i].y) {
+                matchCount++;
+            } else {
+                onThisTrack = false; // เดินออกนอกเส้นทางแล้ว
+                break;
+            }
         }
-        return true;
+
+        if (matchCount > maxMatchCount) maxMatchCount = matchCount;
+        if (onThisTrack) isCurrentlyOnTrack = true; // ยืนยันว่ากำลังมาถูกทาง
+        if (onThisTrack && userGridPath.length === targetPath.length) isExactMatch = true; // เดินครบและถูก 100%
     });
 
-    // ✅ เงื่อนไขการเล่นเสียง: ถ้า "วาดถูก" และ "ก่อนหน้านี้ยังไม่ได้วาดถูก" (กันเสียงดังรัวๆ)
-    if (isCorrect && !previousCorrectState) {
+    // ✅ คำนวณเปอร์เซ็นต์
+    let percent = 0;
+    if (targetTotalLength > 1) {
+        // หักจุดเริ่มต้นออก (นับเฉพาะเส้นที่เดิน)
+        percent = Math.floor(((maxMatchCount - 1) / (targetTotalLength - 1)) * 100);
+    }
+    if (percent < 0) percent = 0;
+    if (percent > 100) percent = 100;
+
+    // ✅ เช็คว่าเกิดข้อผิดพลาดไหม (เดินออกนอกเส้นทางเฉลย)
+    const hasError = userGridPath.length > 1 && !isCurrentlyOnTrack;
+
+    // อัปเดต UI เปอร์เซ็นต์ และ Popup แจ้งเตือน
+    updateProgressAndError(percent, hasError);
+
+    // เรื่องเสียงและปุ่ม RUN
+    if (isExactMatch && !previousCorrectState) {
         const successSound = document.getElementById('successSound');
         if (successSound) {
             successSound.currentTime = 0;
-            successSound.volume = 0.2; // ปรับความดังได้ (0.0 - 1.0)
+            successSound.volume = 0.2;
             successSound.play().catch(e => console.error("เล่นเสียงไม่ได้:", e));
         }
     }
 
-    // บันทึกสถานะปัจจุบันไว้
-    previousCorrectState = isCorrect;
+    previousCorrectState = isExactMatch;
+    updateRunButtonState(isExactMatch);
+}
 
-    updateRunButtonState(isCorrect);
+// ✅ ฟังก์ชันสำหรับอัปเดต UI แจ้งเตือนและเปอร์เซ็นต์
+function updateProgressAndError(percent, hasError) {
+    // 1. อัปเดตวงกลมเปอร์เซ็นต์
+    const progressCircle = document.getElementById('progressCircle');
+    const innerText = document.querySelector('.inner-circle');
+
+    // ดึงค่าเก่าก่อนอัปเดตเพื่อเช็คว่าเปอร์เซ็นต์เปลี่ยนไหม
+    const oldPercent = parseInt(innerText ? innerText.innerText : "0");
+
+    if (progressCircle && innerText) {
+        innerText.innerText = `${percent}%`;
+        progressCircle.style.background = `conic-gradient(#bce051 ${percent}%, #ffffff ${percent}%)`;
+    }
+
+    // 2. ตรวจสอบการแสดงกล่องให้กำลังใจ (Cheer Tooltip)
+    const cheerTooltip = document.getElementById('cheerTooltip');
+    if (cheerTooltip && percent !== oldPercent) {
+        let message = "";
+
+        // เช็คเงื่อนไขและเปลี่ยนข้อความตามเปอร์เซ็นต์ที่กำหนด
+        if (percent === 50) {
+            message = "มาถึงครึ่งทางแล้ว สู้ๆ !";
+        } else if (percent === 80) {
+            message = "อีกนิดเดียว คุณทำได้ !";
+        } else if (percent === 100) {
+            message = "เย้! สำเร็จแล้ว !";
+        }
+
+        if (message !== "") {
+            cheerTooltip.innerText = message;
+            cheerTooltip.classList.add('show');
+
+            // ตั้งเวลาให้กล่องหายไปเองใน 3 วินาที (ถ้ามีอันเก่าค้างอยู่ให้ลบทิ้งก่อน)
+            if (cheerTimer) clearTimeout(cheerTimer);
+            cheerTimer = setTimeout(() => {
+                cheerTooltip.classList.remove('show');
+            }, 3000);
+        }
+    }
+
+    // 3. อัปเดต Popup แจ้งเตือนข้อผิดพลาด
+    const tooltip = document.getElementById('errorTooltip');
+    if (tooltip) {
+        if (hasError) {
+            tooltip.style.opacity = '1';
+            tooltip.style.visibility = 'visible';
+            // ขยับ Popup ไปไว้บนหัวจุดที่กำลังอยู่พอดี
+            tooltip.style.left = `${dot.x}px`;
+            tooltip.style.top = `${dot.y - 15}px`;
+        } else {
+            tooltip.style.opacity = '0';
+            tooltip.style.visibility = 'hidden';
+        }
+    }
 }
 
 function updateRunButtonState(isEnabled) {
@@ -331,31 +453,165 @@ async function saveccv_UserCodeAndStoreId() {
     }
 }
 
+// ✅ 1. เพิ่มตัวแปรและ Event ล็อกการ Scroll กล่องโค้ด
+let maxAllowedScrollX = 0;
+if (codeBox) {
+    codeBox.addEventListener('scroll', () => {
+        // ถ้าผู้เล่นพยายามเลื่อนขวาเกินจุดที่อนุญาต ให้บังคับดึงกลับมา
+        if (codeBox.scrollLeft > maxAllowedScrollX + 1) {
+            codeBox.scrollLeft = maxAllowedScrollX;
+        }
+    });
+}
+
+// ==========================================
+// อัปเดตกล่องโค้ด และวาดกล่องเส้นปรอทิ้งไว้จนจบ
+// ==========================================
 function updateCodeBox() {
     if (!codeBox) return;
     codeBox.innerHTML = '';
+
     let groupedCommands = [];
+
+    // 1. จัดกลุ่มคำสั่งที่ผู้เล่นกดไปแล้ว
     for (let i = 1; i < pathHistory.length; i++) {
-        const current = pathHistory[i], prev = pathHistory[i - 1];
-        let type = "", className = "", isRotation = false;
+        const current = pathHistory[i];
+        const prev = pathHistory[i - 1];
+
+        let type = "";
+        let className = "";
+        let isRotation = false;
+        let commandValue = 0;
+
         if (current.angle !== prev.angle) {
             isRotation = true;
-            if (current.angle < prev.angle) { type = "moveLeft"; className = "item-moveleft"; }
-            else { type = "moveRight"; className = "item-moveright"; }
-        } else { type = "forward"; className = "item-forward"; }
+            let diff = current.angle - prev.angle;
+
+            if (diff > 180) diff -= 360;
+            if (diff < -180) diff += 360;
+
+            if (diff < 0) {
+                type = "moveLeft";
+                className = "item-moveleft";
+                commandValue = Math.abs(diff);
+            } else {
+                type = "moveRight";
+                className = "item-moveright";
+                commandValue = Math.abs(diff);
+            }
+        } else {
+            type = "forward";
+            className = "item-forward";
+            commandValue = 1;
+        }
+
         let lastCommand = groupedCommands[groupedCommands.length - 1];
+
         if (lastCommand && lastCommand.type === type) {
             if (isRotation) {
-                let nextAngle = lastCommand.value + 45; if (nextAngle > 360) nextAngle = 45; lastCommand.value = nextAngle;
-            } else { lastCommand.value += 1; }
-        } else { groupedCommands.push({ type, className, value: isRotation ? 45 : 1, isRotation }); }
+                lastCommand.value += commandValue;
+                if (lastCommand.value >= 360) lastCommand.value = lastCommand.value % 360;
+            } else {
+                lastCommand.value += commandValue;
+            }
+        } else {
+            if (isRotation && commandValue === 0) continue;
+            groupedCommands.push({ type, className, value: commandValue, isRotation });
+        }
     }
+
+    // 2. วาดกล่องคำสั่งที่ผู้เล่นกดแล้วลงบนจอ
+    let userGroupedLength = 0;
     groupedCommands.forEach(cmd => {
-        const span = document.createElement('span'); span.className = `code-item ${cmd.className}`;
+        if (cmd.isRotation && cmd.value === 0) return;
+
+        const span = document.createElement('span');
+        // ✅ เพิ่มคลาส actual-code เพื่อใช้เป็นจุดอ้างอิง
+        span.className = `code-item actual-code ${cmd.className}`;
         span.innerText = cmd.isRotation ? `${cmd.type}(${cmd.value}°)` : `${cmd.type}(${cmd.value})`;
         codeBox.appendChild(span);
+        userGroupedLength++;
     });
-    codeBox.scrollLeft = codeBox.scrollWidth;
+
+    // 3. คำนวณความยาวเฉลย
+    let targetGroupedLength = 0;
+    if (validPaths && validPaths.length > 0) {
+        const targetPath = validPaths[0];
+        let targetAngle = 0;
+        let lastTargetType = "";
+
+        for (let i = 1; i < targetPath.length; i++) {
+            const current = targetPath[i];
+            const prev = targetPath[i - 1];
+
+            let dx = current.x - prev.x;
+            let dy = current.y - prev.y;
+            let angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+            if (angle < 0) angle += 360;
+
+            let type = "";
+            if (angle !== targetAngle) {
+                type = "turn";
+                targetAngle = angle;
+            } else {
+                type = "forward";
+            }
+
+            if (type !== lastTargetType) {
+                targetGroupedLength++;
+                lastTargetType = type;
+            }
+        }
+    }
+
+    // 4. วาดกล่องเส้นประ (Placeholder) ให้ครบตามจำนวนที่เหลือ
+    let placeholdersNeeded = targetGroupedLength - userGroupedLength;
+
+    if (placeholdersNeeded <= 0 && (!validPaths || validPaths.length === 0 || pathHistory.length < validPaths[0].length)) {
+        placeholdersNeeded = 1;
+    }
+
+    for (let p = 0; p < placeholdersNeeded; p++) {
+        const placeholder = document.createElement('span');
+        placeholder.className = 'code-item code-item-placeholder';
+        placeholder.innerText = 'forward(1)';
+        codeBox.appendChild(placeholder);
+    }
+
+    // ✅ 5. ระบบคำนวณและล็อกการเลื่อน (Scroll Lock)
+    requestAnimationFrame(() => {
+        const actualCodes = codeBox.querySelectorAll('.actual-code');
+        const placeholders = codeBox.querySelectorAll('.code-item-placeholder');
+
+        let focusElement = null;
+
+        if (actualCodes.length > 0) {
+            focusElement = actualCodes[actualCodes.length - 1];
+            // ยอมให้มองเห็นกล่องเส้นประ 1 กล่องถัดจากโค้ดจริง
+            if (placeholders.length > 0) {
+                focusElement = placeholders[0];
+            }
+        } else if (placeholders.length > 0) {
+            focusElement = placeholders[0]; // ถ้ายังไม่เริ่มเล่น โฟกัสกล่องแรก
+        }
+
+        if (focusElement) {
+            // คำนวณพิกัดขวาสุดที่อนุญาตให้เลื่อนไปดูได้
+            const targetScroll = focusElement.offsetLeft + focusElement.offsetWidth - codeBox.clientWidth + 20;
+
+            // อัปเดตกำแพงห้ามเลื่อน
+            maxAllowedScrollX = Math.max(0, targetScroll);
+
+            // สั่งกล่องให้เลื่อนไปยังคำสั่งล่าสุดแบบนุ่มนวล
+            codeBox.scrollTo({
+                left: maxAllowedScrollX,
+                behavior: 'smooth'
+            });
+        } else {
+            maxAllowedScrollX = 0;
+            codeBox.scrollTo({ left: 0, behavior: 'smooth' });
+        }
+    });
 }
 
 function saveState() { pathHistory.push({ x: dot.x, y: dot.y, angle: dot.angle }); redoStack = []; }
@@ -513,10 +769,6 @@ async function saveFinalData() {
 // 5. Entry Point & Listeners
 // ==========================================
 
-// ==========================================
-// 5. Entry Point & Listeners
-// ==========================================
-
 // ✅ สร้างฟังก์ชันสำหรับเล่นเสียงคำสั่ง
 function playCommandSound() {
     const cmdSound = document.getElementById('commandSound');
@@ -537,17 +789,29 @@ function playUndoRedoSound() {
     }
 }
 
+// ✅ อัปเดตปุ่มทิศทาง เพื่อแก้ไขกรอบการชนให้ครอบคลุมหน้าจอใหม่
 if (btnForward) btnForward.addEventListener('click', () => {
-    playCommandSound(); // ✅ สั่งเล่นเสียงเมื่อกด forward
+    playCommandSound();
     recordGameStart();
     const angleInDegree = dot.angle % 360;
     const normalizedAngle = angleInDegree < 0 ? angleInDegree + 360 : angleInDegree;
     const moveDist = (normalizedAngle % 90 !== 0) ? gridSize * Math.sqrt(2) : gridSize;
     const rad = ((dot.angle - 90) * Math.PI) / 180;
+
+    // คำนวณจุดต่อไปที่จะเดินไปถึง
     const nextX = dot.x + Math.round(Math.cos(rad) * moveDist);
     const nextY = dot.y + Math.round(Math.sin(rad) * moveDist);
-    if (nextX >= gridOffset.x - 1 && nextX <= canvas.width - gridOffset.x + 1 && nextY >= gridOffset.y - 1 && nextY <= canvas.height - gridOffset.y + 1) {
-        dot.x = nextX; dot.y = nextY; saveState(); draw();
+
+    // ✅ แก้ไขเงื่อนไขกรอบการเดิน: ให้เดินได้เต็มพื้นที่ Canvas 0 ถึง Max Width/Height
+    // โดยเผื่อระยะขอบไว้เล็กน้อย (buffer ประมาณ 10 px) กันจุดล้นออกนอกจอ
+    const buffer = 10;
+    if (nextX >= buffer && nextX <= canvas.width - buffer &&
+        nextY >= buffer && nextY <= canvas.height - buffer) {
+
+        dot.x = nextX;
+        dot.y = nextY;
+        saveState();
+        draw();
     }
 });
 
@@ -591,36 +855,34 @@ if (btnReset) {
         if (typeof Swal !== 'undefined') {
             Swal.fire({
                 title: 'ต้องการรีเซ็ตใหม่อีกครั้งไหม?',
-                // ... (โค้ดเดิม) ...
+                text: 'ภาพและโค้ดปัจจุบันจะถูกล้าง',
+                showCancelButton: true,
+                confirmButtonText: 'เริ่มใหม่',
+                cancelButtonText: 'ยกเลิก',
+                reverseButtons: true,
+                buttonsStyling: false, // ปิด Style เดิม
+                heightAuto: false, // ✅ สำคัญมาก! ป้องกันไม่ให้แบคกราวด์หน้าเกมพัง
+                backdrop: 'rgba(0, 0, 0, 0.6)', // ✅ ทำให้พื้นหลังดำโปร่งแสง เห็นหน้าเกมลางๆ
+                customClass: {
+                    popup: 'my-swal-popup',
+                    title: 'my-swal-title',
+                    htmlContainer: 'my-swal-text',
+                    actions: 'my-swal-actions',
+                    confirmButton: 'my-swal-confirm',
+                    cancelButton: 'my-swal-cancel'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // เล่นเสียง
                     const resetSound = document.getElementById('resetSound');
                     if (resetSound) {
                         resetSound.currentTime = 0;
                         resetSound.volume = 0.5;
                         resetSound.play().catch(e => console.log("Sound error"));
                     }
-
-                    // ✅ เพิ่มบรรทัดนี้: ล้างประวัติเพื่อไม่ให้เด้งกลับมาอีก
                     sessionStorage.removeItem('userPathHistory');
-
                     setupCanvas(startGridPos.x, startGridPos.y);
                 }
             });
-        } else {
-            if(confirm("ต้องการรีเซ็ตใหม่อีกครั้งไหม?")) {
-                const resetSound = document.getElementById('resetSound');
-                if (resetSound) {
-                    resetSound.currentTime = 0;
-                    resetSound.play();
-                }
-
-                // ✅ เพิ่มบรรทัดนี้: ล้างประวัติเพื่อไม่ให้เด้งกลับมาอีก
-                sessionStorage.removeItem('userPathHistory');
-
-                setupCanvas(startGridPos.x, startGridPos.y);
-            }
         }
     });
 }

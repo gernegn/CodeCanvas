@@ -76,8 +76,13 @@ body {
 
 .bt-back .iconify {
   font-size: 2.5rem;
-  color: #000; /* หรือสีที่ต้องการ */
+  color: #000;
   transform: translateX(8px);
+}
+
+.bt-back:hover {
+    background: #D4F2FF;
+    transform: scale(1.08);
 }
 
 .challenge {

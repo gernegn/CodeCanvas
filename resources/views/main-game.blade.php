@@ -7,7 +7,7 @@
     <title>Code Canvas</title>
     <link rel="icon" type="image/png" href="img/elements-frontend/logo-favicon.svg" />
     {{-- เชื่อม css --}}
-    <link href="{{ asset('css/main-game.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/main-game.css') }}?v={{ time() }}" rel="stylesheet">
 
     <!-- Iconify CDN -->
     <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
@@ -51,6 +51,18 @@
             <div class="sec-content-left">
                 <div class="canvas">
                     <canvas id="gameCanvas"></canvas>
+
+                    {{-- วงกลมบอกเปอร์เซ็นต์ (วงสีแดง) --}}
+                    <div id="progressCircle" class="progress-circle">
+                        <div class="inner-circle">0%</div>
+                    </div>
+
+                    {{-- กล่องข้อความให้กำลังใจ (แสดงเหนือเปอร์เซ็นต์) --}}
+                    <div id="cheerTooltip" class="cheer-tooltip">อีกนิดเดียว คุณทำได้ !</div>
+
+                    {{-- กล่องข้อความแจ้งเตือนเดินผิด (วงสีฟ้า) --}}
+                    <div id="errorTooltip" class="error-tooltip">เอ๊ะ มีอะไรผิดพลาดไหมนะ?</div>
+
                     <div class="bt-options">
                         <div class="bt-undo">
                             <span class="iconify" data-icon="pajamas:go-back"></span>
@@ -80,18 +92,19 @@
 
                 <div class="bt-command">
                     <div class="bt-code-grid">
-                        <div class="bt-item bt-forward-item" onclick="document.querySelector('.forward').click()">
+                        {{-- ลบ onclick ออกทั้งหมด --}}
+                        <div class="bt-item bt-forward-item">
                             <button class="forward">forward()</button>
                             <img class="forward-img" src="{{ asset('img/elements-frontend/forward.png') }}"
                                 alt="forward">
                         </div>
 
-                        <div class="bt-item bt-left-item" onclick="document.querySelector('.moveleft').click()">
+                        <div class="bt-item bt-left-item">
                             <img src="{{ asset('img/elements-frontend/moveLeft.png') }}" alt="moveLeft">
                             <button class="moveleft">moveLeft()</button>
                         </div>
 
-                        <div class="bt-item bt-right-item" onclick="document.querySelector('.moveright').click()">
+                        <div class="bt-item bt-right-item">
                             <img src="{{ asset('img/elements-frontend/moveRight.png') }}" alt="moveRight">
                             <button class="moveright">moveRight()</button>
                         </div>

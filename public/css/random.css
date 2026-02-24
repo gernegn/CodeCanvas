@@ -142,21 +142,22 @@ body {
     font-size: 2.2rem;
     font-weight: 500;
     color: #6b3f27;
-    transition: transform 0.1s ease-in-out;
+    /* ปรับ transition ให้นุ่มขึ้นตอนข้อความเปลี่ยน */
+    transition: all 0.2s ease-in-out;
 }
 
 /* เพิ่มคลาสนี้ผ่าน JS ตอนกำลังสุ่ม */
 .randomizing {
-    animation: bounce 0.1s infinite;
+    /* ปรับเวลาจาก 0.1s เป็น 0.3s ให้สมูทขึ้น ไม่อ่านแล้วปวดตา */
+    animation: smooth-random 0.3s ease-in-out infinite;
 }
 
-@keyframes bounce {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+/* เปลี่ยนจาก bounce แข็งๆ เป็นการสั่นและเบลอเบาๆ เหมือนกำลังปั่นสล็อต */
+@keyframes smooth-random {
+    0%   { transform: scale(1); filter: blur(0px); opacity: 1; }
+    50%  { transform: scale(1.08); filter: blur(1px); opacity: 0.8; }
+    100% { transform: scale(1); filter: blur(0px); opacity: 1; }
 }
-
-/* ... (CSS เดิม) ... */
 
 /* [เพิ่มใหม่] Styles สำหรับ Modal Popup */
 .modal {
