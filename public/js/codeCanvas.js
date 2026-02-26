@@ -32,8 +32,8 @@ const btnConfirm = document.querySelector('.confirm');
 const customModal = document.getElementById('customSuccessModal');
 
 // --- Game Variables ---
-const gridSize = window.innerWidth >= 1920 ? 20 : 25;
-const dotSize = window.innerWidth >= 1920 ? 1.5 : 2; // ลดขนาดจุดพื้นหลังในจอทีวี
+const gridSize = window.innerWidth >= 1920 ? 20 : 25; // ปรับของทีวีจาก 20 เป็น 16 เพื่อให้ภาพมีระยะห่างจากขอบจอมากขึ้นconst dotSize = window.innerWidth >= 1920 ? 1.5 : 2; // ลดขนาดจุดพื้นหลังในจอทีวี
+const dotSize = window.innerWidth >= 1920 ? 1.5 : 2;
 const minPadding = 15;
 let dot = { x: 0, y: 0, angle: 0 };
 let gridOffset = { x: 0, y: 0 };
@@ -204,11 +204,11 @@ function setupCanvas(gridX, gridY) {
     gridOffset.x = (canvas.width / 2) - (drawingCenterX * gridSize);
     gridOffset.y = (canvas.height / 2) - (drawingCenterY * gridSize);
 
-    // ✅ 3. ปรับเลื่อนลงแยกระหว่างทีวีและหน้าจอคอม
+    // ✅ 3. ปรับเลื่อนให้อยู่ตรงกลาง ไม่เทลงล่างเกินไปสำหรับทีวี
     if (window.innerWidth >= 1920) {
-        gridOffset.y += 120; // ดันลงมาสำหรับหน้าจอทีวี (ปรับเพิ่มลดตัวเลขได้ครับ)
+        gridOffset.y += 20; // ✅ ลดจาก 120 เหลือ 20 เพื่อให้ภาพอยู่กึ่งกลางสมดุล ไม่กองอยู่ข้างล่าง
     } else {
-        gridOffset.y += 20;  // ดันลงมาสำหรับหน้าจอคอมปกติ
+        gridOffset.y += 20;  // หน้าจอคอมปกติ
     }
 
     // กำหนดตำแหน่งเริ่มต้นผู้เล่น (บังคับจุดเริ่มจากโค้ดสัมพัทธ์)
@@ -373,10 +373,10 @@ function updateProgressAndError(percent, hasError) {
         // เช็คเงื่อนไขและเปลี่ยนข้อความตามเปอร์เซ็นต์ที่กำหนด
         if (percent === 50) {
             message = "มาถึงครึ่งทางแล้ว สู้ๆ !";
-        } else if (percent === 80) {
+        } else if (percent === 75) {
             message = "อีกนิดเดียว คุณทำได้ !";
         } else if (percent === 100) {
-            message = "เย้! สำเร็จแล้ว !";
+            message = "เย้! สำเร็จแล้ว";
         }
 
         if (message !== "") {

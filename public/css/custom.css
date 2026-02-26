@@ -260,7 +260,6 @@ body {
     color: #aaa;
     font-weight: 400;
 }
-
 .box-color {
     width: 100%;
     display: flex;
@@ -272,20 +271,27 @@ body {
 }
 
 .circle-color-item {
-    width: 4rem; /* 5rem -> 4rem เล็กลงนิดหน่อย */
+    width: 4rem;
     height: 4rem;
-    border: 0.3rem solid #fff;
+    border: 0.3rem solid #fff; /* ตั้งค่าขอบเริ่มต้นเป็นสีขาว */
     border-radius: 50%;
     cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.circle-color-item:hover { transform: scale(1.1); }
+/* Hover: ลอยขึ้นเบาๆ และขอบยังคงเป็นสีขาว */
+.circle-color-item:hover {
+    transform: translateY(-4px) scale(1.05);
+    border-color: #fff !important; /* บังคับขอบขาว */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Active: ขยายใหญ่ขึ้นนิดหน่อย ขอบยังคงเป็นสีขาว และเพิ่มเงาให้ดูเด่นขึ้นแทน */
 .circle-color-item.active {
-    border-color: #333;
     transform: scale(1.15);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-color: #fff !important; /* บังคับขอบขาว */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3); /* ใช้เงาเข้มขึ้นเพื่อบอกว่าถูกเลือกอยู่ */
 }
 
 .box-texture {
@@ -301,7 +307,7 @@ body {
 }
 
 .texture-btn {
-    width: 8.5rem; /* 10.1rem -> 8rem */
+    width: 8.5rem;
     height: 3.5rem;
     border: 3px solid #e0e0e0;
     border-radius: 0.8rem;
@@ -310,13 +316,23 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.texture-btn:hover { border-color: #ffd700; }
+/* Hover: ปุ่มลอยขึ้นและเปลี่ยนขอบเป็นสีฟ้าธีม */
+.texture-btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    border-color: #31BEF3;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(49, 190, 243, 0.2);
+}
+
+/* Active: ยุบตัวลงเหมือนถูกกด พร้อมแสงเรืองรองรอบปุ่ม */
 .texture-btn.active {
-    border-color: #ffaa00;
-    box-shadow: 0 0 0 2px #ffaa0033;
+    border-color: #31BEF3;
+    background-color: #f4fcff; /* ปรับพื้นหลังนิดๆ ให้ปุ่ม None ดูรู้ว่าถูกเลือก */
+    transform: scale(1.1);
+    box-shadow: 0 0 0 4px rgba(49, 190, 243, 0.3);
 }
 
 .box-texture-none {

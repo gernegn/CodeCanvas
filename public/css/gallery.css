@@ -233,7 +233,6 @@ body {
 
 .gallery-bt-prev, .gallery-bt-next {
     background: white;
-    border: 2px solid #e0e0e0; /* เพิ่มขอบให้ดูเป็นปุ่มชัดขึ้น */
     padding: 0;
     cursor: pointer;
     width: 3.5rem;
@@ -253,6 +252,19 @@ body {
 
 .gallery-bt-prev .iconify {
     transform: translateX(8px);
+}
+
+.gallery-bt-prev:hover, .gallery-bt-next:hover {
+    background-color: #D4F2FF; /* เปลี่ยนพื้นหลังเป็นสีฟ้าอ่อน */
+    border-color: #D4F2FF;     /* เปลี่ยนสีเส้นขอบให้เนียนไปกับสีพื้นหลัง */
+    transform: scale(1.08);    /* เด้งขยายขึ้นนิดนึงแบบเดียวกับปุ่ม Back */
+    box-shadow: 0 4px 10px rgba(212, 242, 255, 0.5); /* เพิ่มเงาสีฟ้าอ่อนๆ ให้ดูมีมิติ */
+}
+
+/* ตอนคลิกค้างให้ปุ่มยุบลง (Active) จะได้ฟีลลิ่งการกดจริงๆ */
+.gallery-bt-prev:active, .gallery-bt-next:active {
+    transform: scale(0.95);
+    box-shadow: none;
 }
 
 .text-num {

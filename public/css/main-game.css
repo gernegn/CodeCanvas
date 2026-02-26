@@ -79,6 +79,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s;
 }
 
 .bt-back .iconify {
@@ -255,14 +256,13 @@ body {
 
 /* กล่องโค้ดเส้นประว่างๆ (Placeholder) */
 .code-item-placeholder {
-    border: 0.15rem dashed #ccc !important;
+    border: 2px dashed #ccc !important; /* ปรับเส้นประให้คมชัดขึ้น */
     background-color: transparent !important;
-    color: transparent !important;
-    min-width: 12.5rem; /* แทน 200px */
-    height: 3.75rem;    /* แทน 60px */
+    color: transparent !important; /* ซ่อนตัวหนังสือไว้เพื่อดึงขนาดกล่อง */
     box-sizing: border-box;
     box-shadow: none !important;
     border-radius: 50px;
+    height: 2.8rem !important;
 }
 
 /* =========================================
@@ -446,9 +446,12 @@ button, .bt-item, .code-box, .challenge { user-select: none; -webkit-user-select
 .my-swal-popup {
     background-color: #fff !important;
     border-radius: 20px !important;
-    padding: 4rem 3rem 3rem 3rem !important;
+    padding: 3rem 2.5rem 2.5rem 2.5rem !important;
     font-family: 'IBM Plex Sans Thai', sans-serif !important;
-    width: 800px !important;
+
+    /* ✅ เปลี่ยนจาก 800px เป็น rem เพื่อให้ขนาดพอดีบน Desktop และขยายบนทีวี */
+    width: 40rem !important;
+    max-width: 90vw !important; /* กันล้นขอบจอในกรณีจอเล็กมากๆ */
     box-shadow: 0 10px 40px rgba(0,0,0,0.2) !important;
 }
 
@@ -464,7 +467,7 @@ button, .bt-item, .code-box, .challenge { user-select: none; -webkit-user-select
     color: #000 !important;
     font-size: 1.6rem !important;
     font-weight: 500 !important;
-    margin: 0 0 2rem 0 !important;
+    margin: 0 0 2.5rem 0 !important;
     padding: 0 !important;
 }
 
@@ -477,43 +480,45 @@ button, .bt-item, .code-box, .challenge { user-select: none; -webkit-user-select
     margin: 0 !important;
 }
 
+/* ✅ รวม Style ของปุ่มทั้ง 2 ไว้ด้วยกันเพื่อลดโค้ดซ้ำ และเปลี่ยนจาก px เป็น rem */
+.my-swal-cancel, .my-swal-confirm {
+    border-radius: 12px !important;
+    font-size: 1.6rem !important;
+    font-weight: 500 !important;
+    font-family: inherit !important;
+
+    /* ✅ ปรับความกว้างและสูงให้พอดี ไม่เทอะทะแบบ 100px */
+    width: 12rem !important;
+    height: 4.5rem !important;
+
+    margin: 0 !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; /* เพิ่มเอฟเฟกต์สมูทตอน Hover */
+}
+
+/* ปุ่มยกเลิก */
 .my-swal-cancel {
     background-color: #fff !important;
     color: #000 !important;
     border: 2px solid #6daafc !important;
-    border-radius: 12px !important;
-    font-size: 1.6rem !important;
-    font-weight: 500 !important;
-    font-family: inherit !important;
-    width: 200px !important;
-    height: 100px !important;
-    margin: 0 !important;
-    box-shadow: none !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
 }
-.my-swal-cancel:hover { background-color: #f0f8ff !important; }
+.my-swal-cancel:hover {
+    transform: scale(1.05) !important;
+}
 
+/* ปุ่มยืนยัน (เริ่มใหม่) */
 .my-swal-confirm {
     background-color: #6daafc !important;
     color: #000 !important;
     border: 2px solid #6daafc !important;
-    border-radius: 12px !important;
-    font-size: 1.6rem !important;
-    font-weight: 500 !important;
-    font-family: inherit !important;
-    width: 200px !important;
-    height: 100px !important;
-    margin: 0 !important;
-    box-shadow: none !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
 }
-.my-swal-confirm:hover { background-color: #589cf2 !important; border-color: #589cf2 !important;}
+.my-swal-confirm:hover {
+    transform: scale(1.05) !important;
+}
 
 /* =========================================
    UI الإضافเพิ่มเติม (เปอร์เซ็นต์, แจ้งเตือน, กรอบว่าง)
