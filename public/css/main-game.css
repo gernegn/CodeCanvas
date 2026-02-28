@@ -80,6 +80,11 @@ body {
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .bt-back .iconify {
@@ -101,6 +106,11 @@ body {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .sec-head img {
@@ -108,6 +118,11 @@ body {
     height: 4rem;
     object-fit: cover;
     cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* =========================================
@@ -163,6 +178,11 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .bt-options {
@@ -186,12 +206,25 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .bt-undo .iconify, .bt-redo .iconify {
     font-size: 2rem;
     color: #ca6e3c;
     transition: color 0.2s;
+}
+
+.bt-reset {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .reset {
@@ -210,6 +243,11 @@ body {
     justify-content: center;
     transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     font-family: inherit;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .reset:hover, .bt-undo:hover, .bt-redo:hover {
@@ -421,21 +459,61 @@ body {
     z-index: 10;
     transition: transform 0.2s, color 0.2s;
     line-height: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .close-tutorial:hover { color: #000; transform: scale(1.1); }
 
-.tutorial-title { font-family: 'IBM Plex Sans Thai', sans-serif; font-size: 2rem; color: #333; margin: 0.5rem 0 0.5rem 0; font-weight: 600; }
+.tutorial-title {
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-size: 2rem;
+    color: #333;
+    margin: 0.5rem 0 0.5rem 0;
+    font-weight: 600;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .slider-container { display: flex; align-items: center; justify-content: center; width: 100%; flex-grow: 1; position: relative; gap: 10px; margin-bottom: 5px; }
 .slider-wrapper { width: 90%; height: auto; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
 
 /* ✅ 3. ลด max-height ของรูปลง เพื่อให้พอดีกับกล่องที่เตี้ยลง */
-.tutorial-slide { display: none; width: 83%; height: 83%; object-fit: contain; border-radius: 1.2rem; }
+.tutorial-slide {
+    display: none;
+    width: 83%;
+    height: 83%;
+    object-fit: contain;
+    border-radius: 1.2rem;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .tutorial-slide.active { display: block; animation: fadeEffect 0.5s; }
 
 @keyframes fadeEffect { from {opacity: 0.4;} to {opacity: 1;} }
 .slider-btn { background: none; border: none; cursor: pointer; color: #aaa; font-size: 3rem; padding: 0; transition: transform 0.2s; display: flex; align-items: center; z-index: 5; }
 .slider-btn:hover { color: #333; transform: scale(1.1); }
-.pagination-dots { text-align: center; margin-bottom: 10px; height: 20px; }
+
+.pagination-dots {
+    text-align: center;
+    margin-bottom: 10px;
+    height: 20px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .dot { cursor: pointer; height: 1rem; width: 1rem; margin: 0 6px; background-color: #ddd; border-radius: 50%; display: inline-block; transition: background-color 0.3s ease; }
 .dot.active, .dot:hover { background-color: #27AE60; }
 button, .bt-item, .code-box, .challenge { user-select: none; -webkit-user-select: none; }
@@ -486,11 +564,8 @@ button, .bt-item, .code-box, .challenge { user-select: none; -webkit-user-select
     font-size: 1.6rem !important;
     font-weight: 500 !important;
     font-family: inherit !important;
-
-    /* ✅ ปรับความกว้างและสูงให้พอดี ไม่เทอะทะแบบ 100px */
     width: 12rem !important;
     height: 4.5rem !important;
-
     margin: 0 !important;
     box-shadow: none !important;
     cursor: pointer !important;
@@ -549,6 +624,11 @@ button, .bt-item, .code-box, .challenge { user-select: none; -webkit-user-select
     color: #000;       /* ตัวหนังสือสีดำเข้ม */
     font-family: 'IBM Plex Sans Thai', sans-serif;
     z-index: 16;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* ✅ กล่องข้อความให้กำลังใจ (Cheer Tooltip) */
@@ -566,12 +646,16 @@ button, .bt-item, .code-box, .challenge { user-select: none; -webkit-user-select
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     z-index: 25;
     pointer-events: none;
-
     /* ซ่อนไว้เป็นค่าเริ่มต้น */
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px); /* ให้มีแอนิเมชันเด้งขึ้น */
     transition: all 0.3s ease-in-out;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* ติ่งลูกศรชี้ลงของกล่องให้กำลังใจ */

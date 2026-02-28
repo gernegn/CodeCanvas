@@ -37,7 +37,7 @@
             <div class="sec-content-left">
                 <div class="content-topic">
                     <h2>คลังภาพวาด / ชิ้นงานที่ {{ $data->User_ID }}</h2>
-                    <h1>{{ $data->Challenge }}</h1>
+                    <h1>{{ $data->User_Name }}</h1>
                 </div>
                 <div class="content-img-result">
                     <img src="{{ asset('img/result-image/' . $data->Image) }}" alt="{{ $data->Challenge }}"

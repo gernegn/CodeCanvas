@@ -10,10 +10,8 @@
     {{-- เชื่อม css --}}
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
 
-    <!-- Iconify CDN -->
     <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
 
-    <!-- IBM Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -23,21 +21,27 @@
 
 <body>
     <div class="container">
+        <div class="anim-bg-container">
+            <img src="{{ asset('img/elements-frontend/cloud-white.png') }}" class="anim-cloud cloud-1" alt="cloud">
+            <img src="{{ asset('img/elements-frontend/cloud-light.png') }}" class="anim-cloud cloud-2" alt="cloud">
+            <img src="{{ asset('img/elements-frontend/cloud-medium.png') }}" class="anim-cloud cloud-3" alt="cloud">
+            <img src="{{ asset('img/elements-frontend/cloud-dark.png') }}" class="anim-cloud cloud-4" alt="cloud">
+
+            <img src="{{ asset('img/elements-frontend/1clover.png') }}" class="anim-leaf leaf-1" alt="leaf">
+            <img src="{{ asset('img/elements-frontend/1clover.png') }}" class="anim-leaf leaf-2" alt="leaf">
+            <img src="{{ asset('img/elements-frontend/1clover.png') }}" class="anim-leaf leaf-3" alt="leaf">
+            <img src="{{ asset('img/elements-frontend/1clover.png') }}" class="anim-leaf leaf-4" alt="leaf">
+        </div>
+
         <div class="bg-grass">
             <img src="{{ asset('img/elements-frontend/grass-03.png') }}" alt="Grass02" />
         </div>
-        <!-- end bg-grass -->
-
         <div class="bg-cloud">
             <img src="{{ asset('img/elements-frontend/cloud-02.png') }}" alt="cloud" />
         </div>
-        <!-- end bg-cloud -->
-
         <div class="bg-wink">
             <img src="{{ asset('img/elements-frontend/wink.png') }}" alt="wink" />
         </div>
-        <!-- end bg-wink -->
-
         <div class="sec-head">
             <div class="btn-box">
                 <button class="bt-tutorial" onclick="window.location.href='{{ route('game.tutorial') }}'">
@@ -48,8 +52,6 @@
                 </button>
             </div>
         </div>
-        <!-- end sec-head -->
-
         <div class="sec-content">
             <div class="box-content-main">
                 <div class="box-board">
@@ -80,13 +82,10 @@
                         </div>
                     </div>
                 </div>
-                <!-- end box-main -->
             </div>
         </div>
-        <!-- end sec-content -->
     </div>
 
-    <!-- Script -->
     <script src="{{ asset('js/codeCanvas.js') }}?v={{ time() }}"></script>
 
     {{-- ✅ 1. เพิ่มแท็กเสียงสำหรับปุ่มทั่วไปในหน้า Home --}}

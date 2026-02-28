@@ -2,6 +2,30 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/admin-gamegeneral.css') }}">
+
+    <style>
+        /* ล็อคหน้าจอหลักไม่ให้เลื่อน */
+        .content-wrapper {
+            overflow: hidden !important;
+        }
+
+        /* อนุญาตให้กล่องตารางเลื่อนขึ้นลงได้ */
+        .table-card {
+            flex: 1;
+            overflow-y: auto !important;
+            min-height: 0;
+        }
+
+        /* ล็อคหัวตารางให้อยู่กับที่ (Sticky Header) */
+        .custom-table th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #fff;
+            box-shadow: 0 2px 0px #f0f0f0;
+            /* สร้างเส้นขอบจำลองตอนเลื่อน */
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -82,7 +106,7 @@
                         .then(data => {
                             if (data.success) {
                                 console.log("Update Success: ID " + gameId + " to " +
-                                newStatus);
+                                    newStatus);
                                 // อาจจะใส่ Alert หรือ Toast แจ้งเตือนตรงนี้ก็ได้
                             } else {
                                 alert("Error updating status!");

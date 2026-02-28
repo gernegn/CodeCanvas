@@ -26,7 +26,7 @@
                 <form method="POST" action="{{ route('admin.login.submit') }}">
                     @csrf <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email" placeholder="codecanvas@su.ac.th" required
+                        <input type="email" name="email" placeholder="codeCanvas_official@gmail.com" required
                             value="{{ old('email') }}">
                         @error('email')
                             <div class="error-text">{{ $message }}</div>

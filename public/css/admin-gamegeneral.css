@@ -117,3 +117,16 @@ input:checked + .slider {
 input:checked + .slider:before {
     transform: translateX(26px);
 }
+
+/* =========================================
+   Responsive สำหรับ TV (1920px ขึ้นไป)
+========================================= */
+@media screen and (min-width: 1920px) {
+    .custom-table th { padding: 35px; }
+    .custom-table td { padding: 30px; }
+
+    /* ขยายปุ่ม Toggle เปิด-ปิดให้ใหญ่ขึ้น */
+    .toggle-switch { width: 80px; height: 45px; }
+    .slider:before { height: 35px; width: 35px; left: 5px; bottom: 5px; }
+    input:checked + .slider:before { transform: translateX(35px); }
+}

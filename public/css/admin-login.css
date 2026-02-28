@@ -5,7 +5,7 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'IBM Plex Sans Thai', sans-serif;
             height: 100vh;
             width: 100%;
             overflow: hidden;
@@ -30,7 +30,6 @@
             overflow: hidden;
             /* width: 34.18rem; */
             border-radius: 0 25px 25px 0;
-
         }
 
         /* กราฟิกเส้นๆ (ถ้ามีรูปให้ใส่ตรงนี้) */
@@ -89,6 +88,7 @@
 
         input[type="email"],
         input[type="password"] {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
             width: 100%;
             padding: 15px 20px;
             border-radius: 50px; /* ขอบมนแบบแคปซูล */
@@ -125,6 +125,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: 0.3s;
+            font-family: 'IBM Plex Sans Thai', sans-serif;
         }
 
         .btn-login:hover {
@@ -140,3 +141,16 @@
             margin-top: 5px;
             padding-left: 15px;
         }
+
+/* =========================================
+   Responsive สำหรับ TV (1920px ขึ้นไป)
+========================================= */
+@media screen and (min-width: 1920px) {
+    .login-box { max-width: 550px; }
+    h1.title { margin-bottom: 40px; font-size: 3rem; }
+    p.subtitle { margin-bottom: 50px; font-size: 1.25rem; }
+    .form-group { margin-bottom: 35px; }
+    .form-group label { font-size: 1.25rem; }
+    input[type="email"], input[type="password"] { padding: 20px 25px; font-size: 1.25rem; }
+    .btn-login { padding: 20px; margin-top: 30px; font-size: 1.25rem; }
+}

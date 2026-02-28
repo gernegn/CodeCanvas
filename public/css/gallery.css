@@ -243,6 +243,7 @@ body {
     justify-content: center;
     transition: all 0.2s;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: none; /* ล้างเส้นขอบสีเทาของเบราว์เซอร์ทิ้ง */
 }
 
 .gallery-bt-prev .iconify, .gallery-bt-next .iconify {
@@ -256,7 +257,6 @@ body {
 
 .gallery-bt-prev:hover, .gallery-bt-next:hover {
     background-color: #D4F2FF; /* เปลี่ยนพื้นหลังเป็นสีฟ้าอ่อน */
-    border-color: #D4F2FF;     /* เปลี่ยนสีเส้นขอบให้เนียนไปกับสีพื้นหลัง */
     transform: scale(1.08);    /* เด้งขยายขึ้นนิดนึงแบบเดียวกับปุ่ม Back */
     box-shadow: 0 4px 10px rgba(212, 242, 255, 0.5); /* เพิ่มเงาสีฟ้าอ่อนๆ ให้ดูมีมิติ */
 }
@@ -276,9 +276,18 @@ body {
     text-align: center;
 }
 
+.bg-cloud, .bt-back, .challenge, .sec-head img, .text-num, .box-result, .gallery-bt-next, .gallery-bt-prev {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 /* =========================================
    5. Responsive สำหรับ TV (แบบเดียวกับ Custom)
 ========================================= */
 @media screen and (min-width: 1920px) { html { font-size: 22px; } }
 @media screen and (min-width: 2560px) { html { font-size: 30px; } }
 @media screen and (min-width: 3840px) { html { font-size: 42px; } }
+

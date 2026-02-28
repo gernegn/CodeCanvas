@@ -226,6 +226,14 @@ body {
     font-size: 1.5rem;
 }
 
+.content-topic h1, .content-topic h2, .sec-head img, .code-panel, .content-img-result img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 /* Custom Scrollbar */
 .code-panel::-webkit-scrollbar { width: 8px; }
 .code-panel::-webkit-scrollbar-track { background: transparent; margin: 20px 0; }

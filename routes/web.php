@@ -48,15 +48,12 @@ Route::post('/admin/login', [AdminAuthController::class, 'login'])
 // BackEnd (ต้อง login ก่อน)
 Route::middleware('auth:admin')->prefix('admin')->group(function () {
 
-    // ✅ แบบใหม่: เรียกใช้ฟังก์ชัน index ใน AdminController (เพื่อคำนวณตัวเลข)
     Route::get('/dashboard', [AdminController::class, 'index'])
         ->name('admin.dashboard');
 
-    // ✅ แก้ไขตรงนี้: เปลี่ยนจาก function() เป็น [AdminController::class, 'gameGeneral']
     Route::get('/game-general', [AdminController::class, 'gameGeneral'])
         ->name('admin.game-general');
 
-    // ค้นหาบรรทัด game-code เดิม แล้วแก้เป็น:
     Route::get('/game-code', [AdminController::class, 'gameCode'])
         ->name('admin.game-code');
 
@@ -75,7 +72,7 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::post('/game-general/update-status', [AdminController::class, 'updateGameStatus'])
         ->name('admin.game.update-status');
 
-    // เพิ่ม Route สำหรับลบ
+    // Route สำหรับลบ
     Route::delete('/user-code/delete/{id}', [AdminController::class, 'deleteUserCode'])
         ->name('admin.user-code.delete');
 });

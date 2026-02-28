@@ -70,6 +70,11 @@ body {
     top: 50vh;
     left: 50%;
     transform: translate(-50%, -50%);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* =========================================
@@ -108,6 +113,11 @@ body {
     align-items: center;
     justify-content: center;
     transition: transform 0.2s;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .bt-back .iconify {
@@ -128,6 +138,11 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%); /* จัดหัวข้อให้อยู่กึ่งกลางหน้าจอพอดีเป๊ะ */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .sec-head img {
@@ -135,6 +150,11 @@ body {
     height: 4rem;
     object-fit: cover;
     cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* =========================================
@@ -183,6 +203,11 @@ body {
     font-size: 1.8rem;
     font-weight: 500;
     flex-shrink: 0; /* ✅ สำคัญมาก: ป้องกันไม่ให้วงกลมถูกบีบเป็นวงรีเมื่อหน้าจอแคบลง */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .tutorial-text {
@@ -191,6 +216,11 @@ body {
     font-weight: 400;
     line-height: 1.5; /* เพิ่มระยะห่างบรรทัดให้อ่านง่ายขึ้น */
     margin-top: 0.1rem; /* ขยับข้อความลงมานิดนึงให้ตรงกับวงกลมตัวเลข */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* =========================================

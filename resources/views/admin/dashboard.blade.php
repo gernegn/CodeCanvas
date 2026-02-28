@@ -96,17 +96,13 @@
                         <div class="rank-item">
                             <span>{{ $calcPercent($rank2) }}%</span>
                             <small>{{ $rank2->game->Challenge ?? '-' }}</small>
-
-                            <div class="rank-bar orange"
-                                style="height: {{ $calcPercent($rank2) * 2 }}px; min-height: 20px;">
+                            <div class="rank-bar orange">
                                 <span>02</span>
                             </div>
                         </div>
 
                         <div class="rank-item highlight">
-                            {{-- ตัวเลขตรงนี้ปิดไว้เพราะโชว์ข้างบนแล้ว --}}
-
-                            <div class="rank-bar pink" style="height: {{ $calcPercent($rank1) * 2 }}px; min-height: 30px;">
+                            <div class="rank-bar pink">
                                 <span>01</span>
                             </div>
                         </div>
@@ -114,9 +110,7 @@
                         <div class="rank-item">
                             <span>{{ $calcPercent($rank3) }}%</span>
                             <small>{{ $rank3->game->Challenge ?? '-' }}</small>
-
-                            <div class="rank-bar green"
-                                style="height: {{ $calcPercent($rank3) * 2 }}px; min-height: 20px;">
+                            <div class="rank-bar green">
                                 <span>03</span>
                             </div>
                         </div>

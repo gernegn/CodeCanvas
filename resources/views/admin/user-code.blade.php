@@ -2,6 +2,38 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/admin-usercode.css') }}">
+
+    <style>
+        /* ล็อคหน้าจอหลักไม่ให้เลื่อน */
+        .content-wrapper {
+            overflow: hidden !important;
+        }
+
+        /* ให้การ์ดคลุมพื้นที่ที่เหลือทั้งหมด */
+        .table-card {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        /* อนุญาตให้เลื่อนเฉพาะเนื้อหาในตาราง */
+        .table-responsive {
+            flex: 1;
+            overflow-y: auto !important;
+            min-height: 0;
+            padding-right: 5px;
+        }
+
+        /* ล็อคหัวตารางให้อยู่กับที่ (Sticky Header) */
+        .custom-table th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #fff;
+            box-shadow: 0 2px 0px #f0f0f0;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -43,7 +75,7 @@
 
                 <thead>
                     <tr>
-                        <th width="5%">ID</th>
+                        <th width="5%">No.</th>
                         <th width="50%" class="th-multiline">
                             Sort Code
                             <span>(Command, Time)</span>

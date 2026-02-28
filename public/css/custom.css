@@ -78,6 +78,11 @@ body {
   align-items: center;      /* กึ่งกลางแนวตั้ง */
   justify-content: center;
   transition: transform 0.2s;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .bt-back .iconify {
@@ -96,6 +101,11 @@ body {
     font-size: 2.5rem;
     margin: 0;
     /* ✅ บังคับให้หัวข้ออยู่กึ่งกลางหน้าจอ 100% */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .sec-head img {
@@ -103,6 +113,11 @@ body {
     height: 4rem;
     object-fit: cover;
     cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* =========================================
@@ -260,6 +275,28 @@ body {
     color: #aaa;
     font-weight: 400;
 }
+
+/* สไตล์ข้อความแจ้งเตือนตัวอักษรเกิน */
+.limit-alert {
+    color: #FF4D4D; /* สีแดง */
+    font-size: 1rem;
+    margin: 0.5rem 0 0 0.5rem;
+    font-weight: 500;
+    display: none; /* ซ่อนไว้เริ่มต้น */
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ปรับแต่งเมื่อ Input ผิดพลาด (ใส่สีขอบแดง) */
+#userNameInput.is-invalid {
+    border-color: #FF4D4D !important;
+    box-shadow: 0 0 0 4px rgba(255, 77, 77, 0.25) !important;
+}
+
 .box-color {
     width: 100%;
     display: flex;
@@ -277,21 +314,21 @@ body {
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 /* Hover: ลอยขึ้นเบาๆ และขอบยังคงเป็นสีขาว */
 .circle-color-item:hover {
     transform: translateY(-4px) scale(1.05);
     border-color: #fff !important; /* บังคับขอบขาว */
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
 }
 
 /* Active: ขยายใหญ่ขึ้นนิดหน่อย ขอบยังคงเป็นสีขาว และเพิ่มเงาให้ดูเด่นขึ้นแทน */
 .circle-color-item.active {
     transform: scale(1.15);
     border-color: #fff !important; /* บังคับขอบขาว */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3); /* ใช้เงาเข้มขึ้นเพื่อบอกว่าถูกเลือกอยู่ */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.05); /* ใช้เงาเข้มขึ้นเพื่อบอกว่าถูกเลือกอยู่ */
 }
 
 .box-texture {
@@ -322,17 +359,16 @@ body {
 /* Hover: ปุ่มลอยขึ้นและเปลี่ยนขอบเป็นสีฟ้าธีม */
 .texture-btn:hover {
     transform: translateY(-4px) scale(1.05);
-    border-color: #31BEF3;
+    border-color: #ff98b8;
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(49, 190, 243, 0.2);
 }
 
 /* Active: ยุบตัวลงเหมือนถูกกด พร้อมแสงเรืองรองรอบปุ่ม */
 .texture-btn.active {
-    border-color: #31BEF3;
-    background-color: #f4fcff; /* ปรับพื้นหลังนิดๆ ให้ปุ่ม None ดูรู้ว่าถูกเลือก */
-    transform: scale(1.1);
-    box-shadow: 0 0 0 4px rgba(49, 190, 243, 0.3);
+    border-color: #ff98b8 ;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px rgba(255, 152, 184, 0.25);
 }
 
 .box-texture-none {
@@ -497,4 +533,11 @@ body {
     background-color: #ff98b8 !important;
     color: #fff !important;
     font-weight: bold !important;
+}
+
+.wink-yellow-01, .wink-yellow-02, #customResultImg, .topic-name p, .topic-color p, .topic-texture p, .confirm, .modal-header-text h2, .modal-header-text h1, .result-image-box, .qr-box, .qr-text p, .btn-gallery-green, .userNameInput, .userNameInput {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;-ms-user-select: none;
+    user-select: none;
 }

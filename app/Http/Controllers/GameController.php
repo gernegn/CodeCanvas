@@ -14,7 +14,7 @@ class GameController extends Controller
     public function getAllChallenges()
     {
         $challenges = DB::table('ccv_GameGeneral')
-            ->where('Status', 1) // เพิ่มเงื่อนไขนี้
+            ->where('Status', 1)
             ->get();
 
         return response()->json($challenges);
@@ -85,7 +85,6 @@ class GameController extends Controller
         if ($id) {
             // [กรณีที่ 2] UPDATE: ทำงานตอนกดปุ่ม "ยืนยัน" (หน้าตกแต่ง)
 
-            // ✅✅ แก้ไขจุดตาย: ชื่อคอลัมน์ใน DB คือ 'UserCode_ID' (ไม่มี ccv_)
             // แต่ตัวแปรที่รับมาเราตั้งชื่อว่า $id (ซึ่งรับมาจาก input ccv_UserCode_ID)
             DB::table('ccv_UserCode')
                 ->where('UserCode_ID', $id) // <-- ต้องใช้ชื่อคอลัมน์จริงใน DB
@@ -120,7 +119,7 @@ class GameController extends Controller
         try {
             $formattedTime = date('Y-m-d H:i:s');
 
-            // ✅ ตรวจสอบค่า Image ถ้าเป็น null ให้ใส่ค่า Default ป้องกัน Error 500
+            // ตรวจสอบค่า Image ถ้าเป็น null ให้ใส่ค่า Default ป้องกัน Error 500
             $imageName = $request->input('Image');
             if (empty($imageName)) {
                 $imageName = 'default.png';

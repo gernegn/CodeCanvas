@@ -1,11 +1,6 @@
-// ==========================================
-// codeCanvas.js (Final Fix: Linked ID & Color Correct + Random Sound)
-// ==========================================
-
 const appURL = "https://funcslash.com/ia21/ccv";
 
-// --- Global Selectors ---
-const canvas = document.getElementById('gameCanvas');
+const canvas = document.getElementById('gameCanvas'); // canvas - หน้า main-game
 let ctx = null;
 if (canvas) ctx = canvas.getContext('2d');
 
@@ -58,10 +53,10 @@ let currentSelectedTexture = null;
 let currentChallengeIdForCustom = null;
 let currentResultImageName = "";
 
-// ✅ ตัวแปรเก็บ Timer ของกล่องข้อความ เพื่อไม่ให้มันตีกันถ้าวาดเร็วเกินไป
+// ตัวแปรเก็บ Timer ของกล่องข้อความ เพื่อไม่ให้มันตีกันถ้าวาดเร็วเกินไป
 let cheerTimer = null;
 
-// ✅ เพิ่มตัวแปรนี้เข้าไป เพื่อกันไม่ให้เสียงดังรัวๆ ซ้ำซ้อน
+// ตัวแปรนี้เข้าไป เพื่อกันไม่ให้เสียงดังรัวๆ ซ้ำซ้อน
 let previousCorrectState = false;
 
 // ==========================================
@@ -118,8 +113,6 @@ async function loadChallengeData(id) {
             }
 
             if (dataTemplate && dataTemplate.length > 0) {
-                // เราจะไม่ดึงจุดเริ่มต้นตายตัวจาก DB อีกต่อไป
-                // แต่เราจะแปลงเฉพาะรูปร่างของเส้น (Path)
                 validPaths = [];
                 let firstPathStart = null;
 
@@ -147,9 +140,11 @@ async function loadChallengeData(id) {
                 validPaths = [];
             }
 
-            // ... โค้ดส่วน Restore Session ข้อมูลเดิมที่เคยเขียนไว้ ปล่อยไว้เหมือนเดิมครับ ...
             const savedId = sessionStorage.getItem('storedChallengeID');
-            if (savedId && savedId == id) {
+            // เช็คเพิ่มว่า URL มีค่า 'play' หรือไม่ เพื่อป้องกันการดึงค่าเก่าตอนเริ่มเล่นใหม่จากการสุ่ม
+            const isPlayingNew = window.location.href.includes('play');
+
+            if (savedId && savedId == id && !isPlayingNew) {
                 const savedPath = sessionStorage.getItem('userPathHistory');
                 if (savedPath) {
                     pathHistory = JSON.parse(savedPath);
@@ -160,7 +155,11 @@ async function loadChallengeData(id) {
                     }
                 }
             } else {
+                // ล้างข้อมูลการวาดเก่าทิ้งเมื่อเริ่มเล่นเกมใหม่
                 sessionStorage.removeItem('userPathHistory');
+                sessionStorage.removeItem('rawccv_UserCode');
+                sessionStorage.removeItem('rawUserPoint');
+                sessionStorage.removeItem('ccv_UserCodeHtml');
             }
         }
     } catch (error) { console.error(error); setupCanvas(0, 0); }
@@ -182,7 +181,7 @@ function setupCanvas(gridX, gridY) {
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
 
-    // ✅ 1. คำนวณหาจุดกึ่งกลางของภาพจาก validPaths (เฉลย)
+    // คำนวณหาจุดกึ่งกลางของภาพจาก validPaths (เฉลย)
     let drawingCenterX = gridX;
     let drawingCenterY = gridY;
 
@@ -200,11 +199,11 @@ function setupCanvas(gridX, gridY) {
         drawingCenterY = (minY + maxY) / 2;
     }
 
-    // ✅ 2. จัดตำแหน่ง Canvas ให้ภาพวาดอยู่ตรงกลางจอ
+    // จัดตำแหน่ง Canvas ให้ภาพวาดอยู่ตรงกลางจอ
     gridOffset.x = (canvas.width / 2) - (drawingCenterX * gridSize);
     gridOffset.y = (canvas.height / 2) - (drawingCenterY * gridSize);
 
-    // ✅ 3. ปรับเลื่อนให้อยู่ตรงกลาง ไม่เทลงล่างเกินไปสำหรับทีวี
+    // ปรับเลื่อนให้อยู่ตรงกลาง ไม่เทลงล่างเกินไปสำหรับทีวี
     if (window.innerWidth >= 1920) {
         gridOffset.y += 20; // ✅ ลดจาก 120 เหลือ 20 เพื่อให้ภาพอยู่กึ่งกลางสมดุล ไม่กองอยู่ข้างล่าง
     } else {
@@ -662,6 +661,14 @@ window.selectTexture = function(name, el) {
     document.querySelectorAll('.texture-btn').forEach(b => b.classList.remove('active'));
     el.classList.add('active');
 
+    // ✅ เพิ่มโค้ดเล่นเสียงตอนกดเลือก Texture ตรงนี้แทน
+    const btnSound = document.getElementById('buttonSound');
+    if (btnSound) {
+        btnSound.currentTime = 0;
+        btnSound.volume = 0.5;
+        btnSound.play().catch(() => {});
+    }
+
     const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
     currentSelectedTexture = formattedName;
 
@@ -672,7 +679,7 @@ window.selectTexture = function(name, el) {
         if(yellowBtn) yellowBtn.classList.add('active');
     }
 
-    updateCustomImage();
+    updateCustomImage(); // คำสั่งนี้แหละที่ทำหน้าที่ดึงรูปภาพมาแสดง!
     validateForm();
 };
 
@@ -1158,6 +1165,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const mainImage = document.getElementById('customResultImg');
                 const modalImage = document.getElementById('finalResultImage');
                 const qrImage = document.getElementById('qrResult');
+
+                // ✅ 1. ดึงชื่อจาก Input มาใส่ใน Popup
+                const userNameInput = document.getElementById('userNameInput');
+                const successNameDisplay = document.getElementById('successNameDisplay');
+
+                if (userNameInput && successNameDisplay) {
+                    const playerName = userNameInput.value.trim();
+                    // ถ้าผู้เล่นกรอกชื่อมา ให้แสดงชื่อ ถ้าไม่ได้กรอก (เผื่อไว้) ให้แสดง "สำเร็จแล้ว!" เหมือนเดิม
+                    successNameDisplay.innerText = playerName ? playerName : "สำเร็จแล้ว!";
+                }
 
                 if (mainImage && modalImage) {
                     modalImage.src = mainImage.src;

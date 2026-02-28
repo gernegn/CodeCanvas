@@ -6,19 +6,30 @@
     color: #000;
 }
 
-/* Grid Layout 2 Columns */
-.code-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+.content-wrapper {
+    overflow: hidden !important;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Card Styling */
+.code-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    min-height: 0;
+}
+
 .code-card {
-    background: #fff;
-    border-radius: 20px;
-    padding: 30px;
-    min-height: 500px; /* ความสูงขั้นต่ำ */
+    background: #fff; /* พื้นหลังสีขาว */
+    border-radius: 1.25rem; /* ความโค้งมุมเท่า Dashboard */
+    padding: 1.5rem 2rem; /* ระยะขอบด้านใน */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03); /* เงาฟุ้งๆ แบบ Dashboard */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    min-height: 0;
 }
 
 /* Header ของแต่ละการ์ด */
@@ -26,7 +37,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 1rem;
 }
 
 .header-icon-circle {
@@ -53,15 +64,20 @@
 
 /* List Styling */
 .code-list {
-    list-style: none;
-    padding-left: 30px;
+    flex: 1;
+    overflow: hidden !important; /* ปิด Scroll ถาวร */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly; /* หารแบ่งช่องไฟให้เท่าๆ กัน */
+    margin: 0;
+    padding-left: 0; /* รีเซ็ต padding ให้ชิดซ้ายสวยขึ้น */
 }
 
 .code-item {
+    flex: 1;
     display: flex;
     align-items: center;
-    padding: 20px 0;
-    border-bottom: 1px solid #f0f0f0; /* เส้นขีดคั่นบางๆ */
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .code-item:last-child {
@@ -100,4 +116,12 @@
     font-size: 1.3rem;
     font-weight: 600;
     color: #000;
+}
+
+/* =========================================
+   Responsive สำหรับ TV (1920px ขึ้นไป)
+========================================= */
+@media screen and (min-width: 1920px) {
+    .card-header-flex { gap: 20px; }
+    .texture-img { width: 60px; height: 60px; margin-right: 35px; }
 }

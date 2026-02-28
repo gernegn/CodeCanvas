@@ -75,6 +75,11 @@ body {
   align-items: center;      /* กึ่งกลางแนวตั้ง */
   justify-content: center;
   transition: transform 0.2s;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .bt-back .iconify {
@@ -93,8 +98,13 @@ body {
   font-size: 2.5rem;
   margin: 0;
   position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .sec-head img {
@@ -102,6 +112,11 @@ body {
     height: 4rem;
     object-fit: cover;
     cursor: pointer;
+-webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* sec-content */
@@ -133,6 +148,11 @@ body {
     object-fit: contain;
     margin-left: 2rem;
     margin-top: 14rem;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .text-random {
@@ -144,12 +164,25 @@ body {
     color: #6b3f27;
     /* ปรับ transition ให้นุ่มขึ้นตอนข้อความเปลี่ยน */
     transition: all 0.2s ease-in-out;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* เพิ่มคลาสนี้ผ่าน JS ตอนกำลังสุ่ม */
 .randomizing {
     /* ปรับเวลาจาก 0.1s เป็น 0.3s ให้สมูทขึ้น ไม่อ่านแล้วปวดตา */
     animation: smooth-random 0.3s ease-in-out infinite;
+}
+
+.bt-random .iconify {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* เปลี่ยนจาก bounce แข็งๆ เป็นการสั่นและเบลอเบาๆ เหมือนกำลังปั่นสล็อต */
@@ -188,12 +221,22 @@ body {
     justify-content: center;
     align-items: center;
     gap: 2px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .popup-title {
     margin: 0.2rem 0 0 0;
     font-weight: 500;
     font-size: 1.8rem;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .close-modal {
@@ -231,6 +274,11 @@ body {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .modal-actions {
@@ -263,6 +311,11 @@ body {
     font-family: 'IBM Plex Sans Thai', sans-serif;
     font-size: 1.5rem;
     font-weight: 500;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .modal-actions:hover {
@@ -321,10 +374,20 @@ body {
     align-items: center;
     gap: 0.3rem;
     cursor: pointer;
+    -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .bt-random .iconify {
     font-size: 4rem;
+    -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .num-random {

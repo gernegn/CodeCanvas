@@ -1,55 +1,60 @@
-/* Reset & Base */
+/* =========================================
+   Reset & Base
+========================================= */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+html {
+    font-size: 16px; /* ค่าเริ่มต้นสำหรับ Desktop */
+}
+
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f8f8f6; /* สีพื้นหลังฝั่งขวา */
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    background-color: #f8f8f6;
     color: #333;
 }
 
-/* Layout Structure */
+/* =========================================
+   Layout Structure
+========================================= */
 .app-container {
     display: flex;
-    height: 100vh;
+    height: 100vh; /* บังคับให้สูงเท่าขนาดหน้าจอเป๊ะๆ */
     overflow: hidden;
 }
 
 /* --- Sidebar (Left) --- */
 .sidebar {
-    width: 260px;
-    background-color: #0c0c0c; /* สีดำ */
+    width: 16.25rem;
+    background-color: #0c0c0c;
     color: #fff;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 1.25rem;
     flex-shrink: 0;
-
-    /* ✅ เพิ่ม 2 บรรทัดนี้ */
-    height: 100%;      /* ให้สูงเต็มพื้นที่ */
-    overflow-y: auto;  /* ถ้าเมนูยาวเกินจอ ให้เลื่อนได้เฉพาะ Sidebar */
+    height: 100%;
+    overflow-y: auto;
 }
 
 .sidebar-header {
-    padding: 20px 10px;
-    margin-bottom: 20px;
+    padding: 1.25rem 0.6rem;
+    margin-bottom: 1.25rem;
     border-bottom: 1px solid rgba(255,255,255,1);
 }
 
 .brand-logo {
     display: flex;
-    justify-content: center; /* จัดรูปให้อยู่ตรงกลาง */
+    justify-content: center;
     align-items: center;
-    padding: 10px 0; /* เว้นระยะห่างบน-ล่างนิดหน่อย */
+    padding: 0.6rem 0;
 }
 
-/* เพิ่มคลาสนี้เพื่อคุมขนาดรูป */
 .brand-logo img {
-    max-width: 80%; /* ให้รูปกว้างไม่เกิน 80% ของ Sidebar */
-    height: auto;   /* ให้สูงตามสัดส่วนเดิม */
+    max-width: 80%;
+    height: auto;
     object-fit: contain;
 }
 
@@ -61,33 +66,31 @@ body {
     flex: 1;
 }
 
-.sidebar-menu li { margin-bottom: 5px; }
+.sidebar-menu li { margin-bottom: 0.3rem; }
 
 .menu-title {
     font-size: 1.25rem;
     color: #fff;
-    margin: 20px 0 10px 10px;
+    margin: 1.25rem 0 0.6rem 0.6rem;
     letter-spacing: 0.5px;
     font-weight: 500;
-
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
 }
 
 .menu-title i {
-    font-size: 1.2rem; /* ปรับขนาดไอคอนหัวข้อ */
-    margin-right: 4px; /* เว้นระยะห่างจากตัวหนังสือ */
-    color: #fff;       /* สีไอคอน (ควรจางกว่าตัวหนังสือหน่อย) */
+    font-size: 1.2rem;
+    color: #fff;
 }
 
 .menu-item {
     display: flex;
     align-items: center;
-    padding: 12px 15px;
+    padding: 0.75rem 1rem;
     color: #aaa;
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     transition: 0.3s;
     font-weight: 400;
     font-size: 1.25rem;
@@ -95,7 +98,7 @@ body {
 
 .menu-item i {
     font-size: 1.2rem;
-    margin-right: 12px;
+    margin-right: 0.75rem;
 }
 
 .menu-item:hover, .menu-item.active {
@@ -108,31 +111,36 @@ body {
     border: none;
     color: #dc3545;
     cursor: pointer;
-    padding: 10px;
+    padding: 0.6rem;
     display: flex;
     align-items: center;
     font-size: 1rem;
     width: 100%;
 }
-.logout-btn i { margin-right: 10px; }
+.logout-btn i {
+    margin-right: 0.6rem;
+}
+
+.logout-btn .bx {
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+}
 
 /* --- Main Content (Right) --- */
 .main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
-
-    /* ✅ เพิ่ม 2 บรรทัดนี้ */
-    height: 100%;       /* ให้สูงเต็มพื้นที่ */
-    overflow-y: auto;   /* ให้ Scroll ได้เฉพาะฝั่งขวานี้ */
+    height: 100%;
+    overflow: hidden; /* ล็อค Header ไม่ให้เลื่อน */
 }
 
 .top-header {
-    height: 70px;
+    height: 4.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 40px;
+    padding: 0 2.5rem;
+    flex-shrink: 0;
 }
 
 .user-profile i {
@@ -141,12 +149,19 @@ body {
     cursor: pointer;
 }
 
+/* เนื้อหาหลัก (ยอมให้เลื่อนได้สำหรับหน้าตารางยาวๆ) */
 .content-wrapper {
-    padding: 20px 40px;
+    padding: 1.25rem 2.5rem 2.5rem 2.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow-y: auto; /* หน้าตารางจะเลื่อนได้จากบรรทัดนี้ */
 }
 
 .dashboard-title-section {
-    margin-bottom: 30px;
+    margin-bottom: 1.5rem;
+    flex-shrink: 0;
 }
 
 .dashboard-title-section h1 {
@@ -157,189 +172,168 @@ body {
 
 .current-date {
     color: #666;
-    margin-top: 5px;
+    margin-top: 0.3rem;
 }
 
-/* --- Dashboard Grid & Cards --- */
+/* =========================================
+   Dashboard Grid & Cards (Fit to Screen)
+========================================= */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* 2 คอลัมน์ */
-    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    flex: 1;
+    min-height: 0; /* ยอมให้หดตัวได้ */
 }
 
 .grid-column {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1.25rem;
+    height: 100%;
+    min-height: 0; /* ป้องกันการดันทะลุจอ */
 }
 
 .card {
     background: #fff;
-    border-radius: 20px;
-    padding: 25px;
+    border-radius: 1.25rem;
+    padding: 1.5rem;
     box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
 }
 
 .card-header {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
+    flex-shrink: 0; /* ป้องกันส่วนหัวการ์ดหดตัว */
 }
 
 .header-flex { display: flex; align-items: center; }
 
 .icon-box {
-    width: 3.12rem; height: 3.12rem;
+    width: 3.12rem;
+    height: 3.12rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    margin-right: 15px;
+    margin-right: 1rem;
+    flex-shrink: 0;
 }
 
 /* Icon Colors */
-.pink { background: #ffe5ec; color: #ff98b8; font-size: 2rem ; }
-.blue { background: #e0f2fe; color: #2d93ff;font-size: 2rem ; }
-.green { background: #dcfce7; color: #19b56d;font-size: 2rem ; }
-.yellow { background: #fef9c3; color: #fdd849; font-size: 2rem ;}
-.orange { background: #ffedd5; color: #fe9a00; font-size: 2rem ;}
+.pink { background: #ffe5ec; color: #ff98b8; font-size: 2rem; }
+.blue { background: #e0f2fe; color: #2d93ff; font-size: 2rem; }
+.green { background: #dcfce7; color: #19b56d; font-size: 2rem; }
+.yellow { background: #fef9c3; color: #fdd849; font-size: 2rem; }
+.orange { background: #ffedd5; color: #fe9a00; font-size: 2rem; }
 
-.card-label-1,
-.card-label-2,
-.card-label-3,
-.card-label-4{
+.card-label-1, .card-label-2, .card-label-3, .card-label-4 {
     font-size: 1.25rem;
     font-weight: 600;
 }
 
-.card-label-1{
-    color: #ff98b8; /* สีฟ้าตามดีไซน์ */
-}
-.card-label-2{
-    color: #19b56d; /* สีฟ้าตามดีไซน์ */
-}
-.card-label-3{
-    color: #2d93ff; /* สีฟ้าตามดีไซน์ */
-}
-.card-label-4{
-    color: #fdd849; /* สีฟ้าตามดีไซน์ */
+.card-label-1 { color: #ff98b8; }
+.card-label-2 { color: #19b56d; }
+.card-label-3 { color: #2d93ff; }
+.card-label-4 { color: #fdd849; }
+
+/* Stat Card */
+.stat-card {
+    flex-shrink: 0; /* ไม่ให้กล่องนี้หดตัวผิดรูป */
 }
 
-/* Specific Card Styles */
 .card-value {
     font-size: 3.5rem;
     font-weight: 700;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 0.6rem;
     color: #000;
 }
 
-/* Chart Card (Quantity) */
-.badge-today {
-    margin-left: auto;
-    font-size: 0.8rem;
-    color: #666;
+/* =========================================
+   Chart Card (Quantity) - ยืดพอดีกล่อง
+========================================= */
+.chart-card {
+    flex: 1; /* บังคับให้การ์ดกราฟ ยืดเต็มพื้นที่ที่เหลือ */
+    min-height: 0; /* ยอมให้หดตัวได้ */
 }
 
-.chart-area {
-    height: 250px;
-    display: flex;
-    align-items: flex-end;
-}
-
-.bar-chart {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    height: 200px;
-    width: 100%;
-    border-left: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    padding: 10px;
-}
-
-.bar {
-    width: 8%;
-    background-color: #19b56d;
-    border-radius: 4px 4px 0 0;
-    position: relative;
-    transition: 0.3s;
-}
-
-.bar span {
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.75rem;
-    color: #666;
-}
-/* --- Custom Chart Card Style --- */
 .card-header-custom {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
+    flex-shrink: 0;
 }
 
 .header-left {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 1rem;
 }
 
 .icon-circle-green {
-    width: 45px;
-    height: 45px;
-    background-color: #19b56d; /* สีเขียว */
+    width: 2.8rem;
+    height: 2.8rem;
+    background-color: #19b56d;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     font-size: 1.5rem;
-    box-shadow: 0 4px 10px rgba(34, 197, 94, 0.1); /* เงาสีเขียวจางๆ */
+    box-shadow: 0 4px 10px rgba(34, 197, 94, 0.1);
+    flex-shrink: 0;
 }
 
 .card-title {
     font-size: 1.25rem;
-    color: #19b56d; /* สีตัวหนังสือเขียวตามรูป */
+    color: #19b56d;
     font-weight: 600;
 }
 
 .badge-today {
     color: #666;
     font-weight: 500;
+    font-size: 0.8rem;
 }
 
-/* --- Chart Body --- */
 .chart-body {
     position: relative;
-    padding-left: 10px;
+    padding-left: 0.6rem;
+    flex: 1; /* ยืดเต็มการ์ด */
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* ยอมให้หดตัวได้ */
 }
 
 .y-axis-title {
     color: #666;
     font-size: 0.9rem;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 0.6rem;
+    flex-shrink: 0;
 }
 
+/* พื้นที่แท่งกราฟ ยืดเต็มพื้นที่ที่เหลือ */
 .chart-area-wrapper {
     display: flex;
-    height: 200px; /* ความสูงรวมของกราฟ */
+    flex: 1; /* ยืดเต็มพื้นที่อัตโนมัติ */
+    min-height: 0; /* ลบค่าคงที่ทิ้งไป เพื่อให้พอดีกับทุกจอ */
     align-items: flex-end;
 }
 
-/* แกน Y ด้านซ้าย (ตัวเลข) */
 .y-axis-labels {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%; /* ให้เลข 10 อยู่บนสุด */
-    padding-bottom: 0px; /* ชดเชยความสูง */
-    margin-right: 10px;
+    height: 100%;
+    padding-bottom: 0px;
+    margin-right: 0.6rem;
     color: #888;
     font-weight: 600;
     font-size: 0.9rem;
@@ -349,85 +343,64 @@ body {
     width: 2px;
     background-color: #f0f0f0;
     height: 100%;
-    margin-right: 15px;
+    margin-right: 1rem;
 }
 
-/* พื้นที่วางกราฟ */
 .bars-container {
     flex: 1;
     display: flex;
     align-items: flex-end;
-    justify-content: space-between; /* กระจายแท่งกราฟให้เต็ม */
+    justify-content: space-between;
     height: 100%;
-    padding-bottom: 0px; /* ให้กราฟติดเส้นล่าง */
+    padding-bottom: 0px;
 }
 
 .bar-slot {
-    width: 6%; /* ความกว้างของแต่ละช่อง */
+    width: 6%;
     height: 100%;
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    position: relative;
-}
-
-.bar {
-    width: 100%;
-    background-color: #19b56d; /* สีเขียวอ่อนกว่า icon นิดหน่อย ตามรูป */
-    border-radius: 4px 4px 0 0;
-    transition: height 0.5s ease;
-}
-
-/* ตัวเลขบนกราฟ */
-.bar-slot .value {
-    position: absolute;
-    /* คำนวณตำแหน่งให้ลอยอยู่เหนือแท่งกราฟ */
-    bottom: calc(var(--height) + 5px);
-    font-size: 0.8rem;
-    color: #888;
-    font-weight: 600;
-    display: none; /* ซ่อนไว้ก่อน */
-}
-
-/* เทคนิค CSS: ดึงค่า height ของ .bar มาใช้กำหนดตำแหน่งตัวเลข */
-/* ในที่นี้เราจะใช้ bottom: 100% ของตัว bar แทน */
-.has-value .value {
-    display: block;
-    bottom: auto; /* reset */
-    margin-bottom: 5px; /* ลอยเหนือแท่ง 5px */
-}
-/* แต่เนื่องจาก HTML structure เราแยก div bar กับ span value
-   เพื่อให้ง่าย ผมแนะนำใช้ Flex ของ .bar-slot แทน */
-.bar-slot {
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
 }
+
+.bar {
+    width: 100%;
+    background-color: #19b56d;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.5s ease;
+}
+
 .bar-slot .value {
-    position: static;
+    font-size: 0.8rem;
+    color: #888;
+    font-weight: 600;
+    display: none;
     margin-bottom: 5px;
 }
 
+.has-value .value {
+    display: block;
+}
 
-/* --- แกน X (Timeline) --- */
 .x-axis-wrapper {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 0.6rem;
     color: #666;
     font-weight: 600;
     font-size: 0.9rem;
-    padding-left: 35px; /* ดันให้ตรงกับกราฟ (พ้นระยะแกน Y) */
+    padding-left: 2.2rem;
+    flex-shrink: 0;
 }
 
 .timeline-dots {
     flex: 1;
     display: flex;
     justify-content: space-evenly;
-    margin: 0 10px;
+    margin: 0 0.6rem;
 }
 
-/* จุดไข่ปลาสี่เหลี่ยมเล็กๆ */
 .timeline-dots i {
     width: 4px;
     height: 4px;
@@ -436,7 +409,7 @@ body {
 }
 
 .x-label {
-    min-width: 20px;
+    min-width: 1.25rem;
     text-align: center;
 }
 
@@ -447,47 +420,78 @@ body {
 }
 
 .x-label-title {
-    margin-left: 10px;
+    margin-left: 0.6rem;
     color: #666;
 }
 
-/* Challenge Card */
+/* =========================================
+   Challenge Card (ขยายพื้นที่ให้สูงขึ้น)
+========================================= */
+.challenge-card {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+.challenge-card .card-header {
+    margin-bottom: 0.5rem;
+}
+
 .challenge-content {
+    flex: 1; /* ให้เนื้อหาดึงพื้นที่ที่เหลือ */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* ดันกราฟโพเดียมให้ลงไปชิดขอบล่างพอดี */
     text-align: center;
+    padding-top: 0.8rem;
 }
 
 .main-stat h2 {
-    font-size: 2.5rem;
-    margin-bottom: 5px;
+    font-size: 2rem;
+    margin-bottom: 0;
+    line-height: 1.2;
     color: #000;
+    font-weight: 700;
 }
 
 .main-stat p {
-    font-size: 2rem;
+    font-size: 1.4rem;
     font-weight: 600;
     color: #000;
+    margin-bottom: 0; /* เพิ่มช่องว่างก่อนถึงกราฟให้ดูไม่อึดอัด */
 }
 
 .ranking-chart {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: 15px;
-    margin-top: 5px;
+    gap: 1.5rem; /* ขยายระยะห่างแท่งกราฟให้สมดุลกับความสูง */
+    margin-top: -1rem;
 }
 
 .rank-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 0.2rem;
 }
 
-.rank-item span { font-weight: 600; font-size: 1.5rem; color: #000;}
-.rank-item small { color: #000; font-size: 1.5rem; font-weight: 600; }
+.rank-item span {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #000;
+}
+
+.rank-item small {
+    color: #000;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
 
 .rank-bar {
-    width: 4.75rem;
+    width: 4.5rem; /* ขยายความกว้างแท่งกราฟขึ้นนิดนึง */
     border-radius: 8px 8px 0 0;
     display: flex;
     align-items: flex-end;
@@ -495,51 +499,94 @@ body {
     padding-bottom: 5px;
     color: #fff;
     font-weight: bold;
+    transition: height 0.5s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .rank-bar span {
-    font-size: 2.25rem;
-    font-weight: 500;
+    font-size: 1.4rem;
+    font-weight: 600;
     color: #fff;
 }
-.rank-bar.pink { background-color: #ff98b8; }
-.rank-bar.orange { background-color: #fe9a00; }
-.rank-bar.green { background-color: #ace036; }
 
-/* Activity Card */
+/* ขยายความสูงแท่งกราฟให้เต็มกล่องที่ใหญ่ขึ้น */
+.rank-bar.pink {
+    background-color: #ff98b8;
+    height: 6.5rem !important; /* อันดับ 1 */
+}
+
+.rank-bar.orange {
+    background-color: #fe9a00;
+    height: 4.5rem !important; /* อันดับ 2 */
+}
+
+.rank-bar.green {
+    background-color: #ace036;
+    height: 3.2rem !important; /* อันดับ 3 */
+}
+
+/* =========================================
+   Activity Card (ลดพื้นที่ลงให้พอดี ไม่เหลือที่ว่าง)
+========================================= */
+.activity-card {
+    flex: none; /* กินพื้นที่น้อยกว่ากล่องบน (ประมาณ 40%) */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden !important;
+    padding: 1.5rem; /* ปรับ Padding ให้สมดุลกับการ์ดอื่นๆ */
+}
+
 .activity-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    margin: 0;
+    padding: 0;
+    /* ✅ ไม่ต้องใช้ flex: 1 และ justify-content แล้ว ปล่อยให้มันเรียงชิดกันปกติ */
 }
 
 .activity-item {
     display: flex;
     align-items: center;
-    padding-bottom: 15px;
     border-bottom: 1px solid #f0f0f0;
+    padding: 0 0 0.8rem 0; /* ปรับช่องว่างบนล่างของแต่ละรายชื่อให้ดูสวยงาม */
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 .activity-item p {
-    font-size: 1.25rem;
-    font-weight: 400;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0;
 }
 
 .activity-item small {
-        font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 600;
+    color: #666;
 }
 
-.activity-item:last-child { border: none; padding: 0; }
-
 .user-avatar {
-    width: 40px; height: 40px;
+    width: 2.2rem;
+    height: 2.2rem;
     background-color: #eee;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 15px;
+    margin-right: 0.8rem;
     color: #666;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+/* =========================================
+   Responsive สำหรับ TV (1920px ขึ้นไป)
+========================================= */
+@media screen and (min-width: 1920px) {
+    /* ขยายทุกอย่างที่ใช้หน่วย rem ขึ้นประมาณ 25% เพื่อให้พอดีจอทีวี */
+    html { font-size: 20.8px; }
 }

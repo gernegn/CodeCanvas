@@ -179,6 +179,11 @@ body {
     width: 100%;
     height: auto;
     object-fit: contain; /* ป้องกันภาพบิดเบี้ยว */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .box-main {
@@ -201,7 +206,12 @@ body {
     width: 100%;
     max-width: 25rem; /* กำหนดขนาดสูงสุดให้โลโก้ */
     margin: 0;
-     margin-top: -1rem;
+    margin-top: -1rem;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .box-tagline {
@@ -217,9 +227,11 @@ body {
     font-weight: 500;
     text-align: center;
     margin: 0;
+    -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .box-button {
@@ -251,6 +263,11 @@ body {
   font-family: 'IBM Plex Sans Thai', sans-serif;
   font-size: 1.8rem;
   transition: all 0.3s ease;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .bt-play:hover {
@@ -271,6 +288,135 @@ body {
     color: white;
     transform: scale(1.05);
 }
+
+/* =========================================
+Animation พื้นหลัง
+========================================= */
+.anim-bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+    /* ให้อยู่หลังปุ่มและเนื้อหาหลัก */
+    pointer-events: none;
+    /* สำคัญมาก! เพื่อให้ยังคลิกปุ่มด้านหลังได้ */
+}
+
+/* --------------------------------------
+    1. แอนิเมชันก้อนเมฆ (เลื่อนซ้ายไปขวา)
+-------------------------------------- */
+        .anim-cloud {
+            position: absolute;
+            opacity: 0.8;
+            animation: floatCloud linear infinite;
+        }
+
+        /* ปรับขนาด ความเร็ว และตำแหน่งของเมฆแต่ละก้อนให้ต่างกัน */
+        .cloud-1 {
+            top: 10%;
+            left: -20%;
+            width: 150px;
+            animation-duration: 35s;
+        }
+
+        .cloud-2 {
+            top: 25%;
+            left: -20%;
+            width: 200px;
+            animation-duration: 45s;
+            animation-delay: -15s;
+        }
+
+        .cloud-3 {
+            top: 5%;
+            left: -20%;
+            width: 120px;
+            animation-duration: 30s;
+            animation-delay: -5s;
+            opacity: 0.6;
+        }
+
+        .cloud-4 {
+            top: 40%;
+            left: -20%;
+            width: 180px;
+            animation-duration: 50s;
+            animation-delay: -25s;
+        }
+
+        @keyframes floatCloud {
+            0% {
+                transform: translateX(-10vw);
+            }
+
+            100% {
+                transform: translateX(120vw);
+            }
+        }
+
+        /* --------------------------------------
+           2. แอนิเมชันใบไม้ (ปลิวร่วงลงมา + หมุน)
+        -------------------------------------- */
+        .anim-leaf {
+            position: absolute;
+            width: 40px;
+            animation: fallLeaf linear infinite;
+        }
+
+        /* กระจายตำแหน่งใบไม้และความเร็ว */
+        .leaf-1 {
+            left: 15%;
+            top: -10%;
+            animation-duration: 12s;
+            animation-delay: 0s;
+        }
+
+        .leaf-2 {
+            left: 50%;
+            top: -10%;
+            animation-duration: 15s;
+            animation-delay: 4s;
+            width: 30px;
+        }
+
+        .leaf-3 {
+            left: 85%;
+            top: -10%;
+            animation-duration: 10s;
+            animation-delay: 7s;
+            width: 60px;
+        }
+
+        .leaf-4 {
+            left: 30%;
+            top: -10%;
+            animation-duration: 14s;
+            animation-delay: 9s;
+            width: 40px;
+        }
+
+        @keyframes fallLeaf {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
 
 /* =========================================
    Responsive สำหรับ TV (Media Queries)

@@ -75,6 +75,7 @@
                             <p>addName()</p>
                         </div>
                         <input type="text" id="userNameInput" placeholder="Add name here" readonly>
+                        <p id="nameLimitAlert" class="limit-alert">โอ๊ะ! ใส่ชื่อได้เพียง 20 ตัวอักษรเท่านั้นนะ</p>
                     </div>
 
                     {{-- 2. ส่วนเลือก Color --}}
@@ -149,8 +150,8 @@
                 alt="star">
 
             <div class="modal-header-text">
-                <h2>ยินดีด้วย คุณวาดรูป</h2>
-                <h1 class="text-success">สำเร็จแล้ว!</h1>
+                <h2>ยินดีด้วย นี่คือภาพ</h2>
+                <h1 id="successNameDisplay" class="text-success">สำเร็จแล้ว!</h1>
             </div>
 
             <div class="modal-content-wrapper">
@@ -212,53 +213,56 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // === 1. การตั้งค่าตัวแปรพื้นฐาน ===
             const Keyboard = window.SimpleKeyboard.default;
             const inputElement = document.getElementById("userNameInput");
             const keyboardOverlay = document.getElementById("keyboardOverlay");
             const closeKeyboardBtn = document.getElementById("closeKeyboardBtn");
             const btnSound = document.getElementById('buttonSound');
+            const alertElement = document.getElementById("nameLimitAlert"); // ข้อความแจ้งเตือน
 
-            // ตั้งค่าสถานะภาษาปัจจุบัน
             let currentLang = 'th';
             let isShift = false;
 
-            // 1. สร้างคีย์บอร์ดและจัด Layout ใหม่ (ย้าย Enter มาแทน Shift ขวา)
+            // === 2. สร้าง Virtual Keyboard พร้อมระบบตรวจสอบจำนวนตัวอักษร ===
             const myKeyboard = new Keyboard({
-                onChange: input => onChange(input),
+                onChange: input => {
+                    const maxLength = 20;
+
+                    if (input.length > maxLength) {
+                        // ถ้าเกิน 20 ตัวอักษร ให้ตัดทิ้งและแจ้งเตือน
+                        const truncatedInput = input.substring(0, maxLength);
+                        myKeyboard.setInput(truncatedInput);
+                        inputElement.value = truncatedInput;
+
+                        if (alertElement) alertElement.style.display = "block";
+                        inputElement.classList.add("is-invalid");
+                    } else {
+                        // ถ้าปกติ ให้แสดงผลตามจริง
+                        inputElement.value = input;
+                        if (alertElement) alertElement.style.display = "none";
+                        inputElement.classList.remove("is-invalid");
+                    }
+
+                    // ✅ สิ่งสำคัญ: ส่งสัญญาณ 'input' ไปกระตุ้นให้ codeCanvas.js ตรวจสอบปุ่ม "ยืนยัน"
+                    inputElement.dispatchEvent(new Event('input'));
+                },
                 onKeyPress: button => onKeyPress(button),
                 layoutName: 'th-default',
                 layout: {
-                    // 🇬🇧 ภาษาอังกฤษ (ปกติ)
-                    'en-default': [
-                        '` 1 2 3 4 5 6 7 8 9 0 - = {bksp}',
-                        'q w e r t y u i o p [ ] \\',
-                        'a s d f g h j k l ; \'', // เอา {enter} ออกจากบรรทัดนี้
-                        '{shift} z x c v b n m , . / {enter}', // เอา {enter} มาใส่แทน {shift} ขวา
+                    'en-default': ['` 1 2 3 4 5 6 7 8 9 0 - = {bksp}', 'q w e r t y u i o p [ ] \\',
+                        'a s d f g h j k l ; \'', '{shift} z x c v b n m , . / {enter}',
                         '{lang} {space}'
                     ],
-                    // 🇬🇧 ภาษาอังกฤษ (พิมพ์ใหญ่/สัญลักษณ์)
-                    'en-shift': [
-                        '~ ! @ # $ % ^ & * ( ) _ + {bksp}',
-                        'Q W E R T Y U I O P { } |',
-                        'A S D F G H J K L : "',
-                        '{shift} Z X C V B N M < > ? {enter}',
+                    'en-shift': ['~ ! @ # $ % ^ & * ( ) _ + {bksp}', 'Q W E R T Y U I O P { } |',
+                        'A S D F G H J K L : "', '{shift} Z X C V B N M < > ? {enter}', '{lang} {space}'
+                    ],
+                    'th-default': ['_ ๅ / - ภ ถ ุ ค ต จ ข ช ฅ {bksp}', 'ๆ ไ ำ พ ะ ั ี ร น ย บ ล ฃ',
+                        'ฟ ห ก ด เ ้ ่ า ส ว ง \'', '{shift} ผ ป แ อ ิ ื ท ม ใ ฝ {enter}',
                         '{lang} {space}'
                     ],
-                    // 🇹🇭 ภาษาไทย (ปกติ)
-                    'th-default': [
-                        '_ ๅ / - ภ ถ ุ ค ต จ ข ช ฅ {bksp}',
-                        'ๆ ไ ำ พ ะ ั ี ร น ย บ ล ฃ',
-                        'ฟ ห ก ด เ ้ ่ า ส ว ง \'',
-                        '{shift} ผ ป แ อ ิ ื ท ม ใ ฝ {enter}',
-                        '{lang} {space}'
-                    ],
-                    // 🇹🇭 ภาษาไทย (ปุ่ม Shift)
-                    'th-shift': [
-                        '% + ๑ ๒ ๓ ๔ ู ฿ ๕ ๖ ๗ ๘ ๙ {bksp}',
-                        '๐ " ฎ ฑ ธ ํ ๊ ณ ฯ ญ ฐ , ฅ',
-                        'ฤ ฆ ฏ โ ฌ ็ ๋ ษ ศ ซ .',
-                        '{shift} ( ) ฉ ฮ ฺ ์ ? ฒ ฬ ฦ {enter}',
-                        '{lang} {space}'
+                    'th-shift': ['% + ๑ ๒ ๓ ๔ ู ฿ ๕ ๖ ๗ ๘ ๙ {bksp}', '๐ " ฎ ฑ ธ ํ ๊ ณ ฯ ญ ฐ , ฅ',
+                        'ฤ ฆ ฏ โ ฌ ็ ๋ ษ ศ ซ .', '{shift} ( ) ฉ ฮ ฺ ์ ? ฒ ฬ ฦ {enter}', '{lang} {space}'
                     ]
                 },
                 display: {
@@ -270,30 +274,26 @@
                 }
             });
 
-            // 2. เมื่อคลิกที่ช่อง input ให้แสดง Keyboard
+            // === 3. ระบบควบคุมการแสดงผลคีย์บอร์ด ===
             inputElement.addEventListener("click", (e) => {
                 keyboardOverlay.classList.add("show");
                 myKeyboard.setInput(inputElement.value);
             });
 
-            // 3. ปิดแป้นพิมพ์เมื่อกดปุ่ม "ปิดแป้นพิมพ์"
             closeKeyboardBtn.addEventListener("click", () => {
                 keyboardOverlay.classList.remove("show");
             });
 
-            // ✅ 4. [เพิ่มใหม่] ปิดแป้นพิมพ์เมื่อคลิกพื้นที่ว่างข้างนอก
+            // ปิดแป้นพิมพ์เมื่อคลิกพื้นที่ว่าง
             document.addEventListener('click', (event) => {
-                // ถ้าจุดที่คลิก ไม่ได้อยู่ในกล่องแป้นพิมพ์ และ ไม่ใช่กล่อง Input ให้ทำการซ่อน
-                if (!keyboardOverlay.contains(event.target) && event.target !== inputElement) {
+                if (keyboardOverlay.classList.contains('show') &&
+                    !keyboardOverlay.contains(event.target) &&
+                    event.target !== inputElement) {
                     keyboardOverlay.classList.remove("show");
                 }
             });
 
-            function onChange(input) {
-                inputElement.value = input;
-                inputElement.dispatchEvent(new Event('input'));
-            }
-
+            // === 4. ฟังก์ชันการทำงานของปุ่มพิเศษบนคีย์บอร์ด ===
             function onKeyPress(button) {
                 if (btnSound) {
                     btnSound.currentTime = 0;
@@ -323,6 +323,8 @@
                     layoutName: layoutName
                 });
             }
+
+            // ❌ ลบส่วนเลือก Texture และปุ่ม Confirm ออก เพราะเราจะไปใช้ตัวที่สมบูรณ์ใน codeCanvas.js แทน ❌
         });
     </script>
 </body>

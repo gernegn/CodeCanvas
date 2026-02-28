@@ -9,44 +9,6 @@
 /* --- Search Bar (เหมือนหน้า User General) --- */
 .search-section {
     margin-bottom: 25px;
-}
-
-.search-box {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-}
-
-.search-input {
-    width: 100%;
-    padding: 12px 45px 12px 20px;
-    border-radius: 50px;
-    border: 1px solid #ddd;
-    background-color: #fff;
-    font-size: 1rem;
-    color: #333;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-.search-input:focus {
-    border-color: #000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.search-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.2rem;
-    color: #333;
-    pointer-events: none;
-}
-
-/* Search Bar Container */
-.search-section {
-    margin-bottom: 25px;
     display: flex;
     justify-content: space-between; /* แยกซ้ายขวา */
     align-items: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
@@ -72,6 +34,7 @@
     color: #333;
     outline: none;
     transition: all 0.3s ease;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
 }
 
 .search-input:focus {
@@ -125,6 +88,7 @@
 
 /* --- Dropdown Select Styling --- */
 .filter-select {
+    font-family: 'IBM Plex Sans Thai', sans-serif;
     /* 1. ล้างค่า Default ของ Browser (สำคัญมาก!) */
     appearance: none;
     -webkit-appearance: none;
@@ -265,3 +229,4 @@
 .btn-delete:hover {
     background-color: #ff7aa2;
 }
+
