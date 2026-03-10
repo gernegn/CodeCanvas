@@ -1,0 +1,743 @@
+/* =========================================
+   1. Global & Background Elements
+========================================= */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* ป้องกัน Scrollbar โผล่ */
+}
+
+body {
+    background: linear-gradient(to bottom, #31BEF3, #fff);
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.bg-grass {
+    position: absolute;
+    bottom: 0;
+    line-height: 0;
+    z-index: 2;
+}
+
+.bg-grass img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.bg-cloud {
+    position: absolute;
+    line-height: 0;
+    z-index: 3;
+    top: -30px;
+}
+
+.bg-cloud img {
+    width: 100%;
+    object-fit: cover;
+}
+
+/* =========================================
+   2. Header Section (แบบ Responsive)
+========================================= */
+.sec-head {
+    position: relative;  /* สำคัญมาก */
+    margin: 3.8rem 4rem;
+    display: flex;
+    flex-direction: row;
+    /* background-color: red; */
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.btn-box {
+    width: 9rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+}
+
+.bt-back {
+  background: transparent; /* เอาพื้นหลังสีเทาออก */
+  border: none;            /* เอาเส้นขอบออก */
+  padding: 0;
+  cursor: pointer;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;      /* กึ่งกลางแนวตั้ง */
+  justify-content: center;
+  transition: transform 0.2s;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.bt-back .iconify {
+  font-size: 2.5rem;
+  color: #000;
+  transform: translateX(8px);
+}
+
+.bt-back:hover {
+    background: #D4F2FF;
+    transform: scale(1.08);
+}
+
+.sec-head h1 {
+    font-weight: 500;
+    font-size: 2.5rem;
+    margin: 0;
+    /* ✅ บังคับให้หัวข้ออยู่กึ่งกลางหน้าจอ 100% */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.sec-head img {
+    width: 9rem;
+    height: 4rem;
+    object-fit: cover;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* =========================================
+   3. Main Content Layout (แบบตรงกลางจอ)
+========================================= */
+.sec-content {
+    /* ✅ จัดกึ่งกลางแบบสมบูรณ์แบบ (Absolute Center) */
+    width: 100%;
+    height: 79%;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    z-index: 11;
+    /* background-color: #19b56d; */
+    gap: 4rem;
+}
+
+.sec-content-left {
+    /* ✅ ลดความกว้างฝั่งซ้ายลง (จากเดิม 60% เหลือ 50%) */
+    width: 53%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sec-content-right {
+    /* ✅ เพิ่มพื้นที่ให้ฝั่งขวา (Tools ตกแต่ง) เพื่อไม่ให้เบียดกัน */
+    width: 32%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end; /* ชิดขวา */
+}
+
+/* =========================================
+   4. Canvas Area (Left Side)
+========================================= */
+.canvas {
+    background: #fff4eb;
+    width: 100%; /* ให้กางเต็ม 50% ของฝั่งซ้าย */
+    height: 78.5%;
+    border-radius: 20px;
+    position: relative;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.wink-yellow-01 {
+    position: absolute;
+    width: 7rem;
+    height: auto;
+    object-fit: contain;
+    z-index: 30;
+    top: -1rem;
+    left: -1rem; /* ขยับออกมานิดนึง */
+    pointer-events: none;
+}
+
+.wink-yellow-02 {
+    position: absolute;
+    width: 7rem;
+    height: auto;
+    object-fit: contain;
+    z-index: 30;
+    bottom: -1.5rem;
+    right: -1.2rem;
+    pointer-events: none;
+}
+
+.frame-result-radius {
+    width: 25rem; /* แปลงเป็น rem เพื่อให้ขยายบนทีวี */
+    height: 25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.frame-result-radius img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    position: static !important;
+    transform: none !important;
+    margin: 0 !important;
+    opacity: 1 !important;
+}
+
+/* =========================================
+   5. Custom Panel (Right Side)
+========================================= */
+.box-custom {
+    width: 100%;
+    height: 78.5%; /* เว้นที่ให้ปุ่ม Confirm ด้านล่าง */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.custom-name, .custom-color, .custom-texture {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.topic-name, .topic-color, .topic-texture {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.2rem;
+}
+
+.topic-name .iconify, .topic-color .iconify, .topic-texture .iconify {
+    font-size: 2.2rem;
+    color: #333;
+}
+
+.topic-name p, .topic-color p, .topic-texture p {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 0;
+    color: #333;
+}
+
+#userNameInput {
+    width: 100%;
+    height: 3.5rem; /* ลดลงนิดนึงให้สมดุล */
+    border-radius: 1rem;
+    border: 3px solid #e0e0e0;
+    padding: 0 1.5rem;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-size: 1.3rem;
+    color: #333;
+    background-color: #fff;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+}
+
+#userNameInput:focus {
+    border-color: #FF98B8;
+    box-shadow: 0 0 0 4px rgba(255, 152, 184, 0.25);
+}
+
+#userNameInput::placeholder {
+    color: #aaa;
+    font-weight: 400;
+}
+
+/* =========================================
+   สไตล์ที่เพิ่มใหม่สำหรับส่วนสุ่มชื่อและระบบโหลดภาพ
+========================================= */
+#successNameDisplay {
+    font-family: 'Sriracha', cursive !important;
+}
+
+.input-group-name {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.input-group-name input {
+    flex: 1;
+}
+
+.btn-random-name {
+    background-color: #ff9d00;
+    color: white;
+    border: 3px solid;
+    border-radius: 1rem;
+    padding: 0 15px;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.1s ease-in-out;
+    white-space: nowrap;
+}
+
+.btn-random-name:hover {
+    background-color: #ef9402;
+}
+
+.btn-random-name .iconify {
+    font-size: 2.2rem;
+}
+
+/* ✅ จัดการ Loading Spinner และการตั้งค่า Fade-in */
+.frame-result-radius {
+    position: relative; /* ให้ Loader อ้างอิงพิกัด */
+}
+
+/* =========================================
+   ระบบแอนิเมชันหมุนโหลดภาพ (Loading Spinner)
+========================================= */
+@keyframes spinInfinite {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.image-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    color: #ff9d00;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* บังคับให้ไอคอนด้านในหมุนวนด้วยความเร็วคงที่ (linear) แบบไม่มีที่สิ้นสุด (infinite) */
+.image-loader .iconify {
+    animation: spinInfinite 1s linear infinite;
+}
+
+.frame-result-radius img#customResultImg {
+    opacity: 0 !important; /* บังคับซ่อนจนกว่าจะโหลดเสร็จ */
+    transition: opacity 0.8s ease-in-out !important; /* เฟดภาพขึ้นมานุ่มๆ */
+    z-index: 2;
+    position: relative;
+    color: transparent !important; /* ซ่อนข้อความ alt ตอนยังไม่โหลด */
+}
+
+.frame-result-radius img#customResultImg.loaded-fade {
+    opacity: 1 !important; /* โชว์เมื่อมีคลาสนี้ */
+}
+
+/* สไตล์ข้อความแจ้งเตือนตัวอักษรเกิน */
+.limit-alert {
+    color: #FF4D4D; /* สีแดง */
+    font-size: 1rem;
+    margin: 0.5rem 0 0 0.5rem;
+    font-weight: 500;
+    display: none; /* ซ่อนไว้เริ่มต้น */
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ปรับแต่งเมื่อ Input ผิดพลาด (ใส่สีขอบแดง) */
+#userNameInput.is-invalid {
+    border-color: #FF4D4D !important;
+    box-shadow: 0 0 0 4px rgba(255, 77, 77, 0.25) !important;
+}
+
+.box-color {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.circle-color-item {
+    width: 4.2rem;
+    height: 4.2rem;
+    border: 0.2rem solid #fff; /* ตั้งค่าขอบเริ่มต้น (บาง) */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+
+    /* ✅ บังคับให้ขอบขยายเข้าด้านใน ไม่ดันไอคอนข้างๆ */
+    box-sizing: border-box;
+}
+
+/* Hover: ขอบหนาขึ้น และลอยขึ้น */
+.circle-color-item:hover {
+    transform: translateY(-4px) scale(1.05);
+    border: 0.4rem solid #fff !important; /* ✅ เปลี่ยนขนาดขอบให้หนาขึ้นตามต้องการได้เลย */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+}
+
+/* Active: ขยายใหญ่ขึ้น และขอบหนาตอนถูกเลือก */
+.circle-color-item.active {
+    transform: scale(1.15);
+    border: 0.4rem solid #fff !important; /* ✅ เปลี่ยนขนาดขอบให้หนาขึ้นตามต้องการได้เลย */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+}
+
+.box-texture {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.box-texture-top, .box-texture-bottom {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+}
+
+.texture-btn {
+    width: 8.5rem;
+    height: 3.5rem;
+    border: 3px solid #e0e0e0;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    background-color: #fff;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Hover: ปุ่มลอยขึ้นและเปลี่ยนขอบเป็นสีฟ้าธีม */
+.texture-btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    border-color: #ff98b8;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(49, 190, 243, 0.2);
+}
+
+/* Active: ยุบตัวลงเหมือนถูกกด พร้อมแสงเรืองรองรอบปุ่ม */
+.texture-btn.active {
+    border-color: #ff98b8 ;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px rgba(255, 152, 184, 0.25);
+}
+
+.box-texture-none {
+    background: linear-gradient(to top right, transparent calc(50% - 2px), #d1d5db calc(50% - 2px), #d1d5db calc(50% + 2px), transparent calc(50% + 2px));
+    background-color: #fff;
+}
+
+/* =========================================
+   6. Confirm Button & Modal
+========================================= */
+.bt-confirm {
+    width: 100%;
+    height: 4.5rem;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    z-index: 50;
+}
+
+.confirm {
+    background-color: #282828;
+    color: #fff;
+    border: none;
+    height: 100%;
+    width: 50%; /* ขนาดเท่าปุ่ม Next ของหน้า Result */
+    border-radius: 100px;
+    font-size: 1.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    margin-top: -3rem;
+    transition: all 0.2s ease;
+    pointer-events: auto; /* รับคลิกเสมอ */
+}
+
+.confirm:hover:not(:disabled) {
+    transform: scale(1.05);
+    background-color: #333;
+}
+
+.confirm:disabled {
+    background-color: #989898;
+    color: #000;
+    cursor: not-allowed;
+    transform: none;
+    opacity: 1;
+}
+
+/* --- Modal Overlay --- */
+.custom-modal-overlay {
+    display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); justify-content: center; align-items: center; flex-direction: column;
+}
+.custom-modal-container {
+    background-color: #fff; border-radius: 30px; width: 50rem; height: auto; min-height: 32rem; max-width: 90%; padding: 30px 40px; text-align: center; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); margin-bottom: 25px; display: flex; flex-direction: column; align-items: center;
+}
+.close-modal { position: absolute; top: 30px; right: 40px; color: #aaa; font-size: 40px; cursor: pointer; font-weight: bold; z-index: 20; }
+.close-modal:hover { color: #000; }
+.modal-header-text { margin-top: 25px; margin-bottom: 20px; z-index: 5; }
+.modal-header-text h2 { margin: 0; font-family: 'IBM Plex Sans Thai', sans-serif; font-size: 2rem; color: #333; font-weight: 500; }
+.text-success { margin: 0; color: #19b56d; font-weight: 700; font-size: 2.8rem; }
+.modal-content-wrapper { display: flex; flex-direction: row; justify-content: center; align-items: flex-end; gap: 9rem; width: 100%; height: 20rem; margin-bottom: 2rem; }
+.result-image-box img { height: 18rem; width: 18rem; object-fit: contain; display: block; }
+.qr-section { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.qr-code-img { width: 13rem; height: 13rem; }
+.qr-text p { font-family: 'IBM Plex Sans Thai', sans-serif; font-size: 1.2rem; color: #777; margin: 0; line-height: 1.2; text-align: center; }
+.star-decor-img { position: absolute; width: 40px; height: auto; z-index: 1; }
+.star-top-left { top: 50px; left: 22%; width: 50px; }
+.star-top-right { top: 100px; right: 26%; width: 35px; }
+.btn-gallery-green { background-color: #27AE60; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-family: 'IBM Plex Sans Thai', sans-serif; font-size: 2rem; font-weight: 400; display: flex; align-items: center; justify-content: center; gap: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s; height: 3.2rem; width: 18rem; }
+.btn-gallery-green .iconify { font-size: 2.5rem; }
+.btn-gallery-green:hover { transform: scale(1.05); background-color: #219150; }
+
+/* =========================================
+   7. Responsive สำหรับ TV
+========================================= */
+@media screen and (min-width: 1920px) { html { font-size: 22px; } }
+@media screen and (min-width: 2560px) { html { font-size: 30px; } }
+@media screen and (min-width: 3840px) { html { font-size: 42px; } }
+
+/* =========================================
+   8. On-Screen Virtual Keyboard
+========================================= */
+.keyboard-overlay {
+    position: fixed;
+    bottom: -100%; /* ซ่อนไว้ด้านล่างจอ */
+    left: 0;
+    width: 100%;
+    background-color: #e5e7eb; /* สีพื้นหลังคีย์บอร์ด */
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
+    z-index: 10000; /* อยู่บนสุด ทับทุกอย่าง */
+    transition: bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* แอนิเมชันเด้งขึ้นนุ่มๆ */
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2rem;
+    padding-top: 1rem;
+}
+
+/* คลาสที่ใช้เวลาสั่งแสดงผล */
+.keyboard-overlay.show {
+    bottom: 0;
+}
+
+.keyboard-container {
+    width: 80%;
+    max-width: 1200px;
+}
+
+.keyboard-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+/* ปุ่มกดปิด */
+.close-kb-btn {
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* =========================================
+   ปรับแต่ง Simple Keyboard ให้ใหญ่สู้ทีวี
+========================================= */
+.hg-theme-default {
+    font-family: 'IBM Plex Sans Thai', sans-serif !important;
+    background-color: transparent !important;
+}
+
+.hg-button {
+    height: 3.8rem !important; /* ขยายปุ่มให้ใหญ่ขึ้น */
+    font-size: 1.8rem !important; /* ขยายฟอนต์ */
+    border-radius: 12px !important;
+    box-shadow: 0 4px 0 #ccc !important; /* เงาปุ่มแบบ 3D */
+    transition: transform 0.1s, box-shadow 0.1s !important;
+}
+
+.hg-button:active {
+    transform: translateY(4px) !important;
+    box-shadow: 0 0 0 #ccc !important;
+}
+
+/* เปลี่ยนสีปุ่มพิเศษ */
+.hg-button-enter, .hg-button-bksp, .hg-button-shift {
+    background-color: #31BEF3 !important;
+    color: #fff !important;
+    font-weight: bold !important;
+}
+
+/* เปลี่ยนสีปุ่มพิเศษ */
+.hg-button-enter {
+    background-color: #ff98b8 !important;
+    color: #fff !important;
+    font-weight: bold !important;
+}
+
+.wink-yellow-01, .wink-yellow-02, #customResultImg, .topic-name p, .topic-color p, .topic-texture p, .confirm, .modal-header-text h2, .modal-header-text h1, .result-image-box, .qr-box, .qr-text p, .btn-gallery-green, .userNameInput, .userNameInput {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;-ms-user-select: none;
+    user-select: none;
+}
+
+/* --------------------------------------
+    1. แอนิเมชันก้อนเมฆ (เลื่อนซ้ายไปขวา)
+-------------------------------------- */
+        .anim-cloud {
+            position: absolute;
+            opacity: 0.8;
+            animation: floatCloud linear infinite;
+        }
+
+        /* ปรับขนาด ความเร็ว และตำแหน่งของเมฆแต่ละก้อนให้ต่างกัน */
+        .cloud-1 {
+            top: 10%;
+            left: -20%;
+            width: 150px;
+            animation-duration: 35s;
+        }
+
+        .cloud-2 {
+            top: 25%;
+            left: -20%;
+            width: 200px;
+            animation-duration: 45s;
+            animation-delay: -15s;
+        }
+
+        .cloud-3 {
+            top: 5%;
+            left: -20%;
+            width: 120px;
+            animation-duration: 30s;
+            animation-delay: -5s;
+            opacity: 0.6;
+        }
+
+        .cloud-4 {
+            top: 40%;
+            left: -20%;
+            width: 180px;
+            animation-duration: 50s;
+            animation-delay: -25s;
+        }
+
+        @keyframes floatCloud {
+            0% {
+                transform: translateX(-10vw);
+            }
+
+            100% {
+                transform: translateX(120vw);
+            }
+        }
+
+        /* --------------------------------------
+           2. แอนิเมชันใบไม้ (ปลิวร่วงลงมา + หมุน)
+        -------------------------------------- */
+        .anim-leaf {
+            position: absolute;
+            width: 40px;
+            animation: fallLeaf linear infinite;
+        }
+
+        /* กระจายตำแหน่งใบไม้และความเร็ว */
+        .leaf-1 {
+            left: 15%;
+            top: -10%;
+            animation-duration: 12s;
+            animation-delay: 0s;
+        }
+
+        .leaf-2 {
+            left: 50%;
+            top: -10%;
+            animation-duration: 15s;
+            animation-delay: 4s;
+            width: 30px;
+        }
+
+        .leaf-3 {
+            left: 85%;
+            top: -10%;
+            animation-duration: 10s;
+            animation-delay: 7s;
+            width: 60px;
+        }
+
+        .leaf-4 {
+            left: 30%;
+            top: -10%;
+            animation-duration: 14s;
+            animation-delay: 9s;
+            width: 40px;
+        }
+
+        @keyframes fallLeaf {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }

@@ -1,0 +1,299 @@
+/* ===========================
+   QUIZ PAGE — quiz.css
+   (ใช้คู่กับ style.css)
+=========================== */
+/* ===========================
+   GLOBAL VIEWPORT FIX
+=========================== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100dvh; /* ล็อคความสูงให้พอดีจอมือถือเป๊ะๆ */
+  overflow: hidden; /* ห้าม body เลื่อน ป้องกันจอยางยืด */
+}
+
+/* ควบคุมให้กรอบ .scene (ถ้ามีใน HTML) เป็นตัวสกรอลล์แทน */
+.scene {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+/* ปิด brain characters จาก style.css ไม่ใช้ในหน้านี้ */
+.brain { display: none; }
+
+/* ===========================
+   HEADER
+=========================== */
+.quiz-header {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 40px 0;
+  gap: 12px;
+}
+
+.header-title {
+  font-size: clamp(1.1rem, 2.2vw, 2.2rem);
+  font-weight: 500;
+  color: #111;
+  text-align: center;
+  white-space: nowrap;
+}
+.cloud-header-left {
+  width: 70px;
+  position: fixed;
+  top: 100px;
+  animation: slideCloud 30s linear infinite !important;
+}
+
+.cloud-header-right {
+  width: 90px;
+  position: fixed;
+  top: 500px;
+  animation: slideCloud 25s linear infinite !important;
+  animation-delay: -5s !important;
+}
+
+.cloud-1 { animation: slideCloud 20s linear infinite !important; }
+.cloud-2 { animation: slideCloud 25s linear infinite !important; animation-delay: -8s !important; }
+.cloud-3 { animation: slideCloud 18s linear infinite !important; animation-delay: -3s !important; }
+.cloud-4 { animation: slideCloud 22s linear infinite !important; animation-delay: -12s !important; }
+
+/* ลบของเดิมที่ใช้ left ทิ้ง แล้วใช้โค้ดนี้แทน */
+@keyframes slideCloud {
+  0%   { transform: translateX(-150px); }
+  100% { transform: translateX(100vw); }
+}
+
+.header-star {
+  width: 20px;
+  height: auto;
+}
+
+.header-star-right { animation: twinkle 3s ease-in-out infinite; }
+
+.wink-1 {
+    left: 50px;
+}
+.wink-2 {
+    right: 50px;
+    top: 290px;
+}
+.wink-3 {
+    left: 50px;
+    bottom: 160px;
+}
+
+.logos img { height: 25px; }
+.logos { gap: 20px; bottom: 22px; }
+
+/* ===========================
+   QUIZ CARD
+=========================== */
+.quiz-card {
+  position: relative;
+  z-index: 10;
+  background: #fff;
+  border-radius: 24px;
+  padding: 28px 36px 24px;
+  width: min(1196px, 88vw);
+  height: 640px;
+  margin-top: 16px;
+  margin-bottom: 70px;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* ===========================
+   PROGRESS BAR
+=========================== */
+.progress-wrap {
+  position: relative;
+  height: 6px;
+  background: #e8e8e8;
+  border-radius: 999px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #111;
+  border-radius: 999px;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+/* ===========================
+   QUESTION AREA
+=========================== */
+.question-area {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.question-left {
+  flex: 1;
+}
+
+.question-number {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #888;
+}
+
+.question-text {
+    /* white-space: pre-line; */
+  font-size: clamp(1rem, 1.8vw, 2rem);
+  font-weight: 500;
+  color: #111;
+  line-height: 1.6;
+}
+
+.question-img-wrap {
+  width: 365px;
+  height: 230px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.question-img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===========================
+   CHOICES
+=========================== */
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.choice-btn {
+    white-space: pre-line;
+  width: 100%;
+  padding: 14px 20px;
+  background: #FFEDF2;
+  border: 2px solid transparent;
+  border-radius: 15px;
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  font-size: clamp(0.9rem, 1.4vw, 1.2rem);
+  font-weight: 500;
+  color: #111;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.choice-btn:hover {
+  background: #ffc3d6;
+  transform: translateX(2px);
+}
+
+.choice-btn.selected {
+  background: #FF98B8;
+  border: 3px solid;
+  border-color: #E86494;
+  font-weight: 500;
+}
+
+/* ===========================
+   NAVIGATION BUTTONS
+=========================== */
+.quiz-nav {
+  width: 100%;           /* เต็มความกว้าง card */
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;      /* ระยะห่างจาก choices */
+}
+
+.nav-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  font-weight: 700;
+  display: flex;               /* ← เพิ่ม */
+  align-items: center;         /* ← เพิ่ม */
+  justify-content: center;     /* ← เพิ่ม */
+}
+
+.nav-prev {
+  background: #E4F8FF;
+  color: #35C0F4;
+  border: none;
+}
+
+.nav-next {
+  background: #35C0F4;
+  color: #111;
+}
+
+.nav-btn:hover  { transform: scale(1.08); }
+.nav-btn:active { transform: scale(0.95); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
+/* ===========================
+   MOBILE ≤ 768px
+=========================== */
+@media (max-width: 768px) {
+  .quiz-header { padding: 30px 0 10px; }
+  .header-title { font-size: 1.6rem; white-space: normal; text-align: center; }
+
+  .quiz-card {
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 6px;
+    margin-bottom: 45px;
+
+    height: auto;          /* ← ไม่ fix height บน mobile */
+    overflow-y: auto;
+  }
+
+  .question-number {
+    font-size: 0.8rem;
+  }
+
+  .question-text {
+    font-size: 1.1rem;
+  }
+
+  .question-area {
+    flex-direction: column; /* ← ข้อความบน รูปล่าง */
+    gap: 12px;
+  }
+
+  .question-img-wrap {
+    width: 100%;
+    height: 180px;
+  }
+
+  .question-img { height: 180px; }
+
+  .choice-btn { font-size: 0.95rem; padding: 12px 16px; }
+
+  .quiz-nav { margin-top: 16px; }
+  .nav-btn  { width: 50px; height: 50px; }
+
+  .logos { bottom: 25px; gap: 14px; }
+  .logos img { height: 20px; }
+
+  .clover-left  { width: 48px; }
+  .clover-right { width: 42px; }
+  .wink-1 { display: none;}
+}

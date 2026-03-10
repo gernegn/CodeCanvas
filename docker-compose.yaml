@@ -1,0 +1,43 @@
+services:
+  apache:
+    build:
+      context: .
+    ports:
+      - '8080:80'
+      - '5173:5173'
+    volumes:
+      - ./src:/var/www/CodeCanvas
+      - ./apache/default.conf:/etc/apache2/sites-enabled/000-default.conf
+
+  mysql_db:
+    image: mysql:8.1
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: root66
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 9001:80
+    environment:
+      - PMA_ARBITRARY=1
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    volumes:
+      - ./ngrok.yml:/etc/ngrok.yml
+    ports:
+      - 80:80
+    depends_on:
+      - apache
+

@@ -1,0 +1,405 @@
+/* =========================================
+   1. Global & Background Layout
+========================================= */
+html {
+    font-size: 16px; /* ค่าเริ่มต้นสำหรับ Desktop ปกติ */
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    background: linear-gradient(to bottom, #31BEF3, #fff);
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.bg-grass {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    line-height: 0;
+    z-index: 2;
+}
+
+.bg-grass img {
+    width: 100%;
+    object-fit: cover;
+    object-position: bottom;
+}
+
+.bg-cloud {
+    position: absolute;
+    line-height: 0;
+    z-index: 3;
+    top: -30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-cloud img {
+    width: 100%;
+    object-fit: cover;
+}
+
+/* =========================================
+   2. Header Section (แบบเดียวกับ Custom)
+========================================= */
+.sec-head {
+    /* ✅ เปลี่ยนเป็น Absolute ตรึงไว้ด้านบน */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 3rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 30;
+}
+
+.btn-box {
+    width: 9rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+}
+
+.bt-back {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.bt-back .iconify {
+    font-size: 2.5rem;
+    color: #000;
+}
+
+.bt-back:hover {
+    background: #D4F2FF;
+    transform: scale(1.05);
+}
+
+.challenge {
+    font-weight: 600;
+    font-size: 2.5rem;
+    margin: 0;
+    /* ✅ จัดข้อความให้อยู่ตรงกลางเป๊ะๆ */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.sec-head img {
+    width: 9rem;
+    height: auto;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+/* =========================================
+   3. Main Content (Gallery Grid)
+========================================= */
+.sec-content {
+    /* ✅ จัดกึ่งกลางแบบสมบูรณ์แบบ (Absolute Center) */
+    position: absolute;
+    z-index: 15;
+    width: 90.5%; /* กว้างเท่าหน้า Custom */
+    top: 60%; /* ดันลงมาพ้นเมฆ เท่าหน้า Custom */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sec-content-top {
+    width: 100%;
+    height: 88%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.row-top, .row-bottom {
+    width: 100%; /* เปลี่ยนเป็น 100% ให้เต็มกล่อง */
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem; /* เพิ่ม gap กันกล่องเบียดกันเวลากล่องใหญ่ขึ้น */
+}
+
+/* ✅ กล่องผลลัพธ์ */
+.box-result {
+    flex: 1; /* ให้ยืดขยายเต็มพื้นที่ที่เหลืออย่างสมดุล */
+    width: 100%; /* กำหนดขนาดสูงสุด */
+    height: 100%;
+    background-color: #fff4eb;
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* เพิ่มเงาให้ดูมีมิติเหมือนฝั่ง Canvas */
+    transition: transform 0.2s, box-shadow 0.2s; /* เพิ่มลูกเล่นตอนชี้เมาส์ */
+}
+
+.box-result:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* ✅ รูปภาพ */
+.img-result {
+    width: 10rem; /* ขยายขนาดรูปนิดนึง */
+    height: 10rem;
+    position: relative;
+    padding: 0.5rem 0.5rem 0.2rem 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-result img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+/* ✅ ชื่อผลงาน */
+.name-result {
+    width: 90%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 1rem;
+}
+
+/* ✅ ลิ้งค์ล่องหน (Click Layer) */
+.click-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    cursor: pointer;
+}
+
+/* =========================================
+   4. Pagination (Bottom)
+========================================= */
+.sec-content-bottom {
+    width: 100%;
+    height: 12%; /* เพิ่มพื้นที่ให้ปุ่มกดนิดนึง */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem; /* ลดระยะห่างระหว่างปุ่มลูกศรนิดนึง */
+}
+
+.gallery-bt-prev, .gallery-bt-next {
+    background: white;
+    padding: 0;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: none; /* ล้างเส้นขอบสีเทาของเบราว์เซอร์ทิ้ง */
+}
+
+.gallery-bt-prev .iconify, .gallery-bt-next .iconify {
+    font-size: 2.2rem;
+    color: #333;
+}
+
+.gallery-bt-prev .iconify {
+    transform: translateX(8px);
+}
+
+.gallery-bt-prev:hover, .gallery-bt-next:hover {
+    background-color: #D4F2FF; /* เปลี่ยนพื้นหลังเป็นสีฟ้าอ่อน */
+    transform: scale(1.08);    /* เด้งขยายขึ้นนิดนึงแบบเดียวกับปุ่ม Back */
+    box-shadow: 0 4px 10px rgba(212, 242, 255, 0.5); /* เพิ่มเงาสีฟ้าอ่อนๆ ให้ดูมีมิติ */
+}
+
+/* ตอนคลิกค้างให้ปุ่มยุบลง (Active) จะได้ฟีลลิ่งการกดจริงๆ */
+.gallery-bt-prev:active, .gallery-bt-next:active {
+    transform: scale(0.95);
+    box-shadow: none;
+}
+
+.text-num {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+    min-width: 4rem; /* กำหนดความกว้างขั้นต่ำ กันตัวเลขหลักสิบทำให้กล่องขยับ */
+    text-align: center;
+}
+
+.bg-cloud, .bt-back, .challenge, .sec-head img, .text-num, .box-result, .gallery-bt-next, .gallery-bt-prev {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* =========================================
+   5. Responsive สำหรับ TV (แบบเดียวกับ Custom)
+========================================= */
+@media screen and (min-width: 1920px) { html { font-size: 22px; } }
+@media screen and (min-width: 2560px) { html { font-size: 30px; } }
+@media screen and (min-width: 3840px) { html { font-size: 42px; } }
+
+/* --------------------------------------
+    1. แอนิเมชันก้อนเมฆ (เลื่อนซ้ายไปขวา)
+-------------------------------------- */
+        .anim-cloud {
+            position: absolute;
+            opacity: 0.8;
+            animation: floatCloud linear infinite;
+        }
+
+        /* ปรับขนาด ความเร็ว และตำแหน่งของเมฆแต่ละก้อนให้ต่างกัน */
+        .cloud-1 {
+            top: 10%;
+            left: -20%;
+            width: 150px;
+            animation-duration: 35s;
+        }
+
+        .cloud-2 {
+            top: 25%;
+            left: -20%;
+            width: 200px;
+            animation-duration: 45s;
+            animation-delay: -15s;
+        }
+
+        .cloud-3 {
+            top: 5%;
+            left: -20%;
+            width: 120px;
+            animation-duration: 30s;
+            animation-delay: -5s;
+            opacity: 0.6;
+        }
+
+        .cloud-4 {
+            top: 40%;
+            left: -20%;
+            width: 180px;
+            animation-duration: 50s;
+            animation-delay: -25s;
+        }
+
+        @keyframes floatCloud {
+            0% {
+                transform: translateX(-10vw);
+            }
+
+            100% {
+                transform: translateX(120vw);
+            }
+        }
+
+        /* --------------------------------------
+           2. แอนิเมชันใบไม้ (ปลิวร่วงลงมา + หมุน)
+        -------------------------------------- */
+        .anim-leaf {
+            position: absolute;
+            width: 40px;
+            animation: fallLeaf linear infinite;
+        }
+
+        /* กระจายตำแหน่งใบไม้และความเร็ว */
+        .leaf-1 {
+            left: 15%;
+            top: -10%;
+            animation-duration: 12s;
+            animation-delay: 0s;
+        }
+
+        .leaf-2 {
+            left: 50%;
+            top: -10%;
+            animation-duration: 15s;
+            animation-delay: 4s;
+            width: 30px;
+        }
+
+        .leaf-3 {
+            left: 85%;
+            top: -10%;
+            animation-duration: 10s;
+            animation-delay: 7s;
+            width: 60px;
+        }
+
+        .leaf-4 {
+            left: 30%;
+            top: -10%;
+            animation-duration: 14s;
+            animation-delay: 9s;
+            width: 40px;
+        }
+
+        @keyframes fallLeaf {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }

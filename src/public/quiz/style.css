@@ -1,0 +1,288 @@
+/* ===========================
+   GLOBAL RESET
+=========================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  overflow: hidden;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+}
+
+
+
+/* ===========================
+   SCENE
+=========================== */
+.scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #31BEF3 0%, #7DD9F5 60%, #B8ECFA 100%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===========================
+   GRASS  –– smooth hill
+=========================== */
+.grass {
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  width: 110%;
+  height: 160px;
+  background: #B4E642;
+  border-radius: 50% 50% 0 0 / 80px 80px 0 0;
+  z-index: 2;
+}
+
+/* ===========================
+   CLOUDS
+=========================== */
+.cloud {
+  position: absolute;
+  z-index: 1;
+  animation: floatCloud ease-in-out infinite;
+  opacity: 0.95;
+}
+
+.cloud img { width: 100%; height: auto; }
+
+/* แก้แต่ละก้อนให้ใช้ slideCloud แทน */
+.cloud-1 { width: 130px; top: 10%; animation: slideCloud 30s linear infinite; animation-delay: 0s; }
+.cloud-2 { width: 90px;  top: 6%;  animation: slideCloud 28s linear infinite; animation-delay: -8s; }
+.cloud-3 { width: 140px; top: 40%; animation: slideCloud 28s linear infinite; animation-delay: -3s; }
+.cloud-4 { width: 130px; bottom: 20%; animation: slideCloud 30s linear infinite; animation-delay: -12s; }
+
+
+/* เพิ่ม keyframes slideCloud เข้าไป */
+@keyframes slideCloud {
+  0%   { left: -150px; }
+  100% { left: 110%; }
+}
+
+/* ===========================
+   WINK STARS
+=========================== */
+.wink {
+  position: absolute;
+  z-index: 1;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.wink img { width: 100%; height: auto; }
+
+.wink-1 { width: 28px; top: 10%; left: 5%;    animation-delay: 0s; }
+.wink-2 { width: 22px; top: 45%; right: 22%;  animation-delay: 0.8s; }
+.wink-3 { width: 18px; bottom: 30%; left: 20%; animation-delay: 1.5s; }
+.wink-4 { width: 24px; top: 72%; left: 65%;   animation-delay: 2s; }
+
+@keyframes twinkle {
+  0%,100% { transform: scale(1) rotate(0deg);    opacity: 1; }
+  50%      { transform: scale(1.4) rotate(20deg); opacity: 0.5; }
+}
+
+/* ===========================
+   BRAIN CHARACTERS
+=========================== */
+.brain {
+  position: absolute;
+  z-index: 3;
+  animation: floatBrain ease-in-out infinite;
+}
+
+.brain img { width: 100%; height: auto; }
+
+/* top-right, cut slightly off screen */
+.brain-left {
+  width: 280px;
+  top: 80px;
+  right: 60px;
+  animation-duration: 4s;
+  animation-delay: 0s;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* middle-left, hugs left edge */
+.brain-right {
+  width: 320px;
+  top: 34%;
+  left: 90px;
+  animation-duration: 4s;
+  animation-delay: -1s;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* bottom-right, above grass */
+.brain-both {
+  width: 280px;
+  bottom: 90px;
+  right: 80px;
+  animation-duration: 4s;
+  animation-delay: -2s;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@keyframes floatBrain {
+  0%,100% { transform: translateY(0px) rotate(-2deg); }
+  50%      { transform: translateY(-18px) rotate(2deg); }
+}
+
+/* ===========================
+   CLOVERS
+=========================== */
+.clover {
+  position: absolute;
+  z-index: 3;
+  animation: floatBrain ease-in-out 7s infinite;
+}
+
+.clover img { width: 100%; height: auto; }
+
+.clover-left  { width: 80px; bottom: 14px; left: 90px;  animation-delay: -1s; }
+.clover-right { width: 60px; bottom: 12px; right: 50px; animation-delay: -3s; }
+
+/* ===========================
+   CENTER CONTENT
+=========================== */
+.content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 0 24px;
+  animation: fadeInUp 0.8s ease both;
+  margin-bottom: 8rem;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.quiz-label {
+  font-size: clamp(3rem, 5.5vw, 5rem);
+  font-weight: 500;
+  color: #111;
+  line-height: 1.1;
+}
+
+.quiz-sub {
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 500;
+  color: #111;
+  line-height: 1.2;
+  margin-top: 4px;
+}
+
+.btn-start {
+  display: inline-block;
+  margin-top: 36px;
+  padding: 15px 60px;
+  background: #111;
+  color: #fff;
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  font-size: clamp(2rem, 1.8vw, 1.2rem);
+  font-weight: 400;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-start:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+}
+
+.btn-start:active {
+  transform: scale(0.97);
+}
+
+/* ===========================
+   LOGOS
+=========================== */
+.logos {
+  position: absolute;
+  bottom: 3.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  white-space: nowrap;
+}
+
+.logos img {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ===========================
+   TABLET  768px – 1024px
+=========================== */
+@media (max-width: 1024px) {
+  .brain-left { width: 170px; }
+  .brain-right { width: 160px; }
+  .brain-both  { width: 160px; bottom: 80px; right: 20px; }
+}
+
+/* ===========================
+   MOBILE ≤ 480px
+=========================== */
+@media (max-width: 768px) {
+
+  .grass {
+    height: 120px;
+    border-radius: 50% 50% 0 0 / 55px 55px 0 0;
+  }
+
+  .brain-left  { width: 200px; top: -10px;   right: 20px; }
+  .brain-right { width: 165px; top: 40%;     left: -10px; }
+  .brain-both  { width: 190px; bottom: 75px; right: 20px; }
+
+  .cloud-1 { width: 100px;  top: 15%; left: 10%; }
+  .cloud-2 { width: 55px;  top: 8%;  left: 40%; }
+  .cloud-3 { width: 95px;  top: 41%; right: 2%; }
+  .cloud-4 { width: 75px;  bottom: 22%; left: 2%; }
+
+  .wink-1 { width: 20px; left: 10%; }
+  .wink-2 { width: 16px; right: 50px; top: 60%;}
+  .wink-3 { width: 14px; }
+  .wink-4 { width: 18px; }
+
+  .clover-left  { width: 55px; bottom: 8px; left: 20px; }
+  .clover-right { width: 50px; bottom: 2px; right: 18px; }
+
+  .content    { padding: 0 16px; }
+
+  .quiz-label { font-size: 3rem; }
+  .quiz-sub   { font-size: 2.5rem; }
+  .btn-start  { font-size: 1.2rem;   }
+
+  .logos img { height: 25px; margin-bottom: -15px;}
+  .logos { gap: 18px; }
+}

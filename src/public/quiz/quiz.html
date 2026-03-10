@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz สมองซ้ายหรือขวา ใครคุมเกม?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+  <div class="scene">
+
+    <!-- Clouds -->
+    <div class="cloud cloud-1"><img src="img-elements/cloud_02.png" alt=""></div>
+    <div class="cloud cloud-2"><img src="img-elements/cloud_03.png" alt=""></div>
+    <div class="cloud cloud-3"><img src="img-elements/cloud_01.png" alt=""></div>
+    <div class="cloud cloud-4"><img src="img-elements/cloud_04.png" alt=""></div>
+
+    <!-- Wink Stars -->
+    <div class="wink wink-1"><img src="img-elements/wink.png" alt=""></div>
+    <div class="wink wink-2"><img src="img-elements/wink.png" alt=""></div>
+    <div class="wink wink-3"><img src="img-elements/wink.png" alt=""></div>
+
+    <!-- Header -->
+    <div class="quiz-header">
+      <div class="cloud cloud-header-left"><img src="img-elements/cloud_02.png" alt=""></div>
+      <h1 class="header-title">สมองซ้ายหรือขวา ใครคุมเกม?</h1>
+      <div class="cloud cloud-header-right"><img src="img-elements/cloud_01.png" alt=""></div>
+    </div>
+
+    <!-- Quiz Card -->
+    <div class="quiz-card">
+
+      <!-- Progress Bar -->
+      <div class="progress-wrap">
+        <div class="progress-fill" id="progressFill"></div>
+        <div class="progress-track"></div>
+      </div>
+
+      <!-- Question Area -->
+      <div class="question-area">
+        <div class="question-left">
+          <p class="question-number" id="questionNumber">คำถามที่ 1</p>
+          <p class="question-text" id="questionText"></p>
+        </div>
+        <div class="question-img-wrap">
+          <img class="question-img" id="questionImg" src="" alt="question image">
+        </div>
+      </div>
+
+      <!-- Choices -->
+      <div class="choices" id="choicesContainer"></div>
+
+      <!-- Navigation -->
+    <div class="quiz-nav">
+  <button class="nav-btn nav-prev" id="btnPrev">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+  </button>
+  <button class="nav-btn nav-next" id="btnNext">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="5" y1="12" x2="19" y2="12"/>
+      <polyline points="12 5 19 12 12 19"/>
+    </svg>
+  </button>
+</div>
+
+    </div>
+
+    <!-- Grass -->
+    <div class="grass"></div>
+
+    <!-- Clovers -->
+    <div class="clover clover-left"><img src="img-elements/Clover.png" alt=""></div>
+    <div class="clover clover-right"><img src="img-elements/Clover.png" alt=""></div>
+
+    <!-- Logos -->
+    <div class="logos">
+      <img src="img-elements/logo_codecanvas.png" alt="CodeCanvas">
+      <img src="img-elements/logo_func.png" alt="FUNC">
+      <img src="img-elements/logo_ict.png" alt="ICT Silpakorn">
+    </div>
+
+  </div>
+
+  <script src="quiz.js"></script>
+</body>
+</html>

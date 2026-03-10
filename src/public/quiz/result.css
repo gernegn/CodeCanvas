@@ -1,0 +1,409 @@
+/* ===========================
+   RESULT PAGE — result.css
+=========================== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  /* สำคัญมาก: ใช้ 100dvh เพื่อปรับความสูงอัตโนมัติตามแถบเบราว์เซอร์ */
+  height: 100dvh;
+
+  /* ล็อคไม่ให้หน้าเว็บหลัก (body) เลื่อน ป้องกันอาการสกรอลล์แล้วหน้าเว็บเด้ง (Overscroll) */
+  overflow: hidden;
+}
+
+.brain { display: none; }
+
+.scene {
+    width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  justify-content: flex-start;
+  padding-top: 40px;
+  padding-bottom: 160px;
+  align-items: center;
+  /* เพิ่มการไล่สี Gradient ให้หน้าเว็บด้วยเพื่อให้ตรงกับดีไซน์ */
+  background: linear-gradient(180deg, #31BEF3 0%, #FFFFFF 100%);
+}
+
+.grass {
+  position: fixed;
+  bottom: 0;
+}
+
+/* ===========================
+   CLOUDS — เลื่อนซ้ายขวา
+=========================== */
+.cloud-1 { animation: slideCloud 20s linear infinite !important; }
+.cloud-2 { animation: slideCloud 25s linear infinite !important; animation-delay: -8s !important; }
+.cloud-3 { animation: slideCloud 18s linear infinite !important; animation-delay: -3s !important; }
+.cloud-4 { animation: slideCloud 22s linear infinite !important; animation-delay: -12s !important; }
+
+/* ลบของเดิมทิ้ง แล้วใช้โค้ดนี้แทน */
+@keyframes slideCloud {
+  0%   { transform: translateX(-150px); }
+  100% { transform: translateX(100vw); }
+}
+
+/* ===========================
+   RESULT CARD
+=========================== */
+.result-card {
+  position: relative;
+  z-index: 10;
+  background: #fff;
+  border-radius: 28px;
+  padding: 24px 28px 32px;
+  width: min(452px, 88vw);
+  /* height: 720px; */
+
+  height: auto;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 0.6s ease both;
+  transform: none !important;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===========================
+   CARD HEADER
+=========================== */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-quiz-label {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #888;
+}
+
+.card-intro {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #111;
+  white-space: nowrap;
+}
+
+.card-logo-cc {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* ===========================
+   BRAIN IMAGE
+=========================== */
+.card-brain-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.card-brain-img {
+  width: 260px;
+  height: auto;
+  object-fit: contain;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@keyframes floatBrain {
+  0%,100% { transform: translateY(0px); }
+  50%      { transform: translateY(-12px); }
+}
+
+/* ===========================
+   RESULT TYPE BOX
+=========================== */
+.result-type-box {
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.result-type-box.type-L    { background: #FFE6EE; }
+.result-type-box.type-R    { background: #BAECFF; }
+.result-type-box.type-BOTH { background: #FFF1BD; }
+
+.result-type-name {
+  font-family: 'Playpen Sans', cursive;
+  font-size: clamp(1.3rem, 4vw, 1.7rem);
+  font-weight: 500;
+  color: #111;
+  line-height: 1.2;
+}
+
+.result-type-subtitle {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.result-type-icon {
+  width: 90px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+/* ===========================
+   DESCRIPTION
+=========================== */
+.result-desc {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.result-strengths {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.result-strengths-text {
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* ===========================
+   CARD FOOTER LOGOS
+=========================== */
+.card-footer-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  margin-bottom: -10px;
+}
+
+.card-footer-logos img {
+  height: 16px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ===========================
+   SAVE BUTTON
+=========================== */
+/* ===========================
+   ACTION BUTTONS
+=========================== */
+.action-buttons {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+
+  /* 1. บังคับให้กล่องปุ่มมีความกว้างเท่ากับตัวการ์ดเป๊ะๆ */
+  width: min(452px, 88vw);
+  box-sizing: border-box;
+}
+
+.btn-save {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 2. ให้ปุ่มขยายตัวแบ่งพื้นที่กันคนละครึ่ง */
+  gap: 8px;
+  flex: 1;
+  width: 100%;
+  white-space: nowrap;
+  padding: 14px 0; /* ลบ padding ซ้าย/ขวาออก ให้ flex จัดการแทน */
+  background: #111;
+  color: #fff;
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-save:hover  { transform: scale(1.04); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+.btn-save:active { transform: scale(0.97); }
+
+.btn-home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 2. ให้ปุ่มขยายตัวแบ่งพื้นที่กันคนละครึ่ง */
+  gap: 8px;
+  flex: 1;
+  width: 100%;
+  white-space: nowrap;
+  padding: 12px 0; /* ลบ padding ซ้าย/ขวาออก ให้ flex จัดการแทน */
+  background: #ffffff;
+  color: #111;
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 2px solid #111;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.btn-home:hover  { background: #f5f5f5; transform: scale(1.04); }
+.btn-home:active { transform: scale(0.97); }
+/* ===========================
+   MOBILE ≤ 768px
+=========================== */
+@media (max-width: 768px) {
+  .scene {
+    overflow-x: hidden;
+    overflow-y: auto;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+
+  .result-card {
+    width: 88vw;
+    /* max-height: 82vh; */
+    /* overflow-y: auto; */
+    padding: 25px 17px;
+    border-radius: 20px;
+    margin: 0;
+  }
+
+  /* ซ่อน scrollbar แต่ยัง scroll ได้ */
+  .result-card::-webkit-scrollbar { display: none; }
+  .result-card { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .card-header { margin-bottom: 8px; }
+  .card-quiz-label { font-size: 0.7rem; }
+  .card-intro { font-size: 1rem; }
+  .card-logo-cc { height: 24px; }
+  .result-type-icon { width: 90px; }
+
+  .card-brain-wrap { margin-top: -20px; margin-bottom: -8px; }
+  .card-brain-img { width: 220px; height: 220px; }
+
+  .result-type-box { padding: 12px 16px; margin-bottom: 12px; border-radius: 14px; }
+  .result-type-name { font-size: 1.15rem; }
+  .result-type-subtitle { font-size: 0.8rem; margin-top: 4px; }
+  .result-type-icon { width: 36px; }
+
+  .result-desc { font-size: 0.82rem; line-height: 1.6; margin-bottom: 10px; }
+  .result-strengths { font-size: 0.82rem; margin-bottom: 4px; }
+  .result-strengths-text { font-size: 0.78rem; margin-bottom: 12px; }
+
+  .card-footer-logos { gap: 12px; }
+  .card-footer-logos img { height: 14px;}
+
+
+  /* ปรับระยะห่างของกลุ่มปุ่มบนมือถือ */
+  .action-buttons {
+    margin-top: 14px;
+    gap: 10px;
+    width: 88vw; /* บังคับให้กว้างเท่าการ์ดในโหมดมือถือพอดี */
+  }
+
+  /* ขนาดปุ่มบนมือถือ */
+  .btn-save { font-size: 0.9rem; padding: 12px 0; }
+  .btn-home { font-size: 0.9rem; padding: 10px 0; }
+
+  .grass { height: 90px; }
+
+  .clover-left  { width: 60px; bottom: 6px; left: 20px; }
+  .clover-right { width: 50px; bottom: 4px; right: 25px; }
+}
+
+/* ===========================
+   HTML2CANVAS EXPORT FIXES
+=========================== */
+.capture-mode {
+  width: 480px !important;
+  /* จุดสำคัญ: บังคับให้การ์ดยืดความสูงแบบอิสระ ไม่ซ่อนข้อความที่ล้น */
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  border-radius: 40px !important;
+  padding: 44px 36px !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* บังคับเลย์เอาต์ Header ให้แสดงผล Flexbox ถูกต้องตอน Capture เพื่อไม่ให้โลโก้หายบนมือถือ */
+.capture-mode .card-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.capture-mode .card-quiz-label { font-size: 14px !important; margin-bottom: 4px !important; }
+.capture-mode .card-intro { font-size: 26px !important; }
+
+/* ป้องกันโลโก้บนหดตัวเป็น 0px บนมือถือ */
+.capture-mode .card-logo-cc {
+  display: block !important;
+  height: 40px !important;
+  width: auto !important;
+  min-width: unset !important;   /* ← เอา min-width ออก คือตัวการที่บีบโลโก้ */
+  max-width: 160px !important;   /* ← กำหนด max-width แทน */
+  object-fit: contain !important;
+}
+
+.capture-mode .card-brain-img { width: 300px !important; margin: 24px 0 !important; }
+
+.capture-mode .result-type-box { padding: 24px 20px !important; border-radius: 20px !important; gap: 16px !important; }
+.capture-mode .result-type-name { font-size: 28px !important; line-height: 1.2 !important; }
+.capture-mode .result-type-subtitle { font-size: 16px !important; line-height: 1.4 !important; }
+.capture-mode .result-type-icon { width: 90px !important; height: auto !important; }
+
+.capture-mode .result-desc { font-size: 16px !important; line-height: 1.6 !important; margin-bottom: 24px !important; }
+.capture-mode .result-strengths { font-size: 16px !important; margin-bottom: 8px !important; }
+.capture-mode .result-strengths-text { font-size: 15px !important; line-height: 1.6 !important; margin-bottom: 24px !important; }
+
+/* บังคับเลย์เอาต์ Footer โลโก้ด้านล่างให้อยู่ครบตามภาพหน้าคอม */
+.capture-mode .card-footer-logos {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin-bottom: 0 !important;
+  margin-top: 24px !important;
+  gap: 20px !important;
+}
+
+.capture-mode .card-footer-logos img {
+  display: block !important;
+  height: 20px !important;
+  width: auto !important;
+  min-width: 40px !important; /* ป้องกันโลโก้ล่างหาย */
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ผลลัพธ์ Quiz สมองซ้ายหรือขวา</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;700;900&family=Playpen+Sans:wght@400;500;700&display=swap" rel="stylesheet">  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="result.css">
+</head>
+<body>
+  <div class="scene">
+
+    <!-- Clouds -->
+    <div class="cloud cloud-1"><img src="img-elements/cloud_02.png" alt=""></div>
+    <div class="cloud cloud-2"><img src="img-elements/cloud_03.png" alt=""></div>
+    <div class="cloud cloud-3"><img src="img-elements/cloud_01.png" alt=""></div>
+    <div class="cloud cloud-4"><img src="img-elements/cloud_04.png" alt=""></div>
+
+    <!-- Wink Stars -->
+    <div class="wink wink-1"><img src="img-elements/wink.png" alt=""></div>
+    <div class="wink wink-2"><img src="img-elements/wink.png" alt=""></div>
+    <div class="wink wink-3"><img src="img-elements/wink.png" alt=""></div>
+
+    <!-- Result Card (สิ่งที่จะ capture เป็น PNG) -->
+    <div class="result-card" id="resultCard">
+
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="card-header-left">
+          <p class="card-quiz-label">Quiz : สมองซ้ายหรือขวา ใครคุมเกม?</p>
+          <p class="card-intro">นี่คือผลลัพธ์ของคุณ...</p>
+        </div>
+        <img src="img-elements/logo_codecanvas.png" alt="CodeCanvas" class="card-logo-cc">
+      </div>
+
+      <!-- Brain Image -->
+      <div class="card-brain-wrap">
+        <img id="resultBrainImg" src="" alt="brain" class="card-brain-img">
+      </div>
+
+      <!-- Result Type Box -->
+      <div class="result-type-box" id="resultTypeBox">
+        <div class="result-type-text">
+          <p class="result-type-name" id="resultTypeName"></p>
+          <p class="result-type-subtitle" id="resultTypeSubtitle"></p>
+        </div>
+        <img class="result-type-icon" id="resultTypeIcon" src="" alt="">
+      </div>
+
+      <!-- Description -->
+      <p class="result-desc" id="resultDesc"></p>
+
+      <!-- Strengths -->
+      <p class="result-strengths"><span class="star">⭐</span> <strong>จุดเด่นของคุณ</strong></p>
+      <p class="result-strengths-text" id="resultStrengths"></p>
+
+      <!-- Card Footer Logos -->
+      <div class="card-footer-logos">
+        <img src="img-elements/logo_func.png" alt="FUNC">
+        <img src="img-elements/logo_ict.png" alt="ICT Silpakorn">
+      </div>
+
+    </div>
+
+    <!--Button -->
+    <div class="action-buttons" id="actionButtons">
+
+        <a href="index.html" class="btn-home">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        หน้าแรก
+      </a>
+
+      <button class="btn-save" id="btnSave">
+
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle">
+          <polyline points="8 13 12 17 16 13"/>
+          <line x1="12" y1="3" x2="12" y2="17"/>
+          <line x1="5" y1="21" x2="19" y2="21"/>
+        </svg>
+        บันทึกภาพ
+      </button>
+
+
+
+    </div>
+</button>
+
+    <!-- Grass -->
+    <div class="grass"></div>
+
+    <!-- Clovers -->
+    <div class="clover clover-left"><img src="img-elements/Clover.png" alt=""></div>
+    <div class="clover clover-right"><img src="img-elements/Clover.png" alt=""></div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="result.js"></script>
+</body>
+</html>
