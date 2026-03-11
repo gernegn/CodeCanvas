@@ -48,7 +48,7 @@
                     <div class="icon-tutorial">
                         <span class="iconify" data-icon="material-symbols:info-rounded"></span>
                     </div>
-                    <span class="bt-text">วิธีการเล่น</span>
+                    <span class="bt-text">How to Play</span>
                 </button>
             </div>
         </div>
@@ -83,14 +83,14 @@
                     <div class="box-button">
                         <div class="btn-main-box">
                             <button class="bt-play" onclick="window.location.href='{{ route('game.random') }}'">
-                                เริ่มวาดเลย
+                                Start Drawing!
                             </button>
                         </div>
 
                         <div class="btn-main-box">
                             <button class="bt-gallery" onclick="window.location.href='{{ route('game.gallery') }}'">
                                 <span class="iconify" data-icon="fluent:draw-image-24-regular"></span>
-                                ไปดูคลังภาพวาด
+                                View Gallery ({{ $totalArtworks ?? 0 }})
                             </button>
                         </div>
                     </div>

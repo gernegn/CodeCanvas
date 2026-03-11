@@ -6,13 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Code Canvas</title>
     <link rel="icon" type="image/png" href="img/elements-frontend/logo-favicon.svg" />
-    {{-- เชื่อม css --}}
-    <link href="{{ asset('css/random.css') }}" rel="stylesheet">
 
-    <!-- Iconify CDN -->
+    <link href="{{ asset('css/random.css') }}" rel="stylesheet">
     <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
 
-    <!-- IBM Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -27,7 +24,6 @@
             <img src="{{ asset('img/elements-frontend/cloud-light.png') }}" class="anim-cloud cloud-2" alt="cloud">
             <img src="{{ asset('img/elements-frontend/cloud-medium.png') }}" class="anim-cloud cloud-3" alt="cloud">
             <img src="{{ asset('img/elements-frontend/cloud-dark.png') }}" class="anim-cloud cloud-4" alt="cloud">
-
             <img src="{{ asset('img/elements-frontend/1clover.png') }}" class="anim-leaf leaf-1" alt="leaf">
             <img src="{{ asset('img/elements-frontend/1clover.png') }}" class="anim-leaf leaf-2" alt="leaf">
             <img src="{{ asset('img/elements-frontend/1clover.png') }}" class="anim-leaf leaf-3" alt="leaf">
@@ -37,12 +33,9 @@
         <div class="bg-grass">
             <img src="{{ asset('img/elements-frontend/grass-02.png') }}" alt="Grass02" />
         </div>
-        <!-- end bg-grass -->
-
         <div class="bg-cloud">
             <img src="{{ asset('img/elements-frontend/cloud-01.png') }}" alt="Cloud02" />
         </div>
-        <!-- end bg-cloud -->
 
         <div class="sec-head">
             <div class="btn-box">
@@ -50,64 +43,62 @@
                     <span class="iconify" data-icon="material-symbols:arrow-back-ios-rounded"></span>
                 </button>
             </div>
-            <h1 class="challenge">กระดานสุ่มโจทย์</h1>
+            <h1 class="challenge">Random Challenge</h1>
             <a href="{{ route('game.home') }}">
                 <img src="{{ asset('img/elements-frontend/logo-01.png') }}" alt="logo01" />
             </a>
         </div>
-        <!-- end sec-head -->
 
         <div class="sec-content">
             <div class="challenge-random">
-                <img src="{{ asset('img/elements-frontend/board-random.png') }}" alt="Board random" />
-                <h1 class="text-random">???</h1>
+                <img src="{{ asset('img/elements-frontend/board-mobile.png') }}" class="board-bg" alt="Board random" />
+
+                {{-- ✅ 1. กล่องแสดงสถานะ กำลังโหลด/กำลังสุ่ม (ไอคอนหมุน + ข้อความ) --}}
+                <div id="loadingOverlay" class="loading-overlay" style="display: flex;">
+                    <div class="spinner-icon">
+                        <span class="iconify" data-icon="line-md:loading-twotone-loop"></span>
+                    </div>
+                    <h1 class="text-loading-sub">Randomizing...</h1>
+                </div>
+
+                {{-- ✅ 2. กล่องแสดงผลลัพธ์หลังสุ่มเสร็จ --}}
+                <div id="resultContainer" class="result-container" style="display: none;">
+                    <img id="randomResultImage" src="" alt="Challenge Image" style="display: none;" />
+                    <h1 id="randomResultText" class="text-random">Challenge</h1>
+                </div>
             </div>
-            <div class="btn-random-box">
-                <button class="bt-random">
-                    <span class="iconify" data-icon="fad:random-2dice"></span>
-                    <span class="num-random">(2)</span>
-                </button>
+
+            {{-- ✅ 3. กล่องรวมปุ่ม (สุ่ม และ เริ่มวาด) --}}
+            <div class="action-buttons">
+                <div class="btn-random-box">
+                    <button class="bt-random" id="btnRandomAction">
+                        <span class="iconify" data-icon="fad:random-2dice"></span>
+                        <span class="num-random">(2)</span>
+                    </button>
+                </div>
+
+                {{-- ✅ ปุ่มเริ่มวาดเลย (แสดงตลอดแต่ปิดการกดไว้ก่อน) --}}
+                <div class="btn-start-box btn-disabled" id="btnStartGameBox">
+                    <button id="btnStartGameAction" class="bt-start-game" disabled>
+                        Start Drawing!
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-    <div id="randomModal" class="modal">
-        <div class="modal-content">
-            <div class="close-modal">
-                <span class="iconify" data-icon="material-symbols:close-rounded"></span>
-            </div>
-            <h1 class="popup-title">โจทย์ที่คุณได้คือ</h1>
-            <h2 id="modalChallengeName">ชื่อโจทย์</h2>
 
-            <div class="modal-img-box">
-                <img id="modalOriginalImage" src="" alt="Original Image" />
-            </div>
-
-            <div class="modal-actions">
-                <button id="btnGoToGame">เริ่มวาดเลย!</button>
-            </div>
-        </div>
-    </div>
-    <!-- end container -->
-
-    <!-- Script -->
     <script src="{{ asset('js/codeCanvas.js') }}?v={{ time() }}"></script>
 
-    {{-- ✅ 1. เพิ่มแท็กเสียงสำหรับตอนสุ่มโจทย์ --}}
     <audio id="randomSound" loop>
         <source src="{{ asset('audio/random-sound.mp3') }}" type="audio/mpeg">
     </audio>
-
-    {{-- ✅ 1. เพิ่มแท็กเสียง Popup ตรงนี้ครับ --}}
     <audio id="popupSound">
         <source src="{{ asset('audio/popup-sound.mp3') }}" type="audio/mpeg">
     </audio>
-
-    {{-- ✅ 1. เพิ่มแท็กเสียงสำหรับปุ่มในหน้านี้ --}}
     <audio id="buttonSound">
         <source src="{{ asset('audio/button-sound.mp3') }}" type="audio/mpeg">
     </audio>
 
-    {{-- ✅ เรียกใช้ไฟล์เสียงที่เราสร้างไว้ --}}
     @include('components.bg-music')
 </body>
 

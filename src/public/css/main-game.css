@@ -452,93 +452,97 @@ body {
 }
 
 /* =========================================
-   9. Tutorial Modal Styles
+   9. Interactive Tutorial Styles
 ========================================= */
-.tutorial-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 9999; display: flex; justify-content: center; align-items: center; }
+.tutorial-dark-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 9000;
+    pointer-events: none; /* ให้คลิกทะลุไปโดนปุ่มได้ */
+    transition: opacity 0.3s;
+}
 
-/* ✅ 1. ปรับขนาดกล่องให้เท่ากับหน้า Random */
-.tutorial-box {
-    background-color: #fff;
-    width: 48rem;
-    height: 33rem;
-    border-radius: 20px; /* ปรับขอบให้มน 20px เท่า Random */
-    padding: 1.5rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+/* ทำให้ปุ่มที่ถูกชี้ สว่างและคลิกได้ทะลุ Overlay */
+.tutorial-highlight {
     position: relative;
+    z-index: 9001 !important;
+    pointer-events: auto !important;
+    box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.4), 0 0 20px 5px rgba(25, 181, 109, 0.8) !important;
+    animation: tutorialPulse 1.5s infinite;
+    background-color: #fff; /* กันพื้นหลังจม */
+    border-radius: 30px;
 }
 
-/* ✅ 2. ปรับตำแหน่งปุ่มปิดให้อยู่ตำแหน่งเดียวกับ Random */
-.close-tutorial {
-    position: absolute;
-    top: 1.5rem;
-    right: 2rem;
-    font-size: 3rem;
-    color: #aaa;
-    cursor: pointer;
-    z-index: 10;
-    transition: transform 0.2s, color 0.2s;
-    line-height: 0;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+@keyframes tutorialPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
-.close-tutorial:hover { color: #000; transform: scale(1.1); }
 
-.tutorial-title {
-    font-family: 'IBM Plex Sans Thai', sans-serif;
-    font-size: 2rem;
-    color: #333;
-    margin: 0.5rem 0 0.5rem 0;
+.tutorial-bubble {
+    position: fixed; /* ใช้ fixed จะได้คำนวณตำแหน่งง่าย */
+    background: #fff;
+    border: 4px solid #19b56d;
+    border-radius: 15px;
+    padding: 15px 25px;
+    font-size: 1.5rem;
     font-weight: 600;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.slider-container { display: flex; align-items: center; justify-content: center; width: 100%; flex-grow: 1; position: relative; gap: 10px; margin-bottom: 5px; }
-.slider-wrapper { width: 90%; height: auto; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
-
-/* ✅ 3. ลด max-height ของรูปลง เพื่อให้พอดีกับกล่องที่เตี้ยลง */
-.tutorial-slide {
-    display: none;
-    width: 83%;
-    height: 83%;
-    object-fit: contain;
-    border-radius: 1.2rem;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.tutorial-slide.active { display: block; animation: fadeEffect 0.5s; }
-
-@keyframes fadeEffect { from {opacity: 0.4;} to {opacity: 1;} }
-.slider-btn { background: none; border: none; cursor: pointer; color: #aaa; font-size: 3rem; padding: 0; transition: transform 0.2s; display: flex; align-items: center; z-index: 5; }
-.slider-btn:hover { color: #333; transform: scale(1.1); }
-
-.pagination-dots {
+    color: #333;
+    z-index: 9002;
+    max-width: 350px;
     text-align: center;
-    margin-bottom: 10px;
-    height: 20px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: floatBubble 2s infinite ease-in-out;
+    transition: top 0.4s ease, left 0.4s ease;
+    transform: translateX(-50%); /* ให้อยู่กึ่งกลางจุดที่ชี้ */
 }
 
-.dot { cursor: pointer; height: 1rem; width: 1rem; margin: 0 6px; background-color: #ddd; border-radius: 50%; display: inline-block; transition: background-color 0.3s ease; }
-.dot.active, .dot:hover { background-color: #27AE60; }
-button, .bt-item, .code-box, .challenge { user-select: none; -webkit-user-select: none; }
+/* ติ่งลูกศรชี้ลงล่าง */
+.tutorial-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 12px 12px 0;
+    border-style: solid;
+    border-color: #19b56d transparent transparent transparent;
+}
+
+@keyframes floatBubble {
+    0%, 100% { margin-top: 0; }
+    50% { margin-top: -10px; }
+}
+
+.btn-skip-tutorial {
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 2px solid #ccc;
+    padding: 8px 25px;
+    border-radius: 30px;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    z-index: 9002;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    pointer-events: auto;
+}
+
+.btn-skip-tutorial:hover {
+    background: #ff4d4d;
+    color: #fff;
+    border-color: #ff4d4d;
+    transform: translateX(-50%) scale(1.05);
+}
 
 /* =========================================
    10. SweetAlert (Reset Popup Design)

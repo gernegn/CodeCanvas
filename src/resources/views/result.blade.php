@@ -51,8 +51,8 @@
                 </button>
             </div>
             <h1 class="challenge">
-                <strong>นี่คือผลลัพธ์ “<span id="resultChallengeName">Challenge</span>”</strong><br>
-                จากโค้ดที่คุณเขียนและจัดเรียง
+                <strong>Output for “<span id="resultChallengeName">Challenge</span>”</strong><br>
+                Crafted from your code sequence
             </h1>
             <a href="{{ route('game.home') }}">
                 <img src="{{ asset('img/elements-frontend/logo-01.png') }}" alt="logo01" />
@@ -78,7 +78,7 @@
             <div class="sec-content-right">
                 <div class="box-code"></div>
                 <div class="bt-next">
-                    <button class="next" id="btnGoToCustom">ไปตกแต่ง</button>
+                    <button class="next" id="btnGoToCustom">Customize</button>
                 </div>
             </div>
             <!-- end sec-content-right -->

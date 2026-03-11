@@ -156,9 +156,17 @@ class GameController extends Controller
     {
         $images = DB::table('ccv_UserGeneral')
             ->join('ccv_GameGeneral', 'ccv_UserGeneral.Challenge_ID', '=', 'ccv_GameGeneral.Challenge_ID')
-            ->select('ccv_UserGeneral.*', 'ccv_GameGeneral.Challenge')
+
+            // ✅ เพิ่ม Left Join เพื่อดึงตารางโค้ดมาด้วย
+            ->leftJoin('ccv_UserCode', 'ccv_UserGeneral.User_ID', '=', 'ccv_UserCode.User_ID')
+
+            // ✅ ระบุ select ให้ดึง User_Code มาส่งให้หน้า Blade นับ
+            ->select(
+                'ccv_UserGeneral.*',
+                'ccv_GameGeneral.Challenge',
+                'ccv_UserCode.User_Code'
+            )
             ->whereNotNull('ccv_UserGeneral.Image')
-            // เรียงจาก ID มากไปน้อย (ล่าสุดขึ้นก่อน)
             ->orderBy('ccv_UserGeneral.User_ID', 'desc')
             ->paginate(8);
 
@@ -197,5 +205,16 @@ class GameController extends Controller
 
         // ส่งชื่อรูปไปแสดงที่หน้า share.blade.php
         return view('share', compact('imageName'));
+    }
+
+    public function home()
+    {
+        // ✅ นับจำนวนผลงานทั้งหมดที่มีในฐานข้อมูล
+        $totalArtworks = DB::table('ccv_UserGeneral')
+            ->whereNotNull('Image')
+            ->count();
+
+        // ✅ ต้อง return ไปที่ view('home') ครับ ไม่ใช่ 'gallery'
+        return view('home', compact('totalArtworks'));
     }
 }

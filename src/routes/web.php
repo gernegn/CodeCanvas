@@ -7,9 +7,11 @@ use App\Http\Controllers\AdminController;
 
 // --- Frontend Part ---
 
-Route::get('/', function () {
-    return view('home');
-})->name('game.home');
+// Route::get('/', function () {
+//     return view('home');
+// })->name('game.home');
+
+Route::get('/', [GameController::class, 'home'])->name('game.home');
 
 Route::get('/random', function () {
     return view('random');

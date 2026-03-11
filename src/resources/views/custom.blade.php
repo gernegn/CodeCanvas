@@ -52,7 +52,7 @@
                 </button>
             </div>
 
-            <h1>ตกแต่งภาพวาดของคุณ</h1>
+            <h1>Decorate Your Artwork</h1>
 
             <a href="{{ route('game.home') }}">
                 <img src="{{ asset('img/elements-frontend/logo-01.png') }}" alt="logo01" />
@@ -84,16 +84,15 @@
                         </div>
 
                         <div class="input-group-name">
-                            <input type="text" id="userNameInput" placeholder="กรอกชื่อของคุณ" readonly>
+                            <input type="text" id="userNameInput" placeholder="Name this artwork" readonly>
                             <button id="btnRandomName" class="btn-random-name" type="button">
                                 <span class="iconify" data-icon="fad:random-2dice"></span>
-                                สุ่ม
                             </button>
                         </div>
 
                         <p id="nameLimitAlert" class="limit-alert"
                             style="display: block; color: #777; font-size: 1.1rem; font-weight: 500; margin-top: 0.1rem;">
-                            * ใส่ชื่อได้ไม่เกิน 20 ตัวอักษร
+                            * Max 20 characters
                         </p>
                     </div>
 
@@ -147,7 +146,7 @@
                     </div>
                 </div>
                 <div class="bt-confirm">
-                    <button class="confirm" disabled>ยืนยัน</button>
+                    <button class="confirm" disabled>Confirm</button>
                 </div>
             </div>
         </div>
@@ -162,8 +161,8 @@
                 alt="star">
 
             <div class="modal-header-text">
-                <h2>ยินดีด้วย นี่คือภาพ</h2>
-                <h1 id="successNameDisplay" class="text-success">สำเร็จแล้ว!</h1>
+                <h2>Congratulations! Here is your artwork</h2>
+                <h1 id="successNameDisplay" class="text-success">Success</h1>
             </div>
 
             <div class="modal-content-wrapper">
@@ -180,7 +179,7 @@
                             alt="QR Code" class="qr-code-img">
                     </div>
                     <div class="qr-text">
-                        <p>สแกนเพื่อเก็บ<br>ภาพวาดของคุณ</p>
+                        <p>Scan to save your artwork!</p>
                     </div>
                 </div>
 
@@ -189,7 +188,7 @@
 
         <a href="{{ route('game.gallery') }}" class="btn-gallery-green">
             <span class="iconify" data-icon="fluent:draw-image-24-regular"></span>
-            ไปดูคลังภาพวาด
+            View Gallery
         </a>
     </div>
 
@@ -199,7 +198,7 @@
             <div class="keyboard-header">
                 <button id="closeKeyboardBtn" class="close-kb-btn">
                     <span class="iconify" data-icon="material-symbols:keyboard-arrow-down-rounded"></span>
-                    ปิดแป้นพิมพ์
+                    Close
                 </button>
             </div>
             <div class="simple-keyboard"></div>
@@ -207,52 +206,59 @@
     </div>
 
     <script src="{{ asset('js/codeCanvas.js') }}?v={{ time() }}"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
 
     <audio id="popupSound">
         <source src="{{ asset('audio/popup-sound.mp3') }}" type="audio/mpeg">
     </audio>
 
-    {{-- ✅ เพิ่มแท็กเสียงสำหรับปุ่มในหน้านี้ --}}
     <audio id="buttonSound">
         <source src="{{ asset('audio/button-sound.mp3') }}" type="audio/mpeg">
     </audio>
 
-    {{-- ✅ เรียกใช้ไฟล์เสียงที่เราสร้างไว้ --}}
     @include('components.bg-music')
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            // ✅ ระบบตรวจจับภาพโหลดเสร็จแล้วค่อย Fade in
-            const mainImg = document.getElementById("customResultImg");
-            const imgLoader = document.getElementById("imageLoader");
+            // ✅ 1. รายการคำไม่สุภาพ (สามารถเพิ่มได้เรื่อยๆ ในเครื่องหมาย "")
+            const badWords = [
+                "fuck", "shit", "bitch", "asshole", "damn", "pussy", "dick", "slut", "porn",
+                "cunt", "loser", "kuy", "sus", "yed", "hee", "tad", "ted", "ass", "breasts",
+                "tits", "bitches", "cock", "blowjob", "boob", "bullshit", "hole", "busty",
+                "butt", "rape", "deepthroat", "dirty", "fetish", "sex", "horny", "murder",
+                "kill", "incest", "nigga", "negro", "nsfw", "nipple", "orgasm", "rapist",
+                "sadismt", "suck", "whore", "ควย", "สัส", "หี", "แตด", "เย็ด", "เหี้ย",
+                "พ่อง", "แม่ง", "กู", "มึง", "ควาย", "โง่", "อี", "กี", "ปิ๊", "ขวย",
+                "ซวย", "ฆวย", "ดอก", "ตีน", "ส้นตีน", "หน้าด้าน", "กาก", "แรด", "เชี่ย",
+                "เชี้ย", "สาส", "ชาติหมา", "ห่า", "ชิบหาย", "ชิปหาย", "เรื้อน", "ตาย",
+                "หำ", "หรรม", "หัม", "กระเด้า", "ขี้", "น้ําแตก", "กระปู๋", "กะโปก",
+                "กระโปก", "รูตูด", "เสือก"
+            ];
 
-            if (mainImg) {
-                mainImg.addEventListener("load", function() {
-                    this.classList.add("loaded-fade");
-                    if (imgLoader) imgLoader.style.display = "none";
-                });
-
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.attributeName === "src") {
-                            mainImg.classList.remove("loaded-fade");
-                            if (imgLoader) imgLoader.style.display = "flex";
+            // ✅ 2. ฟังก์ชันแปลงคำหยาบเป็นเครื่องหมายดอกจัน (*)
+            function maskBadWords(text) {
+                let result = text;
+                badWords.forEach(word => {
+                    // หาคำหยาบแบบไม่สนใจตัวพิมพ์เล็ก/ใหญ่
+                    const regex = new RegExp(word, 'gi');
+                    if (regex.test(result)) {
+                        let maskedWord = '';
+                        if (word.length <= 2) {
+                            // ถ้าคำสั้นๆ 1-2 ตัวอักษร ให้เป็น ** หมดเลย เช่น กู -> **
+                            maskedWord = '*'.repeat(word.length);
+                        } else {
+                            // ดึงตัวแรก + ใส่ * ตรงกลาง + ดึงตัวสุดท้าย เช่น fuck -> f**k
+                            maskedWord = word.charAt(0) + '*'.repeat(word.length - 2) + word.slice(-1);
                         }
-                    });
+                        // สับเปลี่ยนคำหยาบเป็นคำที่เซ็นเซอร์แล้ว
+                        result = result.replace(regex, maskedWord);
+                    }
                 });
-                observer.observe(mainImg, {
-                    attributes: true
-                });
-
-                if (mainImg.complete && mainImg.getAttribute('src')) {
-                    mainImg.classList.add("loaded-fade");
-                    if (imgLoader) imgLoader.style.display = "none";
-                }
+                return result;
             }
 
+            // ✅ 3. ระบบ Keyboard
             const Keyboard = window.SimpleKeyboard.default;
             const inputElement = document.getElementById("userNameInput");
             const btnRandomName = document.getElementById("btnRandomName");
@@ -267,24 +273,46 @@
             const myKeyboard = new Keyboard({
                 onChange: input => {
                     const maxLength = 20;
+                    let currentInput = input;
+                    let hasBadWord = false;
 
-                    if (input.length > maxLength) {
-                        const truncatedInput = input.substring(0, maxLength);
-                        myKeyboard.setInput(truncatedInput);
-                        inputElement.value = truncatedInput;
+                    // 1. ตรวจสอบและเซ็นเซอร์คำหยาบก่อน
+                    const maskedInput = maskBadWords(currentInput);
 
+                    if (maskedInput !== currentInput) {
+                        hasBadWord = true;
+                        currentInput = maskedInput; // แทนที่ข้อความด้วยตัวที่เซ็นเซอร์แล้ว
+                        myKeyboard.setInput(currentInput); // อัปเดตกลับไปที่คีย์บอร์ด
+                    }
+
+                    // 2. ตรวจสอบความยาว
+                    if (currentInput.length > maxLength) {
+                        currentInput = currentInput.substring(0, maxLength);
+                        myKeyboard.setInput(currentInput);
+                    }
+
+                    // 3. อัปเดตช่อง Input หน้าเว็บ
+                    inputElement.value = currentInput;
+
+                    // 4. จัดการข้อความแจ้งเตือนด้านล่าง
+                    if (hasBadWord) {
                         if (alertElement) {
                             alertElement.style.color = "#FF4D4D";
-                            alertElement.innerText = "โอ๊ะ! คุณพิมพ์ชื่อยาวเกิน 20 ตัวอักษรแล้วนะ";
+                            alertElement.innerText =
+                                "⚠️ Please use polite words!"; // แจ้งเตือนเมื่อมีการเซ็นเซอร์
+                        }
+                    } else if (currentInput.length >= maxLength) {
+                        if (alertElement) {
+                            alertElement.style.color = "#FF4D4D";
+                            alertElement.innerText = "Uh-oh! Keep it under 20 characters";
                         }
                     } else {
-                        inputElement.value = input;
-
                         if (alertElement) {
                             alertElement.style.color = "#777";
-                            alertElement.innerText = "* ใส่ชื่อได้ไม่เกิน 20 ตัวอักษร";
+                            alertElement.innerText = "* Max 20 characters";
                         }
                     }
+
                     inputElement.dispatchEvent(new Event('input'));
                 },
                 onKeyPress: button => onKeyPress(button),
@@ -305,7 +333,7 @@
                         '{lang} {space}'
                     ],
                     'th-default': [
-                        'ๅ ภ ถ ุ ค ต จ ข ช ฅ {bksp}',
+                        'ๅ ภ ถ ุ ึ ค ต จ ข ช ฅ {bksp}',
                         'ๆ ไ ำ พ ะ ั ี ร น ย บ ล ฃ',
                         'ฟ ห ก ด เ ้ ่ า ส ว ง',
                         '{shift} ผ ป แ อ ิ ื ท ม ใ ฝ {enter}',
@@ -313,18 +341,18 @@
                     ],
                     'th-shift': [
                         '๑ ๒ ๓ ๔ ๕ ๖ ๗ ๘ ๙ ๐ {bksp}',
-                        'ฎ ฑ ธ ํ ๊ ณ ฯ ญ ฐ ฅ',
+                        'ฎ ฑ ธ ํ ู ๊ ณ ฯ ญ ฐ',
                         'ฤ ฆ ฏ โ ฌ ็ ๋ ษ ศ ซ',
                         '{shift} ฉ ฮ ์ ฒ ฬ ฦ {enter}',
                         '{lang} {space}'
                     ]
                 },
                 display: {
-                    '{bksp}': 'ลบ',
-                    '{enter}': 'ตั้งชื่อ',
+                    '{bksp}': 'Delete',
+                    '{enter}': 'Name it',
                     '{shift}': 'Shift',
-                    '{space}': 'Spacebar (เว้นวรรค)',
-                    '{lang}': '🌐 เปลี่ยนภาษา'
+                    '{space}': 'Spacebar',
+                    '{lang}': '🌐 Language'
                 }
             });
 
@@ -385,18 +413,33 @@
                         btnSound.play().catch(() => {});
                     }
 
-                    const adjsTh = ["น้อง", "พี่", "ยอดนัก", "จิ๋ว", "ซ่า", "แฮปปี้", "ซุปเปอร์", "กัปตัน",
-                        "เจ้า", "นักรบ"
-                    ];
-                    const nounsTh = ["โค้ด", "แมวเหมียว", "ชาไข่มุก", "สายฟ้า", "ก้อนเมฆ", "หมูเด้ง",
-                        "แซลมอน", "อวกาศ", "เต่าบิน"
+                    const adjsTh = [
+                        "น้อง", "พี่", "ยอดนัก", "จิ๋ว", "ซ่า", "แฮปปี้", "ซุปเปอร์", "กัปตัน",
+                        "เจ้า", "นักรบ", "พี่คนสวย", "เบบี๋", "ที่รักครับ", "เบ้บ", "ลูกคุณหนู",
+                        "เจ้าก้อน", "อ้วงน้อย", "จิ้มลิ้ม", "ปุ๊กปิ๊ก", "น้องกลม", "ก้อนปุย",
+                        "ตุ้ยนุ้ย", "แสบซน", "จิ๋วหลิว", "มอมแมม", "ง๊องแง๊ง", "เด็กดื้อ"
                     ];
 
-                    const adjsEn = ["Super", "Mega", "Happy", "Cyber", "Pixel", "Ninja", "Cosmic", "Lazy",
-                        "Crazy"
+                    const nounsTh = [
+                        "โค้ด", "แมวเหมียว", "ชาไข่มุก", "สายฟ้า", "ก้อนเมฆ", "หมูเด้ง",
+                        "แซลมอน", "อวกาศ", "เต่าบิน", "หมีเนย", "พั้นคุง", "ป้าไอช่า",
+                        "บิวกิ้นพีพี", "เมี๊ยว", "ดูไบช็อกโกแลต", "ส้มส้มพละ", "คนดื้อ",
+                        "โพกาซัง", "ส่ำรวย", "สมหมาย", "ก้านกล้วย", "ชบาแก้ว", "บ๊อกแบ๊ก",
+                        "หมาเด็ก", "ตี๋มานี่มา", "หมวย", "ซิกม่าบอย", "ลิซ่า", "เจนนี่",
+                        "โรเซ่", "จีซู", "หนิงหนิง", "จีเซล", "คาริน่า", "น้องหนาว",
+                        "น้องเนย", "เจ้าเด้ง", "หมูกรอบ", "หมูพะโล้", "ไข่ตุ๋น", "เงอะงะ"
                     ];
-                    const nounsEn = ["Coder", "Cat", "Buddy", "Hacker", "Star", "Rocket", "Dog", "Panda",
-                        "Gamer"
+
+                    const adjsEn = [
+                        "Super", "Happy", "Ninja", "Lazy", "Crazy", "Babe", "Pretty", "Chubby",
+                        "Twinkle"
+                    ];
+
+                    const nounsEn = [
+                        "Coder", "Cat", "Buddy", "Hacker", "Star", "Rocket", "Dog",
+                        "Panda", "Gamer", "Butterbear", "Moo deng", "Dubai Chocolate",
+                        "Shawty", "Meow Meow", "Sigma Boy", "Lisa", "Jennie",
+                        "Rosé", "Jisoo", "Yaya", "Som Tom"
                     ];
 
                     let pickedName = "";
@@ -417,7 +460,7 @@
 
                     if (alertElement) {
                         alertElement.style.color = "#777";
-                        alertElement.innerText = "* ใส่ชื่อได้ไม่เกิน 20 ตัวอักษร";
+                        alertElement.innerText = "* Max 20 characters";
                     }
 
                     inputElement.dispatchEvent(new Event('input'));

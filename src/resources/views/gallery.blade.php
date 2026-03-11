@@ -7,12 +7,10 @@
     <title>Code Canvas</title>
     <link rel="icon" type="image/png" href="img/elements-frontend/logo-favicon.svg" />
     {{-- เชื่อม css --}}
-    <link href="{{ asset('css/gallery.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/gallery.css') }}?v={{ time() }}" rel="stylesheet">
 
-    <!-- Iconify CDN -->
     <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
 
-    <!-- IBM Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -37,26 +35,23 @@
         <div class="bg-grass">
             <img src="{{ asset('img/elements-frontend/grass-01.png') }}" alt="Grass01" />
         </div>
-        <!-- end bg-grass -->
-
         <div class="bg-cloud">
             <img src="{{ asset('img/elements-frontend/cloud-01.png') }}" alt="Cloud01" />
         </div>
-        <!-- end bg-cloud -->
-
         <div class="sec-head">
             <div class="btn-box">
                 <button class="bt-back" onclick="window.location.href='{{ route('game.home') }}'">
                     <span class="iconify" data-icon="fa7-solid:home"></span>
                 </button>
             </div>
-            <h1 class="challenge">คลังภาพวาด</h1>
+
+            {{-- ✅ แก้ไขหัวข้อให้บอกจำนวนรูปทั้งหมดที่มีในฐานข้อมูล --}}
+            <h1 class="challenge">Gallery of {{ $images->total() ?? 0 }} Artworks</h1>
+
             <a href="{{ route('game.home') }}">
                 <img src="{{ asset('img/elements-frontend/logo-01.png') }}" alt="logo01" />
             </a>
         </div>
-        <!-- end sec-head -->
-
         <div class="sec-content">
             <div class="sec-content-top">
 
@@ -72,17 +67,35 @@
                     <div class="row-top">
                         @foreach ($chunks[0] as $index => $img)
                             <div class="box-result">
-                                {{-- ❌ ลบส่วน num-result ออก --}}
 
                                 {{-- 2. รูปภาพ --}}
                                 <div class="img-result">
                                     <img src="{{ asset('img/result-image/' . $img->Image) }}" alt="User Art"
                                         onerror="this.src='{{ asset('img/elements-frontend/logo-01.png') }}'" />
+
+                                    {{-- ✅ ลูกเล่น Hover เอาเมาส์ชี้แล้วขึ้นคำว่า "ดูรายละเอียด" --}}
+                                    <div class="hover-overlay">
+                                        <div class="hover-btn">Detail</div>
+                                    </div>
                                 </div>
 
-                                {{-- ✅ 3. เพิ่มส่วนแสดงชื่อ (User_Name) --}}
+                                {{-- 3. ส่วนแสดงชื่อ และ จำนวนโค้ด --}}
                                 <div class="name-result">
                                     {{ $img->User_Name ?? 'Unknown Artist' }}
+
+                                    {{-- ✅ คำนวณจำนวนโค้ดที่ใช้วาด --}}
+                                    @php
+                                        $codeCount = 0;
+                                        if (isset($img->User_Code) && !empty($img->User_Code)) {
+                                            // นับจำนวนคำสั่งจากคอมม่า (,)
+                                            $codeCount = count(explode(',', $img->User_Code));
+                                        } elseif (isset($img->code_count)) {
+                                            $codeCount = $img->code_count;
+                                        }
+                                    @endphp
+
+                                    {{-- ✅ แสดงจำนวนโค้ด --}}
+                                    <div class="code-count">Drawn with {{ $codeCount }} codes</div>
                                 </div>
 
                                 {{-- 4. ลิ้งค์ล่องหน --}}
@@ -101,17 +114,34 @@
                         @if (isset($chunks[1]))
                             @foreach ($chunks[1] as $index => $img)
                                 <div class="box-result">
-                                    {{-- ❌ ลบส่วน num-result ออก --}}
 
                                     {{-- 2. รูปภาพ --}}
                                     <div class="img-result">
                                         <img src="{{ asset('img/result-image/' . $img->Image) }}" alt="User Art"
                                             onerror="this.src='{{ asset('img/elements-frontend/logo-01.png') }}'" />
+
+                                        {{-- ✅ ลูกเล่น Hover เอาเมาส์ชี้แล้วขึ้นคำว่า "ดูรายละเอียด" --}}
+                                        <div class="hover-overlay">
+                                            <div class="hover-btn">Detail</div>
+                                        </div>
                                     </div>
 
-                                    {{-- ✅ 3. เพิ่มส่วนแสดงชื่อ (User_Name) --}}
+                                    {{-- 3. ส่วนแสดงชื่อ และ จำนวนโค้ด --}}
                                     <div class="name-result">
                                         {{ $img->User_Name ?? 'Unknown Artist' }}
+
+                                        {{-- ✅ คำนวณจำนวนโค้ดที่ใช้วาด --}}
+                                        @php
+                                            $codeCount = 0;
+                                            if (isset($img->User_Code) && !empty($img->User_Code)) {
+                                                $codeCount = count(explode(',', $img->User_Code));
+                                            } elseif (isset($img->code_count)) {
+                                                $codeCount = $img->code_count;
+                                            }
+                                        @endphp
+
+                                        {{-- ✅ แสดงจำนวนโค้ด --}}
+                                        <div class="code-count">Drawn with {{ $codeCount }} codes</div>
                                     </div>
 
                                     {{-- 4. ลิ้งค์ล่องหน --}}
@@ -131,7 +161,7 @@
                 @else
                     {{-- กรณีไม่มีข้อมูลใน Database เลย --}}
                     <div style="width: 100%; text-align: center; margin-top: 5rem;">
-                        <h2 style="color: #666;">ยังไม่มีผลงานภาพวาด</h2>
+                        <h2 style="color: #666;">No drawings yet. Start Creating</h2>
                     </div>
                 @endif
             </div>
@@ -174,9 +204,6 @@
             </div>
         </div>
     </div>
-    <!-- end container -->
-
-    <!-- Script -->
     <script src="{{ asset('js/codeCanvas.js') }}"></script>
 
     {{-- ✅ เรียกใช้ไฟล์เสียงที่เราสร้างไว้ --}}

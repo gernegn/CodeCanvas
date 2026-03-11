@@ -39,7 +39,7 @@
                     <span class="iconify" data-icon="material-symbols:arrow-back-ios-rounded"></span>
                 </button>
             </div>
-            <h1 class="challenge">วิธีการเล่น</h1>
+            <h1 class="challenge">How to Play</h1>
             <a href="{{ route('game.home') }}">
                 <img src="{{ asset('img/elements-frontend/logo-01.png') }}" alt="logo01" />
             </a>
@@ -51,7 +51,7 @@
                 <div class="box-text">
                     <div class="tutorial-number">1</div>
                     <div class="tutorial-text">
-                        สุ่มโจทย์สำหรับวาดภาพ (สามารถสุ่มโจทย์ได้ 2 ครั้ง)
+                        Randomize Challenge (Max 3 times)
                     </div>
                 </div>
                 <!-- ข้อ 1 -->
@@ -59,7 +59,7 @@
                 <div class="box-text">
                     <div class="tutorial-number">2</div>
                     <div class="tutorial-text">
-                        เลือกโค้ดจากกล่องคำสั่งโค้ด เพื่อบังคับทิศทาง<br />ของเส้นจนวาดภาพเสร็จ
+                        Select commands to control your path
                     </div>
                 </div>
                 <!-- ข้อ 2 -->
@@ -67,14 +67,14 @@
                 <div class="box-text">
                     <div class="tutorial-number">3</div>
                     <div class="tutorial-text">
-                        เมื่อวาดภาพเสร็จ ให้เลือกโค้ดคำสั่ง เพื่อตกแต่งภาพ
+                        Pick commands to style your artwork
                     </div>
                 </div>
                 <!-- ข้อ 3 -->
 
                 <div class="box-text">
                     <div class="tutorial-number">4</div>
-                    <div class="tutorial-text">ดาวน์โหลดภาพที่เสร็จสมบูรณ์</div>
+                    <div class="tutorial-text">Save your finished artwork</div>
                 </div>
                 <!-- ข้อ 4 -->
             </div>

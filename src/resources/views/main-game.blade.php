@@ -142,7 +142,7 @@
     <!-- end container -->
 
     <!-- Popup -->
-    <div id="tutorialModal" class="tutorial-overlay">
+    {{-- <div id="tutorialModal" class="tutorial-overlay">
         <div class="tutorial-box">
             <span class="iconify close-tutorial" data-icon="material-symbols:close-rounded"></span>
 
@@ -177,7 +177,17 @@
                 <span class="dot" onclick="currentSlide(4)"></span>
             </div>
         </div>
+    </div> --}}
+
+    <div id="tutorialDarkOverlay" class="tutorial-dark-overlay" style="display: none;"></div>
+
+    <div id="tutorialBubble" class="tutorial-bubble" style="display: none;">
+        <p id="tutorialText">ข้อความสอนเล่น</p>
     </div>
+
+    <button id="btnSkipTutorial" class="btn-skip-tutorial" style="display: none;">
+        ข้ามการสอน <span class="iconify" data-icon="material-symbols:fast-forward-rounded"></span>
+    </button>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/codeCanvas.js') }}?v={{ time() }}"></script>

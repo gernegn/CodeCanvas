@@ -189,8 +189,8 @@ body {
 }
 
 .img-result img {
-    width: 80%;
-    height: 80%;
+    width: 90%;
+    height: 90%;
     object-fit: contain;
 }
 
@@ -205,6 +205,13 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     margin-bottom: 1rem;
+}
+
+.code-count {
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: -0.5rem;
+    font-weight: 400;
 }
 
 /* ✅ ลิ้งค์ล่องหน (Click Layer) */

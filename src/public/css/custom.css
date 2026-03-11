@@ -350,11 +350,11 @@ body {
 }
 
 .frame-result-radius img#customResultImg {
-    opacity: 0 !important; /* บังคับซ่อนจนกว่าจะโหลดเสร็จ */
+    opacity: 0;
+    color: transparent;
     transition: opacity 0.8s ease-in-out !important; /* เฟดภาพขึ้นมานุ่มๆ */
     z-index: 2;
     position: relative;
-    color: transparent !important; /* ซ่อนข้อความ alt ตอนยังไม่โหลด */
 }
 
 .frame-result-radius img#customResultImg.loaded-fade {
@@ -596,7 +596,7 @@ body {
 }
 
 .hg-button {
-    height: 3.8rem !important; /* ขยายปุ่มให้ใหญ่ขึ้น */
+    height: 3.6rem !important; /* ขยายปุ่มให้ใหญ่ขึ้น */
     font-size: 1.8rem !important; /* ขยายฟอนต์ */
     border-radius: 12px !important;
     box-shadow: 0 4px 0 #ccc !important; /* เงาปุ่มแบบ 3D */
