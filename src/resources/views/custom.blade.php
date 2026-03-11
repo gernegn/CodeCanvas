@@ -160,6 +160,13 @@
             <img src="{{ asset('img/elements-frontend/wink-yellow-01.png') }}" class="star-decor-img star-top-right"
                 alt="star">
 
+            <img src="{{ asset('img/elements-frontend/postit-popup-qr-blue.png') }}"
+                class="postit-decor postit-top-left" alt="postit">
+            <img src="{{ asset('img/elements-frontend/postit-popup-qr-pink.png') }}"
+                class="postit-decor postit-bottom-left" alt="postit">
+            <img src="{{ asset('img/elements-frontend/postit-popup-qr-orange.png') }}"
+                class="postit-decor postit-bottom-right" alt="postit">
+
             <div class="modal-header-text">
                 <h2>Congratulations! Here is your artwork</h2>
                 <h1 id="successNameDisplay" class="text-success">Success</h1>

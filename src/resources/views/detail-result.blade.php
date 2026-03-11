@@ -14,6 +14,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap"
         rel="stylesheet" />
+
+    {{-- ✅ เพิ่ม Font Sriracha และ Caveat เข้ามาที่นี่ --}}
+    <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -46,19 +50,48 @@
         </div>
 
         <div class="sec-content">
+
+            {{-- ✅ 1. คำนวณจำนวนโค้ดทั้งหมดเตรียมไว้ --}}
+            @php
+                $codeCount = 0;
+                $codeList = [];
+                if (isset($ccv_UserCode) && $ccv_UserCode && $ccv_UserCode->User_Code) {
+                    // แยกโค้ดด้วยคอมม่า และลบช่องว่างทิ้ง
+                    $codeList = array_filter(array_map('trim', explode(',', $ccv_UserCode->User_Code)));
+                    $codeCount = count($codeList);
+                }
+            @endphp
+
+            {{-- --- ฝั่งซ้าย --- --}}
             <div class="sec-content-left">
-                <div class="content-topic">
-                    <h2>คลังภาพวาด / ชิ้นงานที่ {{ $data->User_ID }}</h2>
-                    <h1>{{ $data->User_Name }}</h1>
-                </div>
-                <div class="content-img-result">
-                    <img src="{{ asset('img/result-image/' . $data->Image) }}" alt="{{ $data->Challenge }}"
-                        onerror="this.src='{{ asset('img/elements-frontend/logo-01.png') }}'" />
+                {{-- ✅ 2. เพิ่มกล่องสีขาวครอบเนื้อหา --}}
+                <div class="left-white-box">
+                    <div class="content-topic">
+                        <h2>Galleries / Artwork No. {{ $data->User_ID }}</h2>
+
+                        {{-- ✅ เช็คภาษาด้วย PHP (ถ้ามีภาษาไทยให้ตัวแปร $isThai เป็น true) --}}
+                        @php
+                            $isThai = preg_match('/[\x{0E00}-\x{0E7F}]/u', $data->User_Name);
+                            $fontClass = $isThai ? 'font-sriracha' : 'font-caveat';
+                        @endphp
+
+                        <h1 class="{{ $fontClass }}">{{ $data->User_Name }}</h1>
+                    </div>
+                    <div class="content-img-result">
+                        <img src="{{ asset('img/result-image/' . $data->Image) }}" alt="{{ $data->Challenge }}"
+                            onerror="this.src='{{ asset('img/elements-frontend/logo-01.png') }}'" />
+                    </div>
                 </div>
             </div>
 
             {{-- ส่วนแสดงโค้ด (ใช้ Logic ชุดที่ 2) --}}
             <div class="sec-content-right">
+
+                {{-- ✅ 3. เพิ่ม Header บอกจำนวนโค้ด --}}
+                <div class="code-panel-header">
+                    <h3>Drawn with {{ $codeCount }} codes</h3>
+                </div>
+
                 <div class="code-panel">
                     @if (isset($ccv_UserCode) && $ccv_UserCode && $ccv_UserCode->User_Code)
                         @foreach (explode(',', $ccv_UserCode->User_Code) as $code)
@@ -81,7 +114,7 @@
                             </div>
                         @endforeach
                     @else
-                        <p class="no-data">ไม่พบข้อมูลโค้ด</p>
+                        <p class="no-data">Oops!<br>We couldn't find any code.</p>
                     @endif
                 </div>
             </div>

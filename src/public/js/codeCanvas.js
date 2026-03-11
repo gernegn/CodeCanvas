@@ -446,9 +446,9 @@ function updateProgressAndError(percent, hasError) {
     const cheerTooltip = document.getElementById('cheerTooltip');
     if (cheerTooltip && percent !== oldPercent) {
         let message = "";
-        if (percent === 50) message = "มาถึงครึ่งทางแล้ว สู้ๆ !";
-        else if (percent === 75) message = "อีกนิดเดียว คุณทำได้ !";
-        else if (percent === 100) message = "เย้! สำเร็จแล้ว";
+        if (percent === 50) message = "Halfway there! Keep it up!";
+        else if (percent === 75) message = "Almost there! You can do it!";
+        else if (percent === 100) message = "Success! Great job!";
 
         if (message !== "") {
             cheerTooltip.innerText = message;

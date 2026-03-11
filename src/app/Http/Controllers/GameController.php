@@ -154,21 +154,32 @@ class GameController extends Controller
 
     public function showGallery()
     {
+        // 1. ดึงข้อมูลหลักและแบ่งหน้า (วิธีนี้จะได้จำนวน Total ที่ตรงกับหน้า Home 100% เพราะไม่โดน LeftJoin ทำให้แถวเบิ้ล)
         $images = DB::table('ccv_UserGeneral')
             ->join('ccv_GameGeneral', 'ccv_UserGeneral.Challenge_ID', '=', 'ccv_GameGeneral.Challenge_ID')
-
-            // ✅ เพิ่ม Left Join เพื่อดึงตารางโค้ดมาด้วย
-            ->leftJoin('ccv_UserCode', 'ccv_UserGeneral.User_ID', '=', 'ccv_UserCode.User_ID')
-
-            // ✅ ระบุ select ให้ดึง User_Code มาส่งให้หน้า Blade นับ
-            ->select(
-                'ccv_UserGeneral.*',
-                'ccv_GameGeneral.Challenge',
-                'ccv_UserCode.User_Code'
-            )
+            ->select('ccv_UserGeneral.*', 'ccv_GameGeneral.Challenge')
             ->whereNotNull('ccv_UserGeneral.Image')
             ->orderBy('ccv_UserGeneral.User_ID', 'desc')
             ->paginate(8);
+
+        // 2. ดึงข้อมูลโค้ด (User_Code) แยกต่างหากเฉพาะรูปที่โชว์ในหน้านี้ แล้วนำมาประกอบกันอย่างปลอดภัย
+        $userIds = collect($images->items())->pluck('User_ID');
+
+        if ($userIds->isNotEmpty()) {
+            $userCodes = DB::table('ccv_UserCode')
+                ->whereIn('User_ID', $userIds)
+                ->get()
+                ->keyBy('User_ID'); // จัดกลุ่มให้ค้นหาด้วย User_ID ได้ง่ายๆ
+
+            // ลูปเอา User_Code ไปแปะให้กับรูปภาพแต่ละใบ
+            foreach ($images->items() as $image) {
+                if (isset($userCodes[$image->User_ID])) {
+                    $image->User_Code = $userCodes[$image->User_ID]->User_Code;
+                } else {
+                    $image->User_Code = ''; // ถ้าไม่มีโค้ดให้เป็นค่าว่าง
+                }
+            }
+        }
 
         return view('gallery', compact('images'));
     }
@@ -211,7 +222,8 @@ class GameController extends Controller
     {
         // ✅ นับจำนวนผลงานทั้งหมดที่มีในฐานข้อมูล
         $totalArtworks = DB::table('ccv_UserGeneral')
-            ->whereNotNull('Image')
+            ->join('ccv_GameGeneral', 'ccv_UserGeneral.Challenge_ID', '=', 'ccv_GameGeneral.Challenge_ID')
+            ->whereNotNull('ccv_UserGeneral.Image')
             ->count();
 
         // ✅ ต้อง return ไปที่ view('home') ครับ ไม่ใช่ 'gallery'

@@ -20,7 +20,6 @@ body {
     padding: 0;
 }
 
-/* พื้นหลังใหม่ (ที่หน้า Detail ใช้) */
 .bg {
     position: fixed;
     top: 0;
@@ -39,10 +38,9 @@ body {
 }
 
 /* =========================================
-   2. Header Section (แบบเดียวกับ Result)
+   2. Header Section
 ========================================= */
 .sec-head {
-    /* ✅ เปลี่ยนเป็น Absolute ตรึงไว้ด้านบน */
     position: absolute;
     top: 0;
     left: 0;
@@ -54,12 +52,7 @@ body {
     z-index: 30;
 }
 
-.btn-box {
-    width: 9rem;
-    height: 4rem;
-    display: flex;
-    align-items: center;
-}
+.btn-box { width: 9rem; height: 4rem; display: flex; align-items: center; }
 
 .bt-back {
     background: transparent;
@@ -76,29 +69,14 @@ body {
     transition: transform 0.2s;
 }
 
-.bt-back .iconify {
-    font-size: 2.5rem;
-    color: #000;
-    transform: translateX(8px);
-}
-
-.bt-back:hover {
-    background: #D4F2FF;
-    transform: scale(1.05);
-}
-
-.sec-head img {
-    width: 9rem;
-    height: auto;
-    object-fit: contain;
-    cursor: pointer;
-}
+.bt-back .iconify { font-size: 2.5rem; color: #000; transform: translateX(8px); }
+.bt-back:hover { background: #D4F2FF; transform: scale(1.05); }
+.sec-head img { width: 9rem; height: auto; object-fit: contain; cursor: pointer; }
 
 /* =========================================
-   3. Main Content Layout (Absolute Center)
+   3. Main Content Layout
 ========================================= */
 .sec-content {
-    /* ✅ จัดกึ่งกลางแบบหน้า Result */
     width: 100%;
     height: 79%;
     top: 22%;
@@ -107,46 +85,75 @@ body {
     justify-content: center;
     display: flex;
     z-index: 11;
-    /* background-color: #19b56d; */
     gap: 4rem;
 }
 
-/* --- ฝั่งซ้าย (ข้อความ + รูปภาพ) --- */
+/* --- ฝั่งซ้าย (ปรับใหม่ให้มีกล่องสีขาว) --- */
 .sec-content-left {
-    width: 50%; /* กว้างเท่าหน้า Result */
+    width: 53%; /* ขยายพื้นที่นิดนึงเพื่อให้กล่องขาวกว้างขึ้น */
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* ดันเนื้อหาให้อยู่กลางความสูง */
+    justify-content: flex-start;
     align-items: center;
-    gap: 2rem; /* ระยะห่างระหว่างข้อความกับรูป */
+}
+
+/* ✅ กล่องขาวที่ครอบฝั่งซ้ายทั้งหมด */
+.left-white-box {
+    width: 100%;
+    height: 90%; /* ให้ความสูงเท่ากล่องฝั่งขวา */
+    background-color: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    padding: 3rem 4rem; /* ระยะห่างเนื้อหาด้านใน */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .content-topic {
     width: 100%;
-    text-align: left; /* จัดข้อความให้อยู่ตรงกลาง */
+    text-align: left; /* จัดข้อความชิดซ้าย */
+    /* margin-bottom: 2rem; */
 }
 
 .content-topic h2 {
-    font-size: 2rem;
-    color: #000;
+    font-size: 1.6rem;
+    color: #444;
     font-weight: 500;
-    margin: 0;
+    margin: 0 0 0.5rem 0;
 }
 
 .content-topic h1 {
-    font-size: 2.5rem;
+    font-size: 2.4rem;
     color: #000;
-    font-weight: 600;
+    font-weight: 700;
     margin: 0;
+    font-style: italic; /* ทำชื่อให้เอียงนิดๆ ตามเรฟเฟอเรนซ์ */
+}
+
+/* ✅ ตั้งค่า Font แยกตามภาษา */
+.content-topic h1.font-sriracha {
+    font-family: 'Sriracha', cursive !important;
+    font-size: 2.8rem; /* ภาษาไทยขนาดปกติกำลังสวย */
+    font-style: normal; /* เอาตัวเอียงออกเพราะฟอนต์ Sriracha มีความโค้งอยู่แล้ว */
+}
+
+.content-topic h1.font-caveat {
+    font-family: 'Caveat', cursive !important;
+    font-size: 3.6rem; /* ภาษาอังกฤษฟอนต์นี้จะตัวเล็ก ต้องขยายไซส์ขึ้นมาหน่อยให้บาลานซ์กัน */
+    font-style: normal;
 }
 
 .content-img-result {
-    width: 60%; /* ปรับขนาดกรอบรูปให้กางออกอีกนิด */
-    height: 55%; /* แบ่งความสูงให้พอดีกับข้อความ */
+    flex: 1; /* ดันให้เต็มพื้นที่ว่างตรงกลางกล่อง */
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    overflow: hidden;
+    min-height: 0;
 }
 
 .content-img-result img {
@@ -157,26 +164,42 @@ body {
 
 /* --- ฝั่งขวา (กล่องโค้ด) --- */
 .sec-content-right {
-    width: 30%; /* กว้างเท่าหน้า Result */
-    height: 90%; /* ปรับให้เตี้ยกว่าฝั่งซ้ายนิดนึง จะได้ดูมีมิติเหมือน Result */
-
+    width: 30%;
+    height: 90%;
     background-color: #fff;
     border-radius: 1.2rem;
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     overflow: hidden;
     display: flex;
-    justify-content: flex-start; /* ดันเนื้อหาให้อยู่กลางความสูง */
-    align-items: start;
-    padding: 0 1px;
+    flex-direction: column; /* เปลี่ยนเป็น column เพื่อแบ่งชั้น Header กับตัว Code */
+    align-items: center;
+}
+
+/* ✅ ส่วนหัวบอกจำนวนโค้ด (มีเส้นคั่น) */
+.code-panel-header {
+    width: 85%;
+    padding: 2rem 0 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
+    background-color: #fff;
+    z-index: 10;
+    flex-shrink: 0; /* ไม่ให้กล่องบีบเล็กลงเวลาโค้ดเยอะ */
+}
+
+.code-panel-header h3 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #000;
 }
 
 /* =========================================
-   4. Code Panel (ภายในกล่องขวา)
+   4. Code Panel (พื้นที่ Scroll)
 ========================================= */
 .code-panel {
     width: 100%;
     height: 100%;
-    padding-top: 3rem;
+    padding-top: 1.5rem; /* ลดลงหน่อยเพราะมีเส้นคั่นแล้ว */
     padding-left: 2rem;
     padding-right: 2rem;
     padding-bottom: 0;
@@ -198,8 +221,8 @@ body {
 
 /* สไตล์ปุ่มคำสั่ง */
 .code-pill {
-    width: 100%;
-    padding: 0.8rem 0; /* แปลงเป็น rem */
+    width: 85%;
+    padding: 0.8rem 0;
     border-radius: 50px;
     font-size: 1.4rem;
     font-weight: 500;
@@ -208,30 +231,20 @@ body {
     font-family: 'IBM Plex Sans Thai', sans-serif;
     transition: transform 0.2s;
     flex-shrink: 0;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* เพิ่มเงาให้เหมือนปุ่มใน Result */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.code-pill:hover {
-    transform: scale(1.02);
-}
+.code-pill:hover { transform: scale(1.02); }
 
 .cmd-forward { background-color: #62D4FF; }
 .cmd-left    { background-color: #FE9A00; }
 .cmd-right   { background-color: #FF98B8; }
 .cmd-default { background-color: #ccc; color: #333; }
 
-.no-data {
-    color: #aaa;
-    margin-top: 5rem;
-    font-size: 1.5rem;
-}
+.no-data { color: #aaa; margin-top: 10rem; font-size: 1.5rem; text-align: center; }
 
 .content-topic h1, .content-topic h2, .sec-head img, .code-panel, .content-img-result img {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    -webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
 }
 
 /* Custom Scrollbar */
@@ -247,116 +260,17 @@ body {
 @media screen and (min-width: 2560px) { html { font-size: 30px; } }
 @media screen and (min-width: 3840px) { html { font-size: 42px; } }
 
-/* --------------------------------------
-    1. แอนิเมชันก้อนเมฆ (เลื่อนซ้ายไปขวา)
--------------------------------------- */
-        .anim-cloud {
-            position: absolute;
-            opacity: 0.8;
-            animation: floatCloud linear infinite;
-            z-index: -1; /* ✅ เพิ่มบรรทัดนี้ เพื่อผลักเมฆไปอยู่หลังหญ้าและ UI (ถ้าหญ้ายังไม่บัง ให้เปลี่ยนเป็น -2) */
-        }
+/* เมฆและใบไม้... เหมือนเดิม */
+.anim-cloud { position: absolute; opacity: 0.8; animation: floatCloud linear infinite; z-index: -1; }
+.cloud-1 { top: 10%; left: -20%; width: 150px; animation-duration: 35s; }
+.cloud-2 { top: 25%; left: -20%; width: 200px; animation-duration: 45s; animation-delay: -15s; }
+.cloud-3 { top: 5%; left: -20%; width: 120px; animation-duration: 30s; animation-delay: -5s; opacity: 0.6; }
+.cloud-4 { top: 40%; left: -20%; width: 180px; animation-duration: 50s; animation-delay: -25s; }
+@keyframes floatCloud { 0% { transform: translateX(-10vw); } 100% { transform: translateX(120vw); } }
 
-        /* ปรับขนาด ความเร็ว และตำแหน่งของเมฆแต่ละก้อนให้ต่างกัน */
-        .cloud-1 {
-            top: 10%;
-            left: -20%;
-            width: 150px;
-            animation-duration: 35s;
-        }
-
-        .cloud-2 {
-            top: 25%;
-            left: -20%;
-            width: 200px;
-            animation-duration: 45s;
-            animation-delay: -15s;
-        }
-
-        .cloud-3 {
-            top: 5%;
-            left: -20%;
-            width: 120px;
-            animation-duration: 30s;
-            animation-delay: -5s;
-            opacity: 0.6;
-        }
-
-        .cloud-4 {
-            top: 40%;
-            left: -20%;
-            width: 180px;
-            animation-duration: 50s;
-            animation-delay: -25s;
-        }
-
-        @keyframes floatCloud {
-            0% {
-                transform: translateX(-10vw);
-            }
-
-            100% {
-                transform: translateX(120vw);
-            }
-        }
-
-        /* --------------------------------------
-           2. แอนิเมชันใบไม้ (ปลิวร่วงลงมา + หมุน)
-        -------------------------------------- */
-        .anim-leaf {
-            position: absolute;
-            width: 40px;
-            animation: fallLeaf linear infinite;
-        }
-
-        /* กระจายตำแหน่งใบไม้และความเร็ว */
-        .leaf-1 {
-            left: 15%;
-            top: -10%;
-            animation-duration: 12s;
-            animation-delay: 0s;
-        }
-
-        .leaf-2 {
-            left: 50%;
-            top: -10%;
-            animation-duration: 15s;
-            animation-delay: 4s;
-            width: 30px;
-        }
-
-        .leaf-3 {
-            left: 85%;
-            top: -10%;
-            animation-duration: 10s;
-            animation-delay: 7s;
-            width: 60px;
-        }
-
-        .leaf-4 {
-            left: 30%;
-            top: -10%;
-            animation-duration: 14s;
-            animation-delay: 9s;
-            width: 40px;
-        }
-
-        @keyframes fallLeaf {
-            0% {
-                transform: translateY(-10vh) translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            80% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(110vh) translateX(100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
+.anim-leaf { position: absolute; width: 40px; animation: fallLeaf linear infinite; }
+.leaf-1 { left: 15%; top: -10%; animation-duration: 12s; animation-delay: 0s; }
+.leaf-2 { left: 50%; top: -10%; animation-duration: 15s; animation-delay: 4s; width: 30px; }
+.leaf-3 { left: 85%; top: -10%; animation-duration: 10s; animation-delay: 7s; width: 60px; }
+.leaf-4 { left: 30%; top: -10%; animation-duration: 14s; animation-delay: 9s; width: 40px; }
+@keyframes fallLeaf { 0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(110vh) translateX(100px) rotate(360deg); opacity: 0; } }

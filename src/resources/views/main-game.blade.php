@@ -70,10 +70,10 @@
                     </div>
 
                     {{-- กล่องข้อความให้กำลังใจ (แสดงเหนือเปอร์เซ็นต์) --}}
-                    <div id="cheerTooltip" class="cheer-tooltip">อีกนิดเดียว คุณทำได้ !</div>
+                    <div id="cheerTooltip" class="cheer-tooltip">So close! Keep going!</div>
 
                     {{-- กล่องข้อความแจ้งเตือนเดินผิด (วงสีฟ้า) --}}
-                    <div id="errorTooltip" class="error-tooltip">เอ๊ะ มีอะไรผิดพลาดไหมนะ?</div>
+                    <div id="errorTooltip" class="error-tooltip">Hmmm... something's not right.</div>
 
                     <div class="bt-options">
                         <div class="bt-undo">

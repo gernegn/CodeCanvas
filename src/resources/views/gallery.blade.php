@@ -72,11 +72,6 @@
                                 <div class="img-result">
                                     <img src="{{ asset('img/result-image/' . $img->Image) }}" alt="User Art"
                                         onerror="this.src='{{ asset('img/elements-frontend/logo-01.png') }}'" />
-
-                                    {{-- ✅ ลูกเล่น Hover เอาเมาส์ชี้แล้วขึ้นคำว่า "ดูรายละเอียด" --}}
-                                    <div class="hover-overlay">
-                                        <div class="hover-btn">Detail</div>
-                                    </div>
                                 </div>
 
                                 {{-- 3. ส่วนแสดงชื่อ และ จำนวนโค้ด --}}
@@ -96,6 +91,11 @@
 
                                     {{-- ✅ แสดงจำนวนโค้ด --}}
                                     <div class="code-count">Drawn with {{ $codeCount }} codes</div>
+                                </div>
+
+                                {{-- ✅ ลูกเล่น Hover เอาเมาส์ชี้แล้วขึ้นคำว่า "ดูรายละเอียด" --}}
+                                <div class="hover-overlay">
+                                    <div class="hover-btn">Detail</div>
                                 </div>
 
                                 {{-- 4. ลิ้งค์ล่องหน --}}
@@ -119,11 +119,6 @@
                                     <div class="img-result">
                                         <img src="{{ asset('img/result-image/' . $img->Image) }}" alt="User Art"
                                             onerror="this.src='{{ asset('img/elements-frontend/logo-01.png') }}'" />
-
-                                        {{-- ✅ ลูกเล่น Hover เอาเมาส์ชี้แล้วขึ้นคำว่า "ดูรายละเอียด" --}}
-                                        <div class="hover-overlay">
-                                            <div class="hover-btn">Detail</div>
-                                        </div>
                                     </div>
 
                                     {{-- 3. ส่วนแสดงชื่อ และ จำนวนโค้ด --}}
@@ -142,6 +137,11 @@
 
                                         {{-- ✅ แสดงจำนวนโค้ด --}}
                                         <div class="code-count">Drawn with {{ $codeCount }} codes</div>
+                                    </div>
+
+                                    {{-- ✅ ลูกเล่น Hover เอาเมาส์ชี้แล้วขึ้นคำว่า "ดูรายละเอียด" --}}
+                                    <div class="hover-overlay">
+                                        <div class="hover-btn">Detail</div>
                                     </div>
 
                                     {{-- 4. ลิ้งค์ล่องหน --}}
